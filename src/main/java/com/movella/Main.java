@@ -6,19 +6,23 @@ public class Main {
 
   static int port = 80;
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
-    System.out.println(String.format("listening on port %d", port));
+    try {
+      System.out.println(String.format("listening on port %d", port));
 
-    port(port);
+      port(port);
 
-    get("/", (req, res) -> {
-      return "Hello World";
-    });
+      get("/", (req, res) -> {
+        return "Hello World";
+      });
 
-    get("/test", (req, res) -> {
-      return "yeah";
-    });
+      get("/test", (req, res) -> {
+        return "yeah";
+      });
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 
   // @RequestMapping("/db")
