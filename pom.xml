@@ -68,8 +68,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <!-- Build an executable JAR -->
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.2.0</version>
@@ -87,7 +86,7 @@
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>3.0.3</version>
-      </plugin>
+      </plugin> -->
     </plugins>
   </build>
 
