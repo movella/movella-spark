@@ -4,11 +4,10 @@ import static spark.Spark.*;
 
 public class Main {
 
-  static int port = 80;
-
   public static void main(String[] args) {
-
     try {
+
+      final int port = getHerokuAssignedPort();
       System.out.println(String.format("listening on port %d", port));
 
       port(port);
@@ -23,6 +22,11 @@ public class Main {
     } catch (Exception e) {
       System.out.println(e);
     }
+  }
+
+  static int getHerokuAssignedPort() {
+    String port = new ProcessBuilder().environment().get("PORT");
+    return port == null ? 80 : Integer.parseInt(port);
   }
 
   // @RequestMapping("/db")
