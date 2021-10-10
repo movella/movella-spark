@@ -37,4 +37,10 @@ $ heroku open
 
 For more information about using Java on Heroku, see these Dev Center articles:
 
-- [Java on Heroku](https://devcenter.heroku.com/categories/java)
+* [Java on Heroku](https://devcenter.heroku.com/categories/java)
+
+## sass
+
+```bash
+sass src/main/resources/scss/custom.scss src/main/resources/public/stylesheets/main.css
+```

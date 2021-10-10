@@ -1,0 +1,1 @@
+sass src/main/resources/scss/custom.scss src/main/resources/public/stylesheets/main.css
