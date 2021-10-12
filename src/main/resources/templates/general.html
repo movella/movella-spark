@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="d-flex flex-column h-100">
+  <head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Movella</title>
+    <link
+      rel="shortcut icon"
+      href="/img/movellasmall.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <script type="text/javascript" src="/scripts/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="./scripts/sweetalert2.min.js"></script>
+  </head>
+
+  <body class="d-flex flex-column flex-grow-1">
+    <nav
+      th:fragment="nav"
+      class="navbar navbar-expand-lg navbar-dark bg-primary lighten-3 px-3"
+    >
+      <div class="container-fluid">
+        <span class="navbar-brand">
+          <img src="/img/movellasmall.png" style="height: 80px; width: 80px" />
+        </span>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#basic-nav"
+          aria-controls="basic-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="basic-nav">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/">Móveis</a>
+            <a class="nav-link" href="/sobre">Sobre</a>
+            <a class="nav-link" href="/contato">Contato</a>
+            <a class="nav-link" href="/perfil">Minha conta</a>
+            <a class="nav-link disabled" href="/cadastrarmovel">
+              Cadastrar móvel
+            </a>
+            <a class="nav-link disabled" href="/sair">Sair</a>
+            <a class="nav-link disabled" href="/entrar">Entrar</a>
+            <a class="nav-link disabled" href="/criarconta">Criar conta</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- <div class="d-flex flex-row justify-content-center align-items-center">
+      <div class="m-2">
+        <a href="/perfil">
+          <img
+            src="/img/"
+            style="
+              height: 50px;
+              width: 50px;
+              border-radius: 50px;
+              object-fit: cover;
+            "
+            alt=""
+          />
+        </a>
+      </div>
+      <div class="text-white">
+        <a href="/perfil" class="text-white">
+          <h5></h5>
+        </a>
+      </div>
+    </div> -->
+
+    <main class="d-flex flex-column flex-grow-1">
+      <div class="container py-3">
+        <p>General</p>
+      </div>
+    </main>
+
+    <footer
+      th:fragment="footer"
+      class="text-center bg-secondary text-white font-small mb-0 p-0"
+    >
+      <div class="py-3">
+        <a
+          href="./"
+          target="_blank"
+          class="py-3 text-white text-decoration-none"
+        >
+          Copyright © 2021 Movella
+        </a>
+        <!-- <a href="https://www.freepik.com/photos/house"
+          ><small>House photo created by vanitjan - www.freepik.com</small></a
+        >
+        <br />
+        <a href="https://www.freepik.com/photos/frame"
+          ><small>Frame photo created by vanitjan - www.freepik.com</small></a
+        >
+        <br />
+        <a href="https://www.freepik.com/photos/luxury"
+          ><small>Luxury photo created by dit26978 - www.freepik.com</small></a
+        > -->
+      </div>
+    </footer>
+  </body>
+</html>
