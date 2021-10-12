@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="d-flex flex-column h-100">
+  <div th:replace="general :: head"></div>
+
+  <body class="d-flex flex-column flex-grow-1">
+    <div th:replace="general :: nav(route='sobre')"></div>
+
+    <main class="d-flex flex-column flex-grow-1">
+      <div class="container">
+        <div th:replace="general :: cover(title='Sobre')"></div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <p>
+              A Movella é uma nova empresa fundada em agosto de 2021, com o
+              intuito de ajudar nossos clientes a ganhar dinheiro com móveis
+              parados, que estão ocupando espaço em casa ou que não são mais
+              utilizados. Todos os móveis e preços são apresentados de forma
+              fácil e simples para que seja necessário o mínimo de tempo
+              possível para alugar qualquer produto do site. Em caso de críticas
+              ou sugestões <a href="/contato">fale com a gente</a> e nos ajude a
+              crescer para seu conforto, segurança e praticidade.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="general :: footer"></div>
+  </body>
+</html>

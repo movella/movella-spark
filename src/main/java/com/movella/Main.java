@@ -19,23 +19,23 @@ public class Main {
       staticFiles.location("/public");
 
       notFound((req, res) -> {
-        Map<String, Object> model = new HashMap<>();
-        return render(model, "/not-found");
+        return render(new HashMap<>(), "/not-found");
       });
 
       internalServerError((req, res) -> {
-        Map<String, Object> model = new HashMap<>();
-        return render(model, "/error");
+        return render(new HashMap<>(), "/error");
       });
 
       get("/", (req, res) -> {
-        Map<String, Object> model = new HashMap<String, Object>();
-        return render(model, "/moveis");
+        return render(new HashMap<>(), "/moveis");
       });
 
       get("/moveis", (req, res) -> {
-        Map<String, Object> model = new HashMap<String, Object>();
-        return render(model, "/moveis");
+        return render(new HashMap<>(), "/moveis");
+      });
+
+      get("/sobre", (req, res) -> {
+        return render(new HashMap<>(), "/sobre");
       });
 
       System.out.println(String.format("listening on port %d", port));

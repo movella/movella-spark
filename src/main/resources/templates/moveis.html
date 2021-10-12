@@ -3,32 +3,11 @@
   <div th:replace="general :: head"></div>
 
   <body class="d-flex flex-column flex-grow-1">
-    <div th:replace="general :: nav"></div>
+    <div th:replace="general :: nav(route='moveis')"></div>
 
     <main class="d-flex flex-column flex-grow-1">
       <div class="container">
-        <div
-          style="
-            height: 300px;
-            backdrop-filter: brightness(50%);
-            background-image: url(/img/cover1.jpg);
-            background-size: cover;
-          "
-        >
-          <div
-            class="
-              w-100
-              h-100
-              d-flex
-              justify-content-center
-              align-items-center
-              text-center
-            "
-            style="backdrop-filter: brightness(50%)"
-          >
-            <h1 class="text-white">Móveis</h1>
-          </div>
-        </div>
+        <div th:replace="general :: cover(title='Móveis')"></div>
       </div>
     </main>
 

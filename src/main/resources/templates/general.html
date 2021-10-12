@@ -21,6 +21,7 @@
   <body class="d-flex flex-column flex-grow-1">
     <nav
       th:fragment="nav"
+      th:with="route=${route} ?: ''"
       class="navbar navbar-expand-lg navbar-dark bg-primary lighten-3 px-3"
     >
       <div class="container-fluid">
@@ -40,10 +41,31 @@
         </button>
         <div class="collapse navbar-collapse" id="basic-nav">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/">Móveis</a>
-            <a class="nav-link" href="/sobre">Sobre</a>
-            <a class="nav-link" href="/contato">Contato</a>
-            <a class="nav-link" href="/perfil">Minha conta</a>
+            <a
+              class="nav-link"
+              th:classappend="${route} == moveis ? active"
+              aria-current="page"
+              href="/"
+              >Móveis</a
+            >
+            <a
+              class="nav-link"
+              th:classappend="${route} == sobre ? active"
+              href="/sobre"
+              >Sobre</a
+            >
+            <a
+              class="nav-link"
+              th:classappend="${route} == contato ? active"
+              href="/contato"
+              >Contato</a
+            >
+            <a
+              class="nav-link"
+              th:classappend="${route} == perfil ? active"
+              href="/perfil"
+              >Minha conta</a
+            >
             <a class="nav-link disabled" href="/cadastrarmovel">
               Cadastrar móvel
             </a>
@@ -79,6 +101,30 @@
     <main class="d-flex flex-column flex-grow-1">
       <div class="container py-3">
         <p>General</p>
+
+        <div
+          th:fragment="cover"
+          style="
+            height: 300px;
+            backdrop-filter: brightness(50%);
+            background-image: url(/img/cover1.jpg);
+            background-size: cover;
+          "
+        >
+          <div
+            class="
+              w-100
+              h-100
+              d-flex
+              justify-content-center
+              align-items-center
+              text-center
+            "
+            style="backdrop-filter: brightness(50%)"
+          >
+            <h1 class="text-white" th:text="${title}"></h1>
+          </div>
+        </div>
       </div>
     </main>
 
