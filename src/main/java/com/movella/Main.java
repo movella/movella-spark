@@ -38,6 +38,18 @@ public class Main {
         return render(new HashMap<>(), "/sobre");
       });
 
+      get("/contato", (req, res) -> {
+        return render(new HashMap<>(), "/contato");
+      });
+
+      get("/entrar", (req, res) -> {
+        return render(new HashMap<>(), "/entrar");
+      });
+
+      get("/criarconta", (req, res) -> {
+        return render(new HashMap<>(), "/criarconta");
+      });
+
       System.out.println(String.format("listening on port %d", port));
     } catch (Exception e) {
       System.out.println(e);

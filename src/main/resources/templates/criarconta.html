@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="d-flex flex-column h-100">
+  <div th:replace="general :: head"></div>
+
+  <body class="d-flex flex-column flex-grow-1">
+    <div th:replace="general :: nav(route='criarconta')"></div>
+
+    <main class="d-flex flex-column flex-grow-1">
+      <div class="container-fluid px-0 h-100">
+        <div
+          class="h-100"
+          style="
+            backdrop-filter: brightness(50%);
+            background-image: url(/img/cover1-compressed.jpg);
+            background-size: cover;
+          "
+        >
+          <div
+            class="
+              w-100
+              h-100
+              py-3
+              d-flex
+              flex-column
+              justify-content-center
+              align-items-center
+              text-center
+            "
+            style="backdrop-filter: brightness(50%)"
+          >
+            <h1 class="text-white">Criar conta</h1>
+            <form method="post" id="form">
+              <div class="card my-4 text-start shadow">
+                <div
+                  class="card-body d-flex flex-column align-items-center pb-2"
+                >
+                  <div class="mb-3">
+                    <label for="nome">Nome</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="nome"
+                      id="nome"
+                      autocomplete="new-password"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input
+                      class="form-control"
+                      type="email"
+                      name="email"
+                      id="email"
+                      autocomplete="new-password"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="senha">Senha</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="senha"
+                      id="senha"
+                      autocomplete="new-password"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="repetesenha">Repetir senha</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="repetesenha"
+                      id="repetesenha"
+                      autocomplete="new-password"
+                      required
+                    />
+                  </div>
+                  <input
+                    class="btn btn-link text-decoration-none"
+                    type="submit"
+                    value="Criar conta"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="general :: footer"></div>
+  </body>
+</html>

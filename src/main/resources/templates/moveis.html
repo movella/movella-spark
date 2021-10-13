@@ -8,6 +8,179 @@
     <main class="d-flex flex-column flex-grow-1">
       <div class="container">
         <div th:replace="general :: cover(title='Móveis')"></div>
+        <div class="row pt-2">
+          <div class="col-12 col-md-3">
+            <div class="card my-2">
+              <div class="card-body py-2">
+                <div
+                  class="nav flex-column nav-pills"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+                >
+                  <a
+                    th:each='item: ${new String[]{"Todos", "Cadeiras", "Sofás", "Mesas", "Estantes"}}'
+                    class="nav-link"
+                    th:classappend="${item} == Todos ? active"
+                    data-toggle="pill"
+                    href="#v-pills-0"
+                    role="tab"
+                    aria-controls="v-pills-0"
+                    aria-selected="true"
+                    th:text="${item}"
+                  >
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card my-2">
+              <div class="card-body pb-2">
+                <h4>Ordenar por</h4>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-menor-preco"
+                    value="valorMes asc"
+                  />
+                  <label class="form-check-label" for="ordena-menor-preco"
+                    >Menor Preço</label
+                  >
+                </div>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-maior-preco"
+                    value="valorMes desc"
+                  />
+                  <label class="form-check-label" for="ordena-maior-preco"
+                    >Maior Preço</label
+                  >
+                </div>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-maior-avaliacao"
+                    value="avaliacao desc"
+                  />
+                  <label class="form-check-label" for="ordena-maior-avaliacao"
+                    >Melhor Avaliação</label
+                  >
+                </div>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-alfabetica"
+                    value="nome asc"
+                    checked
+                  />
+                  <label class="form-check-label" for="ordena-alfabetica"
+                    >Ordem Alfabética</label
+                  >
+                </div>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-novos"
+                    value="data desc"
+                  />
+                  <label class="form-check-label" for="ordena-novos"
+                    >Mais Novos</label
+                  >
+                </div>
+                <div class="form-check py-2">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="ordenar"
+                    id="ordena-antigos"
+                    value="data asc"
+                  />
+                  <label class="form-check-label" for="ordena-antigos"
+                    >Mais Antigos</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-9">
+            <div class="tab-content" id="v-pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="v-pills-base"
+                role="tabpanel"
+                aria-labelledby="v-pills-base-tab"
+              >
+                <nav aria-label="Paginacao">
+                  <ul id="pagination" class="pagination mt-2">
+                    <li class="page-item" data-role="previous">
+                      <a class="page-link" href="/">Anterior</a>
+                    </li>
+                    <li
+                      th:each="item: ${new int[]{1, 2, 3, 4}}"
+                      class="page-item"
+                      th:classappend="${item} == 1 ? active"
+                      data-role="page"
+                      data-page="${item}"
+                    >
+                      <a class="page-link" th:text="${item}" href="/"></a>
+                    </li>
+                    <li class="page-item" data-role="next">
+                      <a class="page-link" href="/">Próximo</a>
+                    </li>
+                  </ul>
+                </nav>
+                <nav class="mb-3" aria-label="Filtro">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="filtro"
+                    maxlength="20"
+                    placeholder="Filtro"
+                  />
+                </nav>
+                <nav class="mb-3" aria-label="Somente disponíveis">
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-check py-2">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="disponiveis"
+                        />
+                        <label class="form-check-label" for="disponiveis"
+                          >Somente disponíveis</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-inline justify-content-end">
+                        <label for="quantidade" class="px-2"
+                          >Itens por página</label
+                        >
+                        <select class="form-control" id="quantidade">
+                          <option>6</option>
+                          <option>12</option>
+                          <option>24</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+                <div class="row px-1 moveis"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 

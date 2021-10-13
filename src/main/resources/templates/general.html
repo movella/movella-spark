@@ -46,36 +46,53 @@
               th:classappend="${route} == moveis ? active"
               aria-current="page"
               href="/"
-              >Móveis</a
             >
+              Móveis
+            </a>
             <a
               class="nav-link"
               th:classappend="${route} == sobre ? active"
               href="/sobre"
-              >Sobre</a
             >
+              Sobre
+            </a>
             <a
               class="nav-link"
               th:classappend="${route} == contato ? active"
               href="/contato"
-              >Contato</a
             >
+              Contato
+            </a>
             <a
-              class="nav-link"
+              class="nav-link disabled"
               th:classappend="${route} == perfil ? active"
               href="/perfil"
-              >Minha conta</a
             >
+              Minha conta
+            </a>
             <a class="nav-link disabled" href="/cadastrarmovel">
               Cadastrar móvel
             </a>
             <a class="nav-link disabled" href="/sair">Sair</a>
-            <a class="nav-link disabled" href="/entrar">Entrar</a>
-            <a class="nav-link disabled" href="/criarconta">Criar conta</a>
+            <a
+              class="nav-link"
+              th:classappend="${route} == entrar ? active"
+              href="/entrar"
+            >
+              Entrar
+            </a>
+            <a
+              class="nav-link"
+              th:classappend="${route} == criarconta ? active"
+              href="/criarconta"
+            >
+              Criar conta
+            </a>
           </div>
         </div>
       </div>
     </nav>
+
     <!-- <div class="d-flex flex-row justify-content-center align-items-center">
       <div class="m-2">
         <a href="/perfil">

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="d-flex flex-column h-100">
+  <div th:replace="general :: head"></div>
+
+  <body class="d-flex flex-column flex-grow-1">
+    <div th:replace="general :: nav(route='contato')"></div>
+
+    <main class="d-flex flex-column flex-grow-1">
+      <div class="container">
+        <div th:replace="general :: cover(title='Contato')"></div>
+        <div class="card my-3">
+          <div class="card-body">
+            <form method="post" id="form">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="nome">Nome</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="nome"
+                      id="nome"
+                      maxlength="100"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email">E-mail</label>
+                    <input
+                      class="form-control"
+                      type="email"
+                      name="email"
+                      id="email"
+                      maxlength="100"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="assunto">Assunto</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="assunto"
+                      id="assunto"
+                      maxlength="50"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3 h-100">
+                    <label for="mensagem">Mensagem</label>
+                    <textarea
+                      class="form-control"
+                      style="height: 210px; min-height: 38px"
+                      name="mensagem"
+                      id="mensagem"
+                      maxlength="400"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6 d-flex justify-content-end">
+                  <input
+                    class="btn btn-primary bg-primary text-white"
+                    type="submit"
+                    value="Enviar"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="general :: footer"></div>
+  </body>
+</html>
