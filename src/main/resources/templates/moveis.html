@@ -176,7 +176,33 @@
                     </div>
                   </div>
                 </nav>
-                <div class="row px-1 moveis"></div>
+                <div class="row px-1 mb-3 moveis">
+                  <div
+                    th:each="item: ${new int[]{1, 2, 3, 4}}"
+                    class="col-6 col-md-4 p-1 movel"
+                  >
+                    <div class="card h-100">
+                      <img
+                        class="card-img-top"
+                        style="height: 150px; object-fit: cover"
+                        src="/img/cover4-compressed.jpg"
+                        alt="Móvel"
+                      />
+                      <div class="card-body">
+                        Cama
+                        <br />
+                        <small>Belo Horizonte</small>
+                        <br />
+                        <small>Por: Carlos</small>
+                        <b>
+                          <p class="text-success">Disponível</p>
+                        </b>
+                        <small>Avaliação: 2.00</small>
+                      </div>
+                      <div class="card-footer">R$ 23,00/mês</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
