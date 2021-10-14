@@ -42,6 +42,10 @@ public class Main {
         return render(new HashMap<>(), "/contato");
       });
 
+      get("/perfil", (req, res) -> {
+        return render(new HashMap<>(), "/perfil");
+      });
+
       get("/entrar", (req, res) -> {
         return render(new HashMap<>(), "/entrar");
       });
