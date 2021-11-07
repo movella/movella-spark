@@ -68,16 +68,22 @@
             <a
               class="nav-link"
               th:classappend="${route} == perfil ? active"
+              th:if="${hasSession}"
               href="/perfil"
             >
               Minha conta
             </a>
-            <a class="nav-link disabled" href="/cadastrarmovel">
+            <a
+              class="nav-link disabled"
+              href="/cadastrarmovel"
+              th:if="${hasSession}"
+            >
               Cadastrar móvel
             </a>
-            <a class="nav-link disabled" href="/sair">Sair</a>
+            <a class="nav-link" href="/sair" th:if="${hasSession}"> Sair </a>
             <a
               class="nav-link"
+              th:if="${!hasSession}"
               th:classappend="${route} == entrar ? active"
               href="/entrar"
             >
@@ -85,37 +91,45 @@
             </a>
             <a
               class="nav-link"
+              th:if="${!hasSession}"
               th:classappend="${route} == criarconta ? active"
               href="/criarconta"
             >
               Criar conta
             </a>
           </div>
+          <div
+            th:if="${hasSession}"
+            class="
+              d-flex
+              flex-row flex-grow-1
+              justify-content-end
+              align-items-center
+            "
+          >
+            <div class="m-2">
+              <a href="/perfil">
+                <img
+                  th:src="${'/img/' + user.getfoto()}"
+                  style="
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50px;
+                    object-fit: cover;
+                  "
+                  th:attr="alt=${user.getnome()}"
+                />
+              </a>
+            </div>
+            <div class="text-white">
+              <a href="/perfil" class="text-white text-decoration-none">
+                <h5 class="mb-0" th:text="${user.getnome()}"></h5>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
-
-    <!-- <div class="d-flex flex-row justify-content-center align-items-center">
-      <div class="m-2">
-        <a href="/perfil">
-          <img
-            src="/img/"
-            style="
-              height: 50px;
-              width: 50px;
-              border-radius: 50px;
-              object-fit: cover;
-            "
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="text-white">
-        <a href="/perfil" class="text-white">
-          <h5></h5>
-        </a>
-      </div>
-    </div> -->
 
     <main class="d-flex flex-column flex-grow-1">
       <div class="container py-3">
