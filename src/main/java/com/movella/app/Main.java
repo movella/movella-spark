@@ -1,4 +1,4 @@
-package com.movella;
+package com.movella.app;
 
 import static spark.Spark.*;
 
@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.movella.responses.Unauthorized;
 import com.movella.service.UsuarioService;
 
 import spark.ModelAndView;
@@ -21,11 +22,11 @@ public class Main {
 
       staticFiles.location("/public");
 
-      before((request, response) -> {
+      before((req, res) -> {
         System.out.println(String.format("[%s] - %s %s %s",
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis())), request.ip(),
-            request.requestMethod(), request.url()));
-        System.out.println(request.body());
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis())), req.ip(),
+            req.requestMethod(), req.url()));
+        System.out.println(req.body());
       });
 
       notFound((req, res) -> {
@@ -64,21 +65,20 @@ public class Main {
         return render(new HashMap<>(), "/criarconta");
       });
 
+      before("/api/*", (req, res) -> {
+        final String splat = req.splat()[0];
+
+        if (splat.equals("login") || splat.equals("register"))
+          return;
+
+        if (req.session() == null)
+          new Unauthorized(res);
+      });
+
       path("/api", () -> {
-        before((req, res) -> {
-          res.header("content-type", "application/json");
-
-          if (req.session() == null)
-            halt(401, "Unauthorized");
-        });
-
-        notFound((req, res) -> {
-          res.header("content-type", "application/json");
-
-          return "{\"message\":\"Not found\"}";
-        });
-
         post("/login", UsuarioService.login);
+
+        post("/register", UsuarioService.register);
       });
 
       System.out.println(String.format("listening on port %d", port));
@@ -88,7 +88,7 @@ public class Main {
   }
 
   static int getHerokuAssignedPort() {
-    String port = new ProcessBuilder().environment().get("PORT");
+    final String port = new ProcessBuilder().environment().get("PORT");
     return port == null ? 80 : Integer.parseInt(port);
   }
 

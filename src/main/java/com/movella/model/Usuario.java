@@ -1,7 +1,9 @@
 package com.movella.model;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class Usuario {
   int id;
@@ -17,6 +19,22 @@ public class Usuario {
   String bairro;
   String cidade;
   String uf;
+
+  public Usuario() {
+    setid(0);
+    setcelular(null);
+    setemail(null);
+    setfoto(null);
+    setsenha(null);
+    setnome(null);
+    setacesso(null);
+    setcep(null);
+    setlogradouro(null);
+    setcomplemento(null);
+    setbairro(null);
+    setcidade(null);
+    setuf(null);
+  }
 
   public Usuario( //
       int id, //
@@ -152,22 +170,61 @@ public class Usuario {
     this.uf = uf;
   }
 
-  public static Usuario fromResultSet(ResultSet rs) throws SQLException {
-    return new Usuario( //
-        rs.getInt("id"), //
-        rs.getString("celular"), //
-        rs.getString("email"), //
-        rs.getString("foto"), //
-        rs.getString("senha"), //
-        rs.getString("nome"), //
-        rs.getString("acesso"), //
-        rs.getString("cep"), //
-        rs.getString("logradouro"), //
-        rs.getString("complemento"), //
-        rs.getString("bairro"), //
-        rs.getString("cidade"), //
-        rs.getString("uf") //
-    );
+  public static Usuario fromJson(JsonObject js) throws SQLException {
+    final Usuario usuario = new Usuario();
+
+    for (String key : js.keySet()) {
+      final JsonElement val = js.get(key);
+
+      if (val == null)
+        break;
+
+      switch (key) {
+      case "id":
+        usuario.setid(js.get("id").getAsInt());
+        break;
+      case "celular":
+        usuario.setcelular(js.get("celular").getAsString());
+        break;
+      case "email":
+        usuario.setemail(js.get("email").getAsString());
+        break;
+      case "foto":
+        usuario.setfoto(js.get("foto").getAsString());
+        break;
+      case "senha":
+        usuario.setsenha(js.get("senha").getAsString());
+        break;
+      case "nome":
+        usuario.setnome(js.get("nome").getAsString());
+        break;
+      case "acesso":
+        usuario.setacesso(js.get("acesso").getAsString());
+        break;
+      case "cep":
+        usuario.setcep(js.get("cep").getAsString());
+        break;
+      case "logradouro":
+        usuario.setlogradouro(js.get("logradouro").getAsString());
+        break;
+      case "complemento":
+        usuario.setcomplemento(js.get("complemento").getAsString());
+        break;
+      case "bairro":
+        usuario.setbairro(js.get("bairro").getAsString());
+        break;
+      case "cidade":
+        usuario.setcidade(js.get("cidade").getAsString());
+        break;
+      case "uf":
+        usuario.setuf(js.get("uf").getAsString());
+        break;
+      default:
+        break;
+      }
+    }
+
+    return usuario;
   }
 }
 
