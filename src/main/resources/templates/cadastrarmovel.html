@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="d-flex flex-column h-100">
+  <div th:replace="general :: head"></div>
+
+  <body class="d-flex flex-column flex-grow-1">
+    <div th:replace="general :: nav(route='cadastrarmovel')"></div>
+
+    <main class="d-flex flex-column flex-grow-1">
+      <div class="container">
+        <div th:replace="general :: cover(title='Cadastrar móvel')"></div>
+        <div class="card my-3">
+          <div class="card-body">
+            <form method="post" id="form">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="nome">Nome</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="nome"
+                      id="nome"
+                      autocomplete="new-password"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="categoriaId">Categoria</label>
+                    <select
+                      class="form-control"
+                      name="categoriaId"
+                      id="categoriaId"
+                      required
+                    ></select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="foto">Imagem</label>
+                    <div class="input-group">
+                      <div class="btn btn-light text-center flex-grow-1">
+                        <input
+                          required
+                          id="foto"
+                          type="file"
+                          name="foto"
+                          class="d-none"
+                          accept="image/*"
+                        />
+                        <label for="foto" class="w-100 text-center">
+                          Escolher
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <img
+                    alt="img"
+                    id="imagem"
+                    class="w-100 h-100"
+                    src="/img/movel-default.png"
+                    style="
+                      object-fit: contain;
+                      border-radius: 10px;
+                      max-height: 300px;
+                    "
+                  />
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <div class="mb-3">
+                      <label for="descricao">Descrição</label>
+                      <textarea
+                        class="form-control"
+                        type="text"
+                        name="descricao"
+                        id="descricao"
+                        autocomplete="new-password"
+                        style="min-height: 38px"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="valorMes">Valor Mês</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                      </div>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="valorMes"
+                        id="valorMes"
+                        autocomplete="new-password"
+                        maxlength="6"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="altura">Altura (m)</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        name="altura"
+                        id="altura"
+                        autocomplete="new-password"
+                        step="0.01"
+                        min="0.01"
+                        max="4"
+                        value="1.00"
+                        required
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="largura">Largura (m)</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        name="largura"
+                        id="largura"
+                        autocomplete="new-password"
+                        step="0.01"
+                        min="0.01"
+                        max="4"
+                        value="1.00"
+                        required
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="espessura">Espessura (m)</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        name="espessura"
+                        id="espessura"
+                        autocomplete="new-password"
+                        step="0.01"
+                        min="0.01"
+                        max="4"
+                        value="1.00"
+                        required
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6 d-flex justify-content-end">
+                  <input
+                    type="submit"
+                    value="Cadastrar móvel"
+                    class="btn btn-primary bg-primary text-white"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="general :: footer"></div>
+
+    <script src="/scripts/pages/cadastrarmovel.js"></script>
+  </body>
+</html>

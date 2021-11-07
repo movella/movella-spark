@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.movella.responses.Unauthorized;
+import com.movella.service.CategoriaService;
 import com.movella.service.ContatoService;
+import com.movella.service.MovelService;
 import com.movella.service.UsuarioService;
 
 import spark.ModelAndView;
@@ -66,6 +68,15 @@ public class Main {
         return render(populateHashMap(new HashMap<>(), req), "/perfil");
       });
 
+      get("/cadastrarmovel", (req, res) -> {
+        if (blockAccess(req, res)) {
+          res.redirect("/entrar");
+          return null;
+        }
+
+        return render(populateHashMap(new HashMap<>(), req), "/cadastrarmovel");
+      });
+
       get("/entrar", (req, res) -> {
         return render(populateHashMap(new HashMap<>(), req), "/entrar");
       });
@@ -96,6 +107,12 @@ public class Main {
         get("/contato/:id", ContatoService.read);
 
         post("/contato/create", ContatoService.create);
+
+        post("/movel/create", MovelService.create);
+
+        get("/categorias", CategoriaService.all);
+
+        post("/categoria/create", CategoriaService.create);
       });
 
       System.out.println(String.format("listening on port %d", port));
@@ -124,6 +141,9 @@ public class Main {
     if (path.equals("/perfil") && !hasSession)
       return true;
 
+    if (path.equals("/cadastrarmovel") && !hasSession)
+      return true;
+
     if (!hasSession && path.contains("/api/"))
       new Unauthorized(res);
 
@@ -140,21 +160,18 @@ public class Main {
   }
 }
 
-// TODO: Seu código back-end (na pasta src/main/java) tem os pacotes app, dao,
-// model e service?
-// TODO: Sua pasta de recursos está organizada em uma pasta para cada um dos
-// recursos? Por exemplo, as pastas front-end, script-bd e imagens.
 // TODO: Suas classes java seguem princípios de desenvolvimento Java?
 // Comentários padronizados, atributos privados começando com letra minúscula e
 // tendo um método get/set?
+
 // TODO: O código src/main/java/app/Aplicacao.java tem um
 // insert/update/remove/get/listar para cada um dos CRUDs?
+
 // TODO: O pacote dao tem uma classe dao para cada um dos CRUDs? Cada classe DAO
 // tem, pelo menos, um método para cada uma das operações
 // insert/update/remove/get/listar? Temos também um método, por exemplo, para
 // abrir a conexão com o banco de dados e outro para fechá-la?
+
 // TODO: O pacote service tem uma classe para cada um dos CRUDs? Cada uma dessas
 // classes tem, pelo menos, um método para cada uma das operações de
 // insert/update/remove/get/listar?
-// TODO: O front-end invoca cada um dos CRUDs? Para cada CRUD, o front-end tem
-// as opções de insert/update/remove/get/listar?

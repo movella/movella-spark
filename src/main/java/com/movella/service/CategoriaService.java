@@ -1,9 +1,10 @@
 package com.movella.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.movella.dao.ContatoDAO;
+import com.movella.dao.CategoriaDAO;
 import com.movella.exceptions.InvalidDataException;
 import com.movella.responses.BadRequest;
 import com.movella.responses.Success;
@@ -11,7 +12,7 @@ import com.movella.utils.Localization;
 
 import spark.*;
 
-public class ContatoService {
+public class CategoriaService {
   public static Route read = (Request req, Response res) -> {
     final String _id = req.params("id");
 
@@ -27,7 +28,7 @@ public class ContatoService {
     }
 
     try {
-      return new Success(res, ContatoDAO.read(id).toJson());
+      return new Success(res, CategoriaDAO.read(id).toJson());
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     }
@@ -37,31 +38,32 @@ public class ContatoService {
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
     final JsonElement _nome = body.get("nome");
-    final JsonElement _email = body.get("email");
-    final JsonElement _assunto = body.get("assunto");
-    final JsonElement _mensagem = body.get("mensagem");
 
     if (_nome == null)
       return new BadRequest(res, Localization.invalidName);
 
-    if (_email == null)
-      return new BadRequest(res, Localization.invalidEmail);
-
-    if (_assunto == null)
-      return new BadRequest(res, Localization.invalidSubject);
-
-    if (_mensagem == null)
-      return new BadRequest(res, Localization.invalidMessage);
-
     final String nome = _nome.getAsString();
-    final String email = _email.getAsString();
-    final String assunto = _assunto.getAsString();
-    final String mensagem = _mensagem.getAsString();
 
     try {
-      ContatoDAO.insert(nome, email, assunto, mensagem);
+      CategoriaDAO.insert(nome);
 
-      return new Success(res, Localization.contactCreateSuccess);
+      return new Success(res, Localization.categoriyCreateSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route all = (Request req, Response res) -> {
+    try {
+      final JsonArray out = new JsonArray();
+
+      CategoriaDAO.all().forEach((v) -> {
+        out.add(v.toJson());
+      });
+
+      return new Success(res, out);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     } catch (RuntimeException e) {

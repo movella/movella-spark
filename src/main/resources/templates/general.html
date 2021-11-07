@@ -18,6 +18,7 @@
     <script type="text/javascript" src="/scripts/bootstrap.bundle.js"></script>
     <script type="text/javascript" src="/scripts/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="/scripts/sweetalert2.js"></script>
+    <script type="text/javascript" src="/scripts/numeral.min.js"></script>
   </head>
 
   <body class="d-flex flex-column flex-grow-1">
@@ -44,56 +45,57 @@
         <div class="collapse navbar-collapse" id="basic-nav">
           <div class="navbar-nav">
             <a
-              class="nav-link"
-              th:classappend="${route} == moveis ? active"
-              aria-current="page"
               href="/"
+              class="nav-link"
+              aria-current="page"
+              th:classappend="${route} == moveis ? active"
             >
               Móveis
             </a>
             <a
+              href="/sobre"
               class="nav-link"
               th:classappend="${route} == sobre ? active"
-              href="/sobre"
             >
               Sobre
             </a>
             <a
+              href="/contato"
               class="nav-link"
               th:classappend="${route} == contato ? active"
-              href="/contato"
             >
               Contato
             </a>
             <a
-              class="nav-link"
-              th:classappend="${route} == perfil ? active"
-              th:if="${hasSession}"
               href="/perfil"
+              class="nav-link"
+              th:if="${hasSession}"
+              th:classappend="${route} == perfil ? active"
             >
               Minha conta
             </a>
             <a
-              class="nav-link disabled"
-              href="/cadastrarmovel"
+              class="nav-link"
               th:if="${hasSession}"
+              href="/cadastrarmovel"
+              th:classappend="|${user.getacesso() != 'normal' ? 'disabled' : ''} ${route == 'cadastrarmovel' ? 'active' : ''}|"
             >
               Cadastrar móvel
             </a>
-            <a class="nav-link" href="/sair" th:if="${hasSession}"> Sair </a>
+            <a class="nav-link" href="/sair" th:if="${hasSession}">Sair</a>
             <a
+              href="/entrar"
               class="nav-link"
               th:if="${!hasSession}"
               th:classappend="${route} == entrar ? active"
-              href="/entrar"
             >
               Entrar
             </a>
             <a
               class="nav-link"
+              href="/criarconta"
               th:if="${!hasSession}"
               th:classappend="${route} == criarconta ? active"
-              href="/criarconta"
             >
               Criar conta
             </a>
@@ -110,6 +112,7 @@
             <div class="m-2">
               <a href="/perfil">
                 <img
+                  th:attr="alt=${user.getnome()}"
                   th:src="${'/img/' + user.getfoto()}"
                   style="
                     height: 50px;
@@ -117,7 +120,6 @@
                     border-radius: 50px;
                     object-fit: cover;
                   "
-                  th:attr="alt=${user.getnome()}"
                 />
               </a>
             </div>

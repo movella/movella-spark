@@ -36,7 +36,7 @@ public class UsuarioService {
       req.session(true);
       req.session().attribute("user", usuario);
 
-      return new Success(res, Localization.loginSuccessful);
+      return new Success(res, Localization.loginSuccess);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     }
