@@ -8,23 +8,24 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
 
 public class DBConnection {
-  static final String server = System.getenv("PGSQL_SERVER");
-  static final String defaultDatabase = System.getenv("PGSQL_DATABASE");
-  static final String username = System.getenv("PGSQL_USER");
-  static final String password = System.getenv("PGSQL_PASSWORD");
-  static final int port = Integer.parseInt(System.getenv("PGSQL_PORT"));
 
   static final String driverName = "org.postgresql.Driver";
-  static final String url = String.format("jdbc:postgresql://%s:%d/%s", server, port, defaultDatabase);
 
   static Connection connect() throws Exception {
+    final ConnectionCreds connectionCreds = ConnectionCreds.get();
+
+    final String url = String.format("jdbc:postgresql://%s:%d/%s", connectionCreds.server, connectionCreds.port,
+        connectionCreds.defaultDatabase);
+
     try {
       Class.forName(driverName);
-      Connection connection = DriverManager.getConnection(url, username, password);
+      Connection connection = DriverManager.getConnection(url, connectionCreds.username, connectionCreds.password);
 
       System.out.println("Connected");
 
@@ -127,5 +128,37 @@ public class DBConnection {
     }
 
     return out;
+  }
+}
+
+class ConnectionCreds {
+  final String username;
+  final String password;
+  final String server;
+  final int port;
+  final String defaultDatabase;
+
+  static ConnectionCreds connectionCreds = null;
+
+  public static ConnectionCreds get() {
+    if (connectionCreds == null)
+      connectionCreds = new ConnectionCreds();
+
+    return connectionCreds;
+  }
+
+  ConnectionCreds() {
+    final String regex = "^(\\w+):\\/\\/(\\w+):(\\w+)@(.+):(\\d+)\\/(\\w+)$";
+    final String string = System.getenv("DATABASE_URL");
+
+    final Matcher matcher = Pattern.compile(regex).matcher(string);
+
+    matcher.find();
+
+    this.username = matcher.group(2);
+    this.password = matcher.group(3);
+    this.server = matcher.group(4);
+    this.port = Integer.parseInt(matcher.group(5));
+    this.defaultDatabase = matcher.group(6);
   }
 }

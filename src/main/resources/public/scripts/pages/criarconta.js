@@ -1,7 +1,8 @@
 /// <reference path="../jquery-3.6.0.js" />
 /// <reference path="../sweetalert2.d.ts" />
+/// <reference path="swal.d.ts" />
 
-// const { default: Swal } = require('sweetalert2')
+const { default: Swal } = require('sweetalert2')
 
 $(() => {
   $('#form').on('submit', (e) => {

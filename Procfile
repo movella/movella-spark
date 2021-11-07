@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.movella.Main
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.movella.app.Main
