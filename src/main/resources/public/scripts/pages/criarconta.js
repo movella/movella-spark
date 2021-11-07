@@ -1,6 +1,5 @@
 /// <reference path="../jquery-3.6.0.js" />
 /// <reference path="../sweetalert2.d.ts" />
-/// <reference path="swal.d.ts" />
 
 // const { default: Swal } = require('sweetalert2')
 
@@ -25,7 +24,13 @@ $(() => {
         if (v.status === 200) {
           const data = await v.json()
 
-          Swal.fire({ title: 'Olá', icon: 'success', text: data['message'] })
+          Swal.fire({
+            title: 'Olá',
+            icon: 'success',
+            text: data['message'],
+          }).then((v) => {
+            location = '/'
+          })
         } else if (v.status == 400) {
           const data = await v.json()
 

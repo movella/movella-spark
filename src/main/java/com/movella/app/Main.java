@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.movella.responses.Unauthorized;
+import com.movella.service.ContatoService;
 import com.movella.service.UsuarioService;
 
 import spark.ModelAndView;
+import spark.Session;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class Main {
@@ -68,10 +70,10 @@ public class Main {
       before("/api/*", (req, res) -> {
         final String splat = req.splat()[0];
 
-        if (splat.equals("login") || splat.equals("register"))
+        if (splat.equals("login") || splat.equals("register") || splat.equals("contato/create"))
           return;
 
-        if (req.session() == null)
+        if (req.session().attribute("user") == null)
           new Unauthorized(res);
       });
 
@@ -79,6 +81,10 @@ public class Main {
         post("/login", UsuarioService.login);
 
         post("/register", UsuarioService.register);
+
+        get("/contato/:id", ContatoService.read);
+
+        post("/contato/create", ContatoService.create);
       });
 
       System.out.println(String.format("listening on port %d", port));

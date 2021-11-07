@@ -13,7 +13,7 @@ $(() => {
         body[v.name] = v.value
       })
 
-    fetch('/api/login', {
+    fetch('/api/contato/create', {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'content-type': 'application/json' },
@@ -24,7 +24,7 @@ $(() => {
         const data = await v.json()
 
         Swal.fire({
-          title: 'Olá',
+          title: 'Sucesso',
           icon: 'success',
           text: data['message'],
         }).then((v) => {

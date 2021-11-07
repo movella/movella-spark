@@ -219,8 +219,6 @@ public class Usuario {
       case "uf":
         usuario.setuf(js.get("uf").getAsString());
         break;
-      default:
-        break;
       }
     }
 
