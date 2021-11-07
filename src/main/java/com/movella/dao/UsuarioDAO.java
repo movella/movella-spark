@@ -5,6 +5,7 @@ import com.movella.app.DBConnection;
 import com.movella.exceptions.InvalidDataException;
 import com.movella.model.Usuario;
 import com.movella.utils.FunctionUtils;
+import com.movella.utils.Localization;
 
 public class UsuarioDAO {
   public static Usuario login(String email, String senha) throws Exception {
@@ -12,7 +13,7 @@ public class UsuarioDAO {
         new String[] { email, FunctionUtils.sha256hex(senha) });
 
     if (res == null)
-      throw new InvalidDataException("User not found");
+      throw new InvalidDataException(Localization.userNotFound);
 
     final Usuario usuario = Usuario.fromJson(res);
 

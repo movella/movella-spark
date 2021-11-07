@@ -22,10 +22,10 @@ public class UsuarioService {
     final JsonElement _senha = body.get("senha");
 
     if (_email == null)
-      return new BadRequest(res, "Invalid email");
+      return new BadRequest(res, Localization.invalidEmail);
 
     if (_senha == null)
-      return new BadRequest(res, "Invalid password");
+      return new BadRequest(res, Localization.invalidPassword);
 
     final String email = _email.getAsString();
     final String senha = _senha.getAsString();
@@ -36,7 +36,7 @@ public class UsuarioService {
       req.session(true);
       req.session().attribute("user", usuario);
 
-      return new Success(res, "Session created");
+      return new Success(res, Localization.loginSuccessful);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     }
@@ -50,13 +50,13 @@ public class UsuarioService {
     final JsonElement _senha = body.get("senha");
 
     if (_nome == null)
-      return new BadRequest(res, "Invalid name");
+      return new BadRequest(res, Localization.invalidName);
 
     if (_email == null)
-      return new BadRequest(res, "Invalid email");
+      return new BadRequest(res, Localization.invalidEmail);
 
     if (_senha == null)
-      return new BadRequest(res, "Invalid password");
+      return new BadRequest(res, Localization.invalidPassword);
 
     final String nome = _nome.getAsString();
     final String email = _email.getAsString();
@@ -79,7 +79,7 @@ public class UsuarioService {
         if (e.getMessage().contains("usuario_email_unique"))
           return new BadRequest(res, Localization.userRegisterDuplicateUsername);
       }
-      return new BadRequest(res, "Bad Request");
+      return new BadRequest(res);
     }
   };
 }
