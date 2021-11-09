@@ -19,6 +19,7 @@
     <script type="text/javascript" src="/scripts/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="/scripts/sweetalert2.js"></script>
     <script type="text/javascript" src="/scripts/numeral.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.mask.min.js"></script>
   </head>
 
   <body class="d-flex flex-column flex-grow-1">
@@ -78,7 +79,7 @@
               class="nav-link"
               th:if="${hasSession}"
               href="/cadastrarmovel"
-              th:classappend="|${user.getacesso() != 'normal' ? 'disabled' : ''} ${route == 'cadastrarmovel' ? 'active' : ''}|"
+              th:classappend="|${user.getacesso() == 'normal' ? 'disabled' : ''} ${route == 'cadastrarmovel' ? 'active' : ''}|"
             >
               Cadastrar móvel
             </a>

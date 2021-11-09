@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS tbl_usuario (
   foto VARCHAR(255) NOT NULL DEFAULT 'default.png',
   senha TEXT NOT NULL,
   nome VARCHAR(20) NOT NULL,
+  cpf CHAR(11),
   acesso acesso NOT NULL DEFAULT 'normal',
   cep CHAR(8) NULL DEFAULT NULL,
   logradouro VARCHAR(255) NULL DEFAULT NULL,
@@ -24,7 +25,8 @@ CREATE TABLE IF NOT EXISTS tbl_usuario (
   PRIMARY KEY (id),
   CONSTRAINT usuario_id_UNIQUE UNIQUE (id),
   CONSTRAINT usuario_email_UNIQUE UNIQUE (email),
-  CONSTRAINT usuario_nome_UNIQUE UNIQUE (nome));
+  CONSTRAINT usuario_nome_UNIQUE UNIQUE (nome),
+  CONSTRAINT usuario_cpf_UNIQUE UNIQUE (cpf));
 
 CREATE INDEX tbl_usuario_id_index ON tbl_usuario (id);
 

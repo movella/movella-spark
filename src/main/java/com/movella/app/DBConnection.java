@@ -109,7 +109,7 @@ public class DBConnection {
       final ResultSetMetaData rsmd = rs.getMetaData();
       final int columnCount = rsmd.getColumnCount();
 
-      if (rs.next()) {
+      while (rs.next()) {
         final JsonObject jsonObject = new JsonObject();
 
         for (int j = 1; j <= columnCount; j++) {

@@ -22,7 +22,8 @@
                   <a
                     class="nav-link active"
                     id="v-pills-stats-tab"
-                    data-toggle="pill"
+                    data-bs-toggle="pill"
+                    data-bs-target="#v-pills-stats"
                     href="#v-pills-stats"
                     role="tab"
                     aria-controls="v-pills-stats"
@@ -31,20 +32,22 @@
                     Estatísticas
                   </a>
                   <a
-                    class="nav-link disabled"
+                    class="nav-link"
                     id="v-pills-editar-tab"
-                    data-toggle="pill"
+                    data-bs-toggle="pill"
+                    data-bs-target="#v-pills-editar"
                     href="#v-pills-editar"
                     role="tab"
                     aria-controls="v-pills-editar"
                     aria-selected="false"
                   >
-                    Editar
+                    Editar dados
                   </a>
                   <a
                     class="nav-link disabled"
                     id="v-pills-pagamento-tab"
-                    data-toggle="pill"
+                    data-bs-toggle="pill"
+                    data-bs-target="#v-pills-pagamento"
                     href="#v-pills-pagamento"
                     role="tab"
                     aria-controls="v-pills-pagamento"
@@ -55,7 +58,8 @@
                   <a
                     class="nav-link disabled"
                     id="v-pills-historico-tab"
-                    data-toggle="pill"
+                    data-bs-toggle="pill"
+                    data-bs-target="#v-pills-historico"
                     href="#v-pills-historico"
                     role="tab"
                     aria-controls="v-pills-historico"
@@ -66,7 +70,8 @@
                   <a
                     class="nav-link disabled"
                     id="v-pills-moveis-tab"
-                    data-toggle="pill"
+                    data-bs-toggle="pill"
+                    data-bs-target="#v-pills-moveis"
                     href="#v-pills-moveis"
                     role="tab"
                     aria-controls="v-pills-moveis"
@@ -80,7 +85,8 @@
                     href="/cadastrarmovel"
                     aria-controls="v-pills-cadastrar"
                     aria-selected="false"
-                    ><i class="fas fa-arrow-left"></i>
+                  >
+                    <i class="fas fa-arrow-left"></i>
                     Cadastrar móvel
                   </a>
                 </div>
@@ -160,7 +166,7 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-editar-tab"
                   >
-                    <h4 class="mb-3">Editar</h4>
+                    <h4 class="mb-3">Editar dados</h4>
                     <form method="post" id="form">
                       <div class="row mb-2">
                         <div class="col-md-6">
@@ -168,18 +174,18 @@
                             <label for="foto">Imagem</label>
                             <div class="input-group">
                               <div
-                                class="custom-file btn btn-light text-center"
+                                class="btn btn-light text-center flex-grow-1"
                               >
                                 <input
-                                  class="custom-file-input d-none"
+                                  class="d-none"
                                   type="file"
                                   name="foto"
                                   id="foto"
                                   accept="image/*"
                                 />
-                                <label for="foto" class="w-100 text-center pt-2"
-                                  >Escolher</label
-                                >
+                                <label for="foto" class="w-100 text-center">
+                                  Escolher
+                                </label>
                               </div>
                             </div>
                           </div>
@@ -194,18 +200,19 @@
                           />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="usuario">Usuário</label>
+                      <div class="mb-3">
+                        <label for="nome">Nome</label>
                         <input
                           class="form-control"
                           type="text"
-                          name="usuario"
-                          id="usuario"
+                          name="nome"
+                          id="nome"
                           maxlength="20"
                           required
+                          th:value="${user.getnome()}"
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="email">Email</label>
                         <input
                           class="form-control"
@@ -215,9 +222,10 @@
                           maxlength="200"
                           required
                           disabled
+                          th:value="${user.getemail()}"
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="celular">Celular</label>
                         <input
                           class="form-control"
@@ -229,7 +237,7 @@
                           required
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="cpf">CPF</label>
                         <input
                           class="form-control"
@@ -240,7 +248,7 @@
                           required
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="cep">CEP</label>
                         <input
                           class="form-control"
@@ -251,7 +259,7 @@
                           required
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="bairro">Bairro</label>
                         <input
                           class="form-control"
@@ -263,7 +271,7 @@
                           disabled
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="cidade">Cidade</label>
                         <input
                           class="form-control"
@@ -275,7 +283,7 @@
                           disabled
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="complemento">Complemento</label>
                         <input
                           class="form-control"
@@ -286,7 +294,7 @@
                           required
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="logradouro">Logradouro</label>
                         <input
                           class="form-control"
@@ -298,7 +306,7 @@
                           disabled
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="uf">UF</label>
                         <input
                           class="form-control"
@@ -310,11 +318,11 @@
                           disabled
                         />
                       </div>
-                      <div class="form-group">
+                      <div class="d-flex justify-content-end">
                         <input
-                          class="btn btn-primary bg-primary btn-lg"
                           type="submit"
                           value="Atualizar"
+                          class="btn btn-primary text-white"
                         />
                       </div>
                     </form>
@@ -370,5 +378,7 @@
     </main>
 
     <div th:replace="general :: footer"></div>
+
+    <script src="/scripts/pages/perfil.js"></script>
   </body>
 </html>

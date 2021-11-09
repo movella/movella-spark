@@ -8,6 +8,7 @@ import com.movella.exceptions.InvalidDataException;
 import com.movella.model.Usuario;
 import com.movella.responses.BadRequest;
 import com.movella.responses.Success;
+import com.movella.utils.FunctionUtils;
 import com.movella.utils.Localization;
 
 import org.postgresql.util.PSQLException;
@@ -31,7 +32,7 @@ public class UsuarioService {
     final String senha = _senha.getAsString();
 
     try {
-      final Usuario usuario = UsuarioDAO.login(email, senha);
+      final Usuario usuario = UsuarioDAO.login(email, FunctionUtils.sha256hex(senha));
 
       req.session(true);
       req.session().attribute("user", usuario);
@@ -63,7 +64,7 @@ public class UsuarioService {
     final String senha = _senha.getAsString();
 
     try {
-      final Usuario usuario = UsuarioDAO.register(nome, email, senha);
+      final Usuario usuario = UsuarioDAO.register(nome, email, FunctionUtils.sha256hex(senha));
 
       req.session(true);
       req.session().attribute("user", usuario);
@@ -76,10 +77,102 @@ public class UsuarioService {
         if (e.getMessage().contains("usuario_email_unique"))
           return new BadRequest(res, Localization.userRegisterDuplicateEmail);
 
-        if (e.getMessage().contains("usuario_email_unique"))
+        if (e.getMessage().contains("usuario_nome_unique"))
           return new BadRequest(res, Localization.userRegisterDuplicateUsername);
       }
+
       return new BadRequest(res);
+    }
+  };
+
+  // TODO falta upload de imagem
+  public static Route update = (Request req, Response res) -> {
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _cpf = body.get("cpf");
+    final JsonElement _celular = body.get("celular");
+    final JsonElement _cep = body.get("cep");
+    final JsonElement _complemento = body.get("complemento");
+    final JsonElement _numero = body.get("numero");
+
+    final JsonElement _nome = body.get("nome");
+    final JsonElement _email = body.get("email");
+    final JsonElement _senha = body.get("senha");
+
+    if (_nome == null)
+      return new BadRequest(res, Localization.invalidName);
+
+    if (_email == null)
+      return new BadRequest(res, Localization.invalidEmail);
+
+    if (_senha == null)
+      return new BadRequest(res, Localization.invalidPassword);
+
+    if (_cpf == null)
+      return new BadRequest(res, Localization.invalidCpf);
+
+    if (_celular == null)
+      return new BadRequest(res, Localization.invalidCelular);
+
+    if (_cep == null)
+      return new BadRequest(res, Localization.invalidCep);
+
+    if (_complemento == null)
+      return new BadRequest(res, Localization.invalidComplemento);
+
+    if (_numero == null)
+      return new BadRequest(res, Localization.invalidNumero);
+
+    final String nome = _nome.getAsString();
+    final String senha = _senha.getAsString();
+
+    final String cpf = _cpf.getAsString().replaceAll("[\\.\\-]", "");
+    final String celular = _celular.getAsString().replaceAll("[\\(\\)\\-\\s]", "");
+    final String cep = _cep.getAsString().replaceAll("[\\.\\-]", "");
+    final String complemento = _complemento.getAsString();
+    // TODO colocar número no endereço
+    final String numero = _numero.getAsString();
+
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    final String acesso = sessionUsuario.getacesso();
+    final String email = sessionUsuario.getemail();
+    final String newAcesso = acesso == "admin" ? "admin" : "verificado";
+
+    final int id = sessionUsuario.getid();
+
+    try {
+      final JsonObject viaCep = FunctionUtils.get(String.format("https://viacep.com.br/ws/%s/json/", cep));
+
+      final String bairro = viaCep.get("bairro").getAsString();
+      final String cidade = viaCep.get("localidade").getAsString();
+      final String logradouro = viaCep.get("logradouro").getAsString();
+      final String uf = viaCep.get("uf").getAsString();
+
+      try {
+        final Usuario usuario = UsuarioDAO.update(email, newAcesso, bairro, celular, cep, cidade, cpf, complemento,
+            logradouro, uf, nome, FunctionUtils.sha256hex(senha), id);
+
+        req.session().attribute("user", usuario);
+
+        // TODO
+        return new Success(res, Localization.userUpdateSuccess);
+      } catch (InvalidDataException e) {
+        return new BadRequest(res, e.message);
+      } catch (RuntimeException e) {
+        if (e.getCause().getClass() == PSQLException.class) {
+          if (e.getMessage().contains("usuario_email_unique"))
+            return new BadRequest(res, Localization.userRegisterDuplicateEmail);
+
+          if (e.getMessage().contains("usuario_nome_unique"))
+            return new BadRequest(res, Localization.userRegisterDuplicateUsername);
+        }
+
+        return new BadRequest(res);
+      }
+    } catch (Exception e) {
+      return new BadRequest(res, e.getMessage());
     }
   };
 }

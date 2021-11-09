@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.movella.model.Usuario;
 import com.movella.responses.Unauthorized;
 import com.movella.service.CategoriaService;
 import com.movella.service.ContatoService;
@@ -113,6 +114,8 @@ public class Main {
         get("/categorias", CategoriaService.all);
 
         post("/categoria/create", CategoriaService.create);
+
+        post("/usuario/update", UsuarioService.update);
       });
 
       System.out.println(String.format("listening on port %d", port));
@@ -133,7 +136,8 @@ public class Main {
 
   static boolean blockAccess(Request req, Response res) {
     final String path = req.pathInfo();
-    final boolean hasSession = req.session().attribute("user") != null;
+    final Session session = req.session();
+    final boolean hasSession = session.attribute("user") != null;
 
     if (path.equals("/api/login") || path.equals("/api/register") || path.equals("/api/contato/create"))
       return false;
@@ -141,7 +145,8 @@ public class Main {
     if (path.equals("/perfil") && !hasSession)
       return true;
 
-    if (path.equals("/cadastrarmovel") && !hasSession)
+    if (path.equals("/cadastrarmovel")
+        && (!hasSession || ((Usuario) session.attribute("user")).getacesso().equals("normal")))
       return true;
 
     if (!hasSession && path.contains("/api/"))
@@ -175,3 +180,12 @@ public class Main {
 // TODO: O pacote service tem uma classe para cada um dos CRUDs? Cada uma dessas
 // classes tem, pelo menos, um método para cada uma das operações de
 // insert/update/remove/get/listar?
+
+// TODO: fix poder ver contato sem ser adm
+// TODO: terminar a edição de perfil
+// TODO: fazer cadastro de móveis
+// TODO: fazer chaves cadastradas
+// TODO: fazer sistema de aluguel
+// TODO: fazer resto do perfil
+// TODO: fazer a parte de admin
+// TODO:

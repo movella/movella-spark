@@ -6,7 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.movella.dao.CategoriaDAO;
 import com.movella.exceptions.InvalidDataException;
+import com.movella.model.Usuario;
 import com.movella.responses.BadRequest;
+import com.movella.responses.Forbidden;
 import com.movella.responses.Success;
 import com.movella.utils.Localization;
 
@@ -35,6 +37,11 @@ public class CategoriaService {
   };
 
   public static Route create = (Request req, Response res) -> {
+    final String acesso = ((Usuario) req.session().attribute("user")).getacesso();
+
+    if (!acesso.equals("admin"))
+      return new Forbidden(res);
+
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
     final JsonElement _nome = body.get("nome");
