@@ -116,6 +116,8 @@ public class Main {
         post("/categoria/create", CategoriaService.create);
 
         post("/usuario/update", UsuarioService.update);
+
+        get("/moveis", MovelService.all);
       });
 
       System.out.println(String.format("listening on port %d", port));
@@ -139,7 +141,8 @@ public class Main {
     final Session session = req.session();
     final boolean hasSession = session.attribute("user") != null;
 
-    if (path.equals("/api/login") || path.equals("/api/register") || path.equals("/api/contato/create"))
+    if (path.equals("/api/login") || path.equals("/api/register") || path.equals("/api/contato/create")
+        || path.equals("/api/moveis") || path.equals("/api/categorias"))
       return false;
 
     if (path.equals("/perfil") && !hasSession)

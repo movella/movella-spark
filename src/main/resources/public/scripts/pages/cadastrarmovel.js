@@ -1,11 +1,10 @@
 /// <reference path="../jquery-3.6.0.js" />
 /// <reference path="../sweetalert2.d.ts" />
+/// <reference path="index.d.ts" />
 
 // const { default: Swal } = require('sweetalert2')
 
 $(() => {
-  // numeral.locale('pt-br')
-
   $('#valorMes').on('change', function () {
     let val = $(this).val()
     val = numeral(val).format('$0.00').replace('$', '').replace('.', ',')
@@ -23,13 +22,15 @@ $(() => {
   $('#form').on('submit', (e) => {
     let body = {}
 
+    console.log(4234)
+
     $('#form')
       .serializeArray()
       .forEach((v) => {
         body[v.name] = v.value
       })
 
-    fetch('/api/register', {
+    fetch('/api/movel/create', {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'content-type': 'application/json' },
@@ -40,7 +41,7 @@ $(() => {
         const data = await v.json()
 
         Swal.fire({
-          title: 'Olá',
+          title: 'Sucesso',
           icon: 'success',
           text: data['message'],
         }).then((v) => {
@@ -60,5 +61,32 @@ $(() => {
     })
 
     return e.preventDefault() ?? false
+  })
+
+  fetch('/api/categorias').then(async (v) => {
+    console.log(v)
+
+    if (v.status === 200) {
+      /**
+       * @type {Categoria[]}
+       */
+      const data = await v.json()
+
+      $('#categoria').append(
+        data.map((v) => {
+          return /* html */ `<option value="${v.id}">${v.nome}</option>`
+        })
+      )
+    } else if (v.status == 400) {
+      const data = await v.json()
+
+      Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+    } else {
+      Swal.fire({
+        title: 'Atenção',
+        icon: 'error',
+        text: 'Houve um erro inesperado',
+      })
+    }
   })
 })

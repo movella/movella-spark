@@ -51,12 +51,13 @@ public class Categoria {
     final Categoria categoria = new Categoria();
 
     for (String key : js.keySet()) {
-      final JsonElement val = js.get(key);
+      final String uKey = key.toLowerCase();
+      final JsonElement val = js.get(uKey.toLowerCase());
 
       if (val == null)
-        break;
+        continue;
 
-      switch (key) {
+      switch (uKey) {
       case "id":
         categoria.setid(js.get("id").getAsInt());
         break;

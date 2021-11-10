@@ -23,7 +23,7 @@ public class CategoriaDAO {
   }
 
   public static List<Categoria> all() throws Exception {
-    final List<JsonObject> res = DBConnection.query("select * from tbl_categoria", new String[] {});
+    final List<JsonObject> res = DBConnection.query("select * from tbl_categoria order by nome", new String[] {});
     final List<Categoria> categorias = new ArrayList<Categoria>();
 
     res.forEach((v) -> {

@@ -37,9 +37,10 @@ public class CategoriaService {
   };
 
   public static Route create = (Request req, Response res) -> {
-    final String acesso = ((Usuario) req.session().attribute("user")).getacesso();
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-    if (!acesso.equals("admin"))
+    if (!sessionUsuario.getacesso().equals("admin"))
       return new Forbidden(res);
 
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();

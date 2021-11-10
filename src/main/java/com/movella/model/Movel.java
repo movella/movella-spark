@@ -168,20 +168,21 @@ public class Movel {
     final Movel movel = new Movel();
 
     for (String key : js.keySet()) {
-      final JsonElement val = js.get(key);
+      final String uKey = key.toLowerCase();
+      final JsonElement val = js.get(uKey);
 
       if (val == null)
-        break;
+        continue;
 
-      switch (key) {
+      switch (uKey) {
       case "id":
         movel.setid(js.get("id").getAsInt());
         break;
-      case "categoriaId":
-        movel.setcategoriaId(js.get("categoriaId").getAsInt());
+      case "categoriaid":
+        movel.setcategoriaId(js.get("categoriaid").getAsInt());
         break;
-      case "usuarioId":
-        movel.setusuarioId(js.get("usuarioId").getAsInt());
+      case "usuarioid":
+        movel.setusuarioId(js.get("usuarioid").getAsInt());
         break;
       case "descricao":
         movel.setdescricao(js.get("descricao").getAsString());
@@ -192,8 +193,8 @@ public class Movel {
       case "nome":
         movel.setnome(js.get("nome").getAsString());
         break;
-      case "valorMes":
-        movel.setvalorMes(js.get("valorMes").getAsDouble());
+      case "valormes":
+        movel.setvalorMes(js.get("valormes").getAsDouble());
         break;
       case "disponivel":
         movel.setdisponivel(js.get("disponivel").getAsBoolean());

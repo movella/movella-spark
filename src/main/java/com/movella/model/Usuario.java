@@ -186,12 +186,13 @@ public class Usuario {
     final Usuario usuario = new Usuario();
 
     for (String key : js.keySet()) {
-      final JsonElement val = js.get(key);
+      final String uKey = key.toLowerCase();
+      final JsonElement val = js.get(uKey.toLowerCase());
 
       if (val == null)
-        break;
+        continue;
 
-      switch (key) {
+      switch (uKey) {
       case "id":
         usuario.setid(js.get("id").getAsInt());
         break;

@@ -104,12 +104,13 @@ public class Contato {
     final Contato contato = new Contato();
 
     for (String key : js.keySet()) {
-      final JsonElement val = js.get(key);
+      final String uKey = key.toLowerCase();
+      final JsonElement val = js.get(uKey.toLowerCase());
 
       if (val == null)
-        break;
+        continue;
 
-      switch (key) {
+      switch (uKey) {
       case "id":
         contato.setid(js.get("id").getAsInt());
         break;

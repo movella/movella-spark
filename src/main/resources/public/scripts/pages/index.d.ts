@@ -5,3 +5,8 @@ type ViaCep = {
   logradouro: string
   uf: string
 }
+
+type Categoria = {
+  id: number
+  nome: string
+}

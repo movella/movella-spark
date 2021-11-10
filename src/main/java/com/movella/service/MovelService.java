@@ -1,5 +1,6 @@
 package com.movella.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,47 +8,25 @@ import com.movella.dao.MovelDAO;
 import com.movella.exceptions.InvalidDataException;
 import com.movella.model.Usuario;
 import com.movella.responses.BadRequest;
+import com.movella.responses.Forbidden;
 import com.movella.responses.Success;
 import com.movella.utils.Localization;
-
-import org.postgresql.util.PSQLException;
 
 import spark.*;
 
 public class MovelService {
-  // public static Route login = (Request req, Response res) -> {
-  // final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
-
-  // final JsonElement _email = body.get("email");
-  // final JsonElement _senha = body.get("senha");
-
-  // if (_email == null)
-  // return new BadRequest(res, Localization.invalidEmail);
-
-  // if (_senha == null)
-  // return new BadRequest(res, Localization.invalidPassword);
-
-  // final String email = _email.getAsString();
-  // final String senha = _senha.getAsString();
-
-  // try {
-  // final Usuario usuario = UsuarioDAO.login(email, senha);
-
-  // req.session(true);
-  // req.session().attribute("user", usuario);
-
-  // return new Success(res, Localization.loginSuccessful);
-  // } catch (InvalidDataException e) {
-  // return new BadRequest(res, e.message);
-  // }
-  // };
-
   public static Route create = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (sessionUsuario.getacesso().equals("normal"))
+      return new Forbidden(res);
+
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
     final JsonElement _nome = body.get("nome");
-    final JsonElement _categoriaId = body.get("categoriaId");
-    final JsonElement _foto = body.get("foto");
+    final JsonElement _categoria = body.get("categoria");
+    // final JsonElement _foto = body.get("foto");
     final JsonElement _descricao = body.get("descricao");
     final JsonElement _valorMes = body.get("valorMes");
     final JsonElement _altura = body.get("altura");
@@ -59,11 +38,11 @@ public class MovelService {
     if (_nome == null)
       return new BadRequest(res, Localization.invalidName);
 
-    if (_categoriaId == null)
+    if (_categoria == null)
       return new BadRequest(res, Localization.invalidCategory);
 
-    if (_foto == null)
-      return new BadRequest(res, Localization.invalidPicture);
+    // if (_foto == null)
+    // return new BadRequest(res, Localization.invalidPicture);
 
     if (_descricao == null)
       return new BadRequest(res, Localization.invalidDescription);
@@ -81,28 +60,38 @@ public class MovelService {
       return new BadRequest(res, Localization.invalidThickness);
 
     final String nome = _nome.getAsString();
-    final int categoriaId = _categoriaId.getAsInt();
-    final String foto = _foto.getAsString();
+    final int categoriaId = _categoria.getAsInt();
+    // final String foto = _foto.getAsString();
     final String descricao = _descricao.getAsString();
-    final double valorMes = _valorMes.getAsDouble();
+    final double valorMes = Double
+        .parseDouble(_valorMes.getAsString().replace(",", "!").replace(".", "").replace("!", "."));
     final double altura = _altura.getAsDouble();
     final double largura = _largura.getAsDouble();
     final double espessura = _espessura.getAsDouble();
 
     try {
-      MovelDAO.insert(categoriaId, ((Usuario) req.session().attribute("user")).getid(), descricao, foto, nome, valorMes,
-          true, altura, largura, espessura);
+      MovelDAO.insert(categoriaId, sessionUsuario.getid(), descricao, "movel-default.png", nome, valorMes, true, altura,
+          largura, espessura);
       return new Success(res, Localization.furnitureCreateSuccess);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     } catch (RuntimeException e) {
-      if (e.getCause().getClass() == PSQLException.class) {
-        // if (e.getMessage().contains("usuario_email_unique"))
-        // return new BadRequest(res, Localization.userRegisterDuplicateEmail);
+      return new BadRequest(res);
+    }
+  };
 
-        // if (e.getMessage().contains("usuario_email_unique"))
-        // return new BadRequest(res, Localization.userRegisterDuplicateUsername);
-      }
+  public static Route all = (Request req, Response res) -> {
+    try {
+      final JsonArray out = new JsonArray();
+
+      MovelDAO.all().forEach((v) -> {
+        out.add(v.toJson());
+      });
+
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
       return new BadRequest(res);
     }
   };
