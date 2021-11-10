@@ -164,9 +164,9 @@
                     </div>
                     <div class="col">
                       <div class="form-inline justify-content-end">
-                        <label for="quantidade" class="px-2"
-                          >Itens por página</label
-                        >
+                        <label for="quantidade" class="px-2">
+                          Itens por página
+                        </label>
                         <select class="form-control" id="quantidade">
                           <option>6</option>
                           <option>12</option>
@@ -176,33 +176,7 @@
                     </div>
                   </div>
                 </nav>
-                <div class="row px-1 mb-3 moveis">
-                  <div
-                    th:each="item: ${new int[]{1, 2, 3, 4}}"
-                    class="col-6 col-md-4 p-1 movel"
-                  >
-                    <div class="card h-100">
-                      <img
-                        class="card-img-top"
-                        style="height: 150px; object-fit: cover"
-                        src="/img/cover4-compressed.jpg"
-                        alt="Móvel"
-                      />
-                      <div class="card-body">
-                        Cama
-                        <br />
-                        <small>Belo Horizonte</small>
-                        <br />
-                        <small>Por: Carlos</small>
-                        <b>
-                          <p class="text-success">Disponível</p>
-                        </b>
-                        <small>Avaliação: 2.00</small>
-                      </div>
-                      <div class="card-footer">R$ 23,00/mês</div>
-                    </div>
-                  </div>
-                </div>
+                <div id="moveis" class="row px-1 mb-3"></div>
               </div>
             </div>
           </div>
@@ -211,5 +185,7 @@
     </main>
 
     <div th:replace="general :: footer"></div>
+
+    <script src="/scripts/pages/moveis.js"></script>
   </body>
 </html>

@@ -19,9 +19,13 @@ public class Localization {
   public final static String invalidCpf = "CPF inválido.";
   public final static String invalidCep = "CEP inválido.";
   public final static String invalidName = "Nome inválido.";
+  public final static String invalidOrder = "Ordem inválida.";
   public final static String invalidEmail = "Email inválido.";
+  public final static String invalidLimit = "Limite inválido.";
   public final static String invalidWidth = "Largura inválida.";
+  public final static String invalidFilter = "Filtro inválido.";
   public final static String invalidNumero = "Número inválido.";
+  public final static String invalidOffset = "Offset inválido.";
   public final static String invalidHeight = "Altura inválida.";
   public final static String invalidPicture = "Imagem inválida.";
   public final static String invalidPassword = "Senha inválida.";
@@ -33,6 +37,7 @@ public class Localization {
   public final static String invalidDescription = "Descrição inválida.";
   public final static String invalidMonthlyValue = "Valor mês inválido.";
   public final static String invalidComplemento = "Complemento inválido.";
+  public final static String invalidDisponivel = "Disponibilidade inválida.";
 
   public final static String loginSuccess = "Login feito com sucesso!";
   public final static String categoriyCreateSuccess = "Categoria criada!";

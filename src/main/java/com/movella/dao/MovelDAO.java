@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.movella.app.DBConnection;
 import com.movella.exceptions.InvalidDataException;
 import com.movella.model.Movel;
+import com.movella.model.MovelPaginado;
 import com.movella.utils.Localization;
 
 public class MovelDAO {
@@ -38,6 +39,22 @@ public class MovelDAO {
     res.forEach((v) -> {
       try {
         moveis.add(Movel.fromJson(v));
+      } catch (Exception e) {
+      }
+    });
+
+    return moveis;
+  }
+
+  public static List<MovelPaginado> pagination(int limit, int offset) throws Exception {
+    final List<JsonObject> res = DBConnection.query(
+        "select * from view_movel limit cast(? as integer) offset cast(? as integer)",
+        new String[] { String.valueOf(limit), String.valueOf(offset) });
+    final List<MovelPaginado> moveis = new ArrayList<MovelPaginado>();
+
+    res.forEach((v) -> {
+      try {
+        moveis.add(MovelPaginado.fromJson(v));
       } catch (Exception e) {
       }
     });

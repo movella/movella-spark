@@ -1,6 +1,7 @@
 /// <reference path="../jquery-3.6.0.js" />
 /// <reference path="../sweetalert2.d.ts" />
 /// <reference path="index.d.ts" />
+/// <reference path="common.js" />
 
 // const { default: Swal } = require('sweetalert2')
 

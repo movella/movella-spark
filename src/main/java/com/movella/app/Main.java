@@ -117,7 +117,9 @@ public class Main {
 
         post("/usuario/update", UsuarioService.update);
 
-        get("/moveis", MovelService.all);
+        get("/movel/all", MovelService.all);
+
+        post("/moveis", MovelService.pagination);
       });
 
       System.out.println(String.format("listening on port %d", port));

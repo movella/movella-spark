@@ -350,11 +350,15 @@ CREATE VIEW view_movel AS
         m.valorMes AS valorMes,
         m.disponivel AS disponivel,
         m.id AS id,
-        u.cidade AS cidade
+        u.cidade AS cidade,
+        (FLOOR(((SUM(a.avaliacao) / COUNT(a.avaliacao)) * 10)) / 10) AS avaliacao,
+        COUNT(a.avaliacao) AS avaliacoes
     FROM
-        ((tbl_movel m
-        JOIN tbl_categoria c ON ((m.categoriaId = c.id)))
-        JOIN tbl_usuario u ON ((m.usuarioId = u.id)));
+        tbl_movel m
+        JOIN tbl_categoria c ON m.categoriaId = c.id
+        JOIN tbl_usuario u ON m.usuarioId = u.id
+        LEFT JOIN tbl_avaliacao a on a.avaliadoId = u.id
+    GROUP BY usuarioNome, categoria, m.nome, descricao, imagem, valorMes, disponivel, m.id, cidade;
 
 -- -----------------------------------------------------
 -- View view_usuario
@@ -377,8 +381,8 @@ CREATE VIEW view_usuario AS
         (FLOOR(((SUM(a.avaliacao) / COUNT(a.avaliacao)) * 10)) / 10) AS avaliacao,
         COUNT(a.avaliacao) AS avaliacoes
     FROM
-      tbl_usuario u
-      LEFT JOIN tbl_avaliacao a ON a.avaliadoId = u.id
+        tbl_usuario u
+        LEFT JOIN tbl_avaliacao a ON a.avaliadoId = u.id
     GROUP BY nome, email, celular, foto, cep, logradouro, complemento, bairro, cidade, uf, acesso;
 
 CREATE OR REPLACE FUNCTION update_aluguel()

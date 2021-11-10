@@ -81,10 +81,68 @@ public class MovelService {
   };
 
   public static Route all = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getacesso().equals("admin"))
+      return new Forbidden(res);
+
     try {
       final JsonArray out = new JsonArray();
 
       MovelDAO.all().forEach((v) -> {
+        out.add(v.toJson());
+      });
+
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route pagination = (Request req, Response res) -> {
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _limit = body.get("limit");
+    final JsonElement _offset = body.get("offset");
+    final JsonElement _categoria = body.get("categoria");
+    final JsonElement _filtro = body.get("filtro");
+    final JsonElement _disponivel = body.get("disponivel");
+    final JsonElement _order = body.get("order");
+
+    // TODO: fix, falta checar se é int ou string
+
+    if (_limit == null)
+      return new BadRequest(res, Localization.invalidLimit);
+
+    if (_offset == null)
+      return new BadRequest(res, Localization.invalidOffset);
+
+    if (_categoria == null)
+      return new BadRequest(res, Localization.invalidCategory);
+
+    if (_filtro == null)
+      return new BadRequest(res, Localization.invalidFilter);
+
+    if (_disponivel == null)
+      return new BadRequest(res, Localization.invalidDisponivel);
+
+    if (_order == null)
+      return new BadRequest(res, Localization.invalidOrder);
+
+    final int limit = _limit.getAsInt();
+    final int offset = _offset.getAsInt();
+    // final String categoria = _categoria.getAsString();
+    // final String filtro = _filtro.getAsString();
+    // final Boolean disponivel = _filtro.getAsBoolean();
+    // final String order = _order.getAsString();
+
+    try {
+      final JsonArray out = new JsonArray();
+
+      MovelDAO.pagination(limit, offset).forEach((v) -> {
         out.add(v.toJson());
       });
 
