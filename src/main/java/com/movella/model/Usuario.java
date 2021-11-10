@@ -14,6 +14,7 @@ public class Usuario {
   String nome;
   String acesso;
   String cep;
+  String cpf;
   String logradouro;
   String complemento;
   String bairro;
@@ -29,6 +30,7 @@ public class Usuario {
     setnome(null);
     setacesso(null);
     setcep(null);
+    setcpf(null);
     setlogradouro(null);
     setcomplemento(null);
     setbairro(null);
@@ -45,6 +47,7 @@ public class Usuario {
       String nome, //
       String acesso, //
       String cep, //
+      String cpf, //
       String logradouro, //
       String complemento, //
       String bairro, //
@@ -59,6 +62,7 @@ public class Usuario {
     setnome(nome);
     setacesso(acesso);
     setcep(cep);
+    setcpf(cpf);
     setlogradouro(logradouro);
     setcomplemento(complemento);
     setbairro(bairro);
@@ -96,6 +100,10 @@ public class Usuario {
 
   public String getcep() {
     return this.cep;
+  };
+
+  public String getcpf() {
+    return this.cpf;
   };
 
   public String getlogradouro() {
@@ -148,6 +156,10 @@ public class Usuario {
 
   public void setcep(String cep) {
     this.cep = cep;
+  }
+
+  public void setcpf(String cpf) {
+    this.cpf = cpf;
   }
 
   public void setlogradouro(String logradouro) {
@@ -203,6 +215,9 @@ public class Usuario {
         break;
       case "cep":
         usuario.setcep(js.get("cep").getAsString());
+        break;
+      case "cpf":
+        usuario.setcpf(js.get("cpf").getAsString());
         break;
       case "logradouro":
         usuario.setlogradouro(js.get("logradouro").getAsString());

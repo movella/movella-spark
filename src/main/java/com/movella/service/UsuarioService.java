@@ -93,17 +93,17 @@ public class UsuarioService {
     final JsonElement _celular = body.get("celular");
     final JsonElement _cep = body.get("cep");
     final JsonElement _complemento = body.get("complemento");
-    final JsonElement _numero = body.get("numero");
+    // final JsonElement _numero = body.get("numero");
 
     final JsonElement _nome = body.get("nome");
-    final JsonElement _email = body.get("email");
+    // final JsonElement _email = body.get("email");
     final JsonElement _senha = body.get("senha");
 
     if (_nome == null)
       return new BadRequest(res, Localization.invalidName);
 
-    if (_email == null)
-      return new BadRequest(res, Localization.invalidEmail);
+    // if (_email == null)
+    // return new BadRequest(res, Localization.invalidEmail);
 
     if (_senha == null)
       return new BadRequest(res, Localization.invalidPassword);
@@ -120,8 +120,8 @@ public class UsuarioService {
     if (_complemento == null)
       return new BadRequest(res, Localization.invalidComplemento);
 
-    if (_numero == null)
-      return new BadRequest(res, Localization.invalidNumero);
+    // if (_numero == null)
+    // return new BadRequest(res, Localization.invalidNumero);
 
     final String nome = _nome.getAsString();
     final String senha = _senha.getAsString();
@@ -131,7 +131,7 @@ public class UsuarioService {
     final String cep = _cep.getAsString().replaceAll("[\\.\\-]", "");
     final String complemento = _complemento.getAsString();
     // TODO colocar número no endereço
-    final String numero = _numero.getAsString();
+    // final String numero = _numero.getAsString();
 
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
@@ -142,9 +142,12 @@ public class UsuarioService {
 
     final int id = sessionUsuario.getid();
 
-    try {
-      final JsonObject viaCep = FunctionUtils.get(String.format("https://viacep.com.br/ws/%s/json/", cep));
+    final JsonObject viaCep = FunctionUtils.get(String.format("https://viacep.com.br/ws/%s/json/", cep));
 
+    if (viaCep.get("erro") != null)
+      return new BadRequest(res, Localization.invalidCep);
+
+    try {
       final String bairro = viaCep.get("bairro").getAsString();
       final String cidade = viaCep.get("localidade").getAsString();
       final String logradouro = viaCep.get("logradouro").getAsString();
@@ -156,7 +159,6 @@ public class UsuarioService {
 
         req.session().attribute("user", usuario);
 
-        // TODO
         return new Success(res, Localization.userUpdateSuccess);
       } catch (InvalidDataException e) {
         return new BadRequest(res, e.message);
@@ -167,10 +169,15 @@ public class UsuarioService {
 
           if (e.getMessage().contains("usuario_nome_unique"))
             return new BadRequest(res, Localization.userRegisterDuplicateUsername);
+
+          if (e.getMessage().contains("usuario_cpf_unique"))
+            return new BadRequest(res, Localization.userUpdateError);
         }
 
         return new BadRequest(res);
       }
+    } catch (HaltException e) {
+      throw e;
     } catch (Exception e) {
       return new BadRequest(res, e.getMessage());
     }

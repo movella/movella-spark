@@ -11,6 +11,7 @@ public class Localization {
   public final static String furnitureNotFound = "Móvel não encontrado.";
   public final static String categoryNotFound = "Categoria não encontrada.";
 
+  public final static String userUpdateError = "Dados inválidos.";
   public final static String userRegisterDuplicateEmail = "Email já cadastrado.";
   public final static String userRegisterDuplicateUsername = "Nome indisponível.";
 
