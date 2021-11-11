@@ -1,5 +1,13 @@
 package com.movella.service;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+
+import javax.servlet.MultipartConfigElement;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -147,6 +155,44 @@ public class MovelService {
       });
 
       return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route upload = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    final String _id = req.params("id");
+
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
+
+    int id;
+
+    try {
+      id = Integer.parseInt(_id);
+    } catch (Exception e) {
+      return new BadRequest(res, Localization.invalidId);
+    }
+
+    try {
+      req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+
+      try (final InputStream input = req.raw().getPart("file").getInputStream()) {
+        Files.copy(input, Files.createTempFile(new File("upload").toPath(), "", ""),
+            StandardCopyOption.REPLACE_EXISTING);
+      }
+
+      final String name = UUID.randomUUID().toString();
+
+      MovelDAO.upload(id, sessionUsuario.getid(), name);
+
+      // TODO: fix
+      return new Success(res, "Imagem enviada!");
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     } catch (RuntimeException e) {

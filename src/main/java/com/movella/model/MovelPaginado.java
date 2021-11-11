@@ -47,6 +47,94 @@ public class MovelPaginado {
     this.avaliacoes = avaliacoes;
   }
 
+  public String getUsuarioNome() {
+    return this.usuarionome;
+  }
+
+  public String getCategoria() {
+    return this.categoria;
+  }
+
+  public String getNome() {
+    return this.nome;
+  }
+
+  public String getDescricao() {
+    return this.descricao;
+  }
+
+  public String getImagem() {
+    return this.imagem;
+  }
+
+  public Double getValorMes() {
+    return this.valormes;
+  }
+
+  public boolean getDisponivel() {
+    return this.disponivel;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+
+  public String getCidade() {
+    return this.cidade;
+  }
+
+  public Double getAvaliacao() {
+    return this.avaliacao;
+  }
+
+  public int getAvaliacoes() {
+    return this.avaliacoes;
+  }
+
+  public void setUsuarioNome(String str) {
+    this.usuarionome = str;
+  }
+
+  public void setCategoria(String str) {
+    this.categoria = str;
+  }
+
+  public void setNome(String str) {
+    this.nome = str;
+  }
+
+  public void setDescricao(String str) {
+    this.descricao = str;
+  }
+
+  public void setImagem(String str) {
+    this.imagem = str;
+  }
+
+  public void setValorMes(Double str) {
+    this.valormes = str;
+  }
+
+  public void setDisponivel(boolean str) {
+    this.disponivel = str;
+  }
+
+  public void setId(int str) {
+    this.id = str;
+  }
+
+  public void setCidade(String str) {
+    this.cidade = str;
+  }
+
+  public void setAvaliacao(Double str) {
+    this.avaliacao = str;
+  }
+
+  public void setAvaliacoes(int str) {
+    this.avaliacoes = str;
+  }
+
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 

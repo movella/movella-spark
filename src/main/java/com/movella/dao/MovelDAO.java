@@ -32,6 +32,12 @@ public class MovelDAO {
             String.valueOf(espessura) });
   }
 
+  public static void upload(int id, int usuarioId, String imagem) throws Exception {
+    DBConnection.execute(
+        "update tbl_movel set imagem = ? where id = cast(? as integer) and usuarioId = cast(? as integer)",
+        new String[] { imagem, String.valueOf(id), String.valueOf(usuarioId) });
+  }
+
   public static List<Movel> all() throws Exception {
     final List<JsonObject> res = DBConnection.query("select * from tbl_movel", new String[] {});
     final List<Movel> moveis = new ArrayList<Movel>();
