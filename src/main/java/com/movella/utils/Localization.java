@@ -45,4 +45,5 @@ public class Localization {
   public final static String userRegisterSuccess = "Conta criada com sucesso!";
   public final static String userUpdateSuccess = "Dados atualizados com sucesso!";
   public final static String contactCreateSuccess = "Contato registrado. Obrigado pelo feedback!";
+  public final static String furniturePictureUploadSuccess = "Imagem enviada!";
 }

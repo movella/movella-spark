@@ -1,12 +1,8 @@
 package com.movella.service;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.io.FileOutputStream;
+import java.util.Base64;
 import java.util.UUID;
-
-import javax.servlet.MultipartConfigElement;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,7 +30,6 @@ public class MovelService {
 
     final JsonElement _nome = body.get("nome");
     final JsonElement _categoria = body.get("categoria");
-    // final JsonElement _foto = body.get("foto");
     final JsonElement _descricao = body.get("descricao");
     final JsonElement _valorMes = body.get("valorMes");
     final JsonElement _altura = body.get("altura");
@@ -48,9 +43,6 @@ public class MovelService {
 
     if (_categoria == null)
       return new BadRequest(res, Localization.invalidCategory);
-
-    // if (_foto == null)
-    // return new BadRequest(res, Localization.invalidPicture);
 
     if (_descricao == null)
       return new BadRequest(res, Localization.invalidDescription);
@@ -69,7 +61,6 @@ public class MovelService {
 
     final String nome = _nome.getAsString();
     final int categoriaId = _categoria.getAsInt();
-    // final String foto = _foto.getAsString();
     final String descricao = _descricao.getAsString();
     final double valorMes = Double
         .parseDouble(_valorMes.getAsString().replace(",", "!").replace(".", "").replace("!", "."));
@@ -142,15 +133,15 @@ public class MovelService {
 
     final int limit = _limit.getAsInt();
     final int offset = _offset.getAsInt();
-    // final String categoria = _categoria.getAsString();
-    // final String filtro = _filtro.getAsString();
-    // final Boolean disponivel = _filtro.getAsBoolean();
+    final String categoria = _categoria.getAsString();
+    final String filtro = _filtro.getAsString();
+    final Boolean disponivel = _filtro.getAsBoolean();
     // final String order = _order.getAsString();
 
     try {
       final JsonArray out = new JsonArray();
 
-      MovelDAO.pagination(limit, offset).forEach((v) -> {
+      MovelDAO.pagination(limit, offset, categoria, filtro, disponivel).forEach((v) -> {
         out.add(v.toJson());
       });
 
@@ -168,6 +159,8 @@ public class MovelService {
 
     final String _id = req.params("id");
 
+    final String body = req.body();
+
     if (_id == null)
       return new BadRequest(res, Localization.invalidId);
 
@@ -180,19 +173,26 @@ public class MovelService {
     }
 
     try {
-      req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-
-      try (final InputStream input = req.raw().getPart("file").getInputStream()) {
-        Files.copy(input, Files.createTempFile(new File("upload").toPath(), "", ""),
-            StandardCopyOption.REPLACE_EXISTING);
-      }
-
       final String name = UUID.randomUUID().toString();
 
-      MovelDAO.upload(id, sessionUsuario.getid(), name);
+      final String treatedBody = body.replaceAll(".+,(.+)", "$1");
 
-      // TODO: fix
-      return new Success(res, "Imagem enviada!");
+      try {
+        final byte[] bytes = Base64.getDecoder().decode(treatedBody);
+
+        final FileOutputStream f = new FileOutputStream(String.format("src/main/resources/public/img/%s", name));
+
+        f.write(bytes);
+        f.close();
+      } catch (Exception e) {
+        System.out.println(e.getStackTrace());
+      }
+
+      final int maxId = MovelDAO.maxUploadId();
+
+      MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getid(), name);
+
+      return new Success(res, Localization.furniturePictureUploadSuccess);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     } catch (RuntimeException e) {

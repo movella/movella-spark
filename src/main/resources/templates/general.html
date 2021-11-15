@@ -21,6 +21,23 @@
     <script type="text/javascript" src="/scripts/numeral.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.mask.min.js"></script>
     <script type="text/javascript" src="/scripts/pages/common.js"></script>
+    <script
+      src="https://unpkg.com/blip-chat-widget"
+      type="text/javascript"
+    ></script>
+    <script>
+      ;(function () {
+        window.onload = function () {
+          new BlipChat()
+            .withAppKey(
+              'am9uYXM3OjE5MDU1NjA2LWNkYTgtNDZhNC04YmI2LWQ4NzMwNDRkMzRiYg=='
+            )
+            .withButton({ color: '#df2226', icon: '' })
+            .withCustomCommonUrl('https://sure-mqcgd.chat.blip.ai/')
+            .build()
+        }
+      })()
+    </script>
   </head>
 
   <body class="d-flex flex-column flex-grow-1">

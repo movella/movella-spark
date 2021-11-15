@@ -32,6 +32,12 @@ public class MovelDAO {
             String.valueOf(espessura) });
   }
 
+  public static int maxUploadId() throws Exception {
+    final JsonObject res = DBConnection.queryOne("select max(id) as max from tbl_movel", new String[] {});
+
+    return res.get("max").getAsInt();
+  }
+
   public static void upload(int id, int usuarioId, String imagem) throws Exception {
     DBConnection.execute(
         "update tbl_movel set imagem = ? where id = cast(? as integer) and usuarioId = cast(? as integer)",
@@ -52,9 +58,17 @@ public class MovelDAO {
     return moveis;
   }
 
-  public static List<MovelPaginado> pagination(int limit, int offset) throws Exception {
+  public static List<MovelPaginado> pagination(int limit, int offset, String categoria, String filtro,
+      Boolean disponivel) throws Exception {
+    final String disponivelClause = disponivel ? "'disponivel'" : "true";
+    final String categoriaClause = categoria.equals("Todos") ? "true" : String.format("categoria = '%s'", categoria);
+    final String filterClause = filtro.length() == 0 ? "true"
+        : String.format("lower(nome) like lower('%%%s%%')", filtro);
+
     final List<JsonObject> res = DBConnection.query(
-        "select * from view_movel limit cast(? as integer) offset cast(? as integer)",
+        String.format(
+            "select * from view_movel where %s and %s and %s limit cast(? as integer) offset cast(? as integer)",
+            disponivelClause, filterClause, categoriaClause),
         new String[] { String.valueOf(limit), String.valueOf(offset) });
     final List<MovelPaginado> moveis = new ArrayList<MovelPaginado>();
 

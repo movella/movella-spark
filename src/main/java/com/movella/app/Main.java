@@ -30,10 +30,16 @@ public class Main {
       staticFiles.location("/public");
 
       before((req, res) -> {
+        String body = req.body();
+
+        if (body == null)
+          body = "";
+
         System.out.println(String.format("[%s] - %s %s %s",
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis())), req.ip(),
             req.requestMethod(), req.url()));
-        System.out.println(req.body());
+
+        System.out.println(body.length() < 4000 ? body : "== Large body payload ==");
       });
 
       notFound((req, res) -> {
@@ -120,6 +126,8 @@ public class Main {
         get("/movel/all", MovelService.all);
 
         post("/moveis", MovelService.pagination);
+
+        post("/movel/upload/:id", MovelService.upload);
       });
 
       System.out.println(String.format("listening on port %d", port));

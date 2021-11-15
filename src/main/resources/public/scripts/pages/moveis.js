@@ -23,8 +23,6 @@ $(() => {
   // $('#form').on('submit', (e) => {
   //   let body = {}
 
-  //   console.log(4234)
-
   //   $('#form')
   //     .serializeArray()
   //     .forEach((v) => {
@@ -91,6 +89,57 @@ $(() => {
   //   }
   // })
 
+  $('#quantidade, #disponiveis').on('change', () => {
+    refresh()
+  })
+
+  $('#filtro').on('keyup', () => {
+    refresh()
+  })
+
+  fetch('/api/categorias').then(async (v) => {
+    console.log(v)
+
+    if (v.status === 200) {
+      /**
+       * @type {Categoria[]}
+       */
+      const data = await v.json()
+
+      $('#v-pills-tab').append(
+        data.map((v, k) => {
+          return /* html */ `
+            <a
+              role="tab"
+              class="nav-link"
+              data-toggle="pill"
+              aria-selected="true"
+              data-bs-toggle="pill"
+              href="#v-pills-${k + 1}"
+              aria-controls="v-pills-${k + 1}"
+            >
+              ${v.nome}
+            </a>
+          `
+        })
+      )
+
+      $('#v-pills-tab > a').on('click', () => {
+        refresh()
+      })
+    } else if (v.status == 400) {
+      const data = await v.json()
+
+      Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+    } else {
+      Swal.fire({
+        title: 'Atenção',
+        icon: 'error',
+        text: 'Houve um erro inesperado',
+      })
+    }
+  })
+
   refresh()
 })
 
@@ -100,9 +149,9 @@ const refresh = () => {
     body: JSON.stringify({
       limit: parseInt($('#quantidade').val()),
       offset: 0,
-      categoria: '',
-      filtro: '',
-      disponivel: false,
+      categoria: $('#v-pills-tab > .active').text().replace(/\n/g, '').trim(),
+      filtro: $('#filtro').val(),
+      disponivel: $('#disponiveis').val() === 'on',
       order: '',
     }),
     headers: { 'content-type': 'application/json' },
@@ -115,36 +164,45 @@ const refresh = () => {
        */
       const data = await v.json()
 
-      $('#moveis').append(
-        data.map((v) => {
-          return /* html */ `
-          <div class="col-6 col-md-4 p-1 movel">
-            <div class="card h-100">
-              <img
-                class="card-img-top"
-                style="height: 150px; object-fit: cover"
-                src="/img/${v.imagem}"
-                alt="Móvel"
-              />
-              <div class="card-body">
-                ${v.nome}
-                <br />
-                <small>${v.cidade}</small>
-                <br />
-                <small>Por: ${v.usuarionome}</small>
-                <b>
-                  <p class="text-${v.disponivel ? 'success' : 'danger'}">
-                    ${v.disponivel ? 'Disponível' : 'Indisponível'}
-                  </p>
-                </b>
-                <small>Avaliação: ${v.avaliacao}</small>
-              </div>
-              <div class="card-footer">${formataValor(v.valormes)}/mês</div>
-            </div>
+      $('#moveis').html('')
+
+      if (data.length === 0)
+        $('#moveis').append(/* html */ `
+          <div class="p-4 text-center">
+            <small>Nenhum móvel encontrado</small>
           </div>
-          `
-        })
-      )
+        `)
+      else
+        $('#moveis').append(
+          data.map((v) => {
+            return /* html */ `
+              <div class="col-6 col-md-4 p-1 movel">
+                <div class="card h-100">
+                  <img
+                    class="card-img-top"
+                    style="height: 150px; object-fit: cover"
+                    src="/img/${v.imagem}"
+                    alt="Móvel"
+                  />
+                  <div class="card-body">
+                    ${v.nome}
+                    <br />
+                    <small>${v.cidade}</small>
+                    <br />
+                    <small>Por: ${v.usuarionome}</small>
+                    <b>
+                      <p class="text-${v.disponivel ? 'success' : 'danger'}">
+                        ${v.disponivel ? 'Disponível' : 'Indisponível'}
+                      </p>
+                    </b>
+                    <small>Avaliação: ${v.avaliacao}</small>
+                  </div>
+                  <div class="card-footer">${formataValor(v.valormes)}/mês</div>
+                </div>
+              </div>
+            `
+          })
+        )
     } else if (v.status == 400) {
       const data = await v.json()
 

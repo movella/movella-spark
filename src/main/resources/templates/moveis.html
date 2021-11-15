@@ -13,22 +13,21 @@
             <div class="card my-2">
               <div class="card-body py-2">
                 <div
-                  class="nav flex-column nav-pills"
                   id="v-pills-tab"
                   role="tablist"
                   aria-orientation="vertical"
+                  class="nav flex-column nav-pills"
                 >
                   <a
-                    th:each='item: ${new String[]{"Todos", "Cadeiras", "Sofás", "Mesas", "Estantes"}}'
-                    class="nav-link"
-                    th:classappend="${item} == Todos ? active"
-                    data-toggle="pill"
-                    href="#v-pills-0"
                     role="tab"
-                    aria-controls="v-pills-0"
+                    href="#v-pills-0"
+                    data-toggle="pill"
                     aria-selected="true"
-                    th:text="${item}"
+                    data-bs-toggle="pill"
+                    class="nav-link active"
+                    aria-controls="v-pills-0"
                   >
+                    Todos
                   </a>
                 </div>
               </div>
@@ -81,9 +80,9 @@
                     value="nome asc"
                     checked
                   />
-                  <label class="form-check-label" for="ordena-alfabetica"
-                    >Ordem Alfabética</label
-                  >
+                  <label class="form-check-label" for="ordena-alfabetica">
+                    Ordem Alfabética
+                  </label>
                 </div>
                 <div class="form-check py-2">
                   <input
@@ -93,9 +92,9 @@
                     id="ordena-novos"
                     value="data desc"
                   />
-                  <label class="form-check-label" for="ordena-novos"
-                    >Mais Novos</label
-                  >
+                  <label class="form-check-label" for="ordena-novos">
+                    Mais Novos
+                  </label>
                 </div>
                 <div class="form-check py-2">
                   <input
@@ -105,9 +104,9 @@
                     id="ordena-antigos"
                     value="data asc"
                   />
-                  <label class="form-check-label" for="ordena-antigos"
-                    >Mais Antigos</label
-                  >
+                  <label class="form-check-label" for="ordena-antigos">
+                    Mais Antigos
+                  </label>
                 </div>
               </div>
             </div>
@@ -157,9 +156,9 @@
                           class="form-check-input"
                           id="disponiveis"
                         />
-                        <label class="form-check-label" for="disponiveis"
-                          >Somente disponíveis</label
-                        >
+                        <label class="form-check-label" for="disponiveis">
+                          Somente disponíveis
+                        </label>
                       </div>
                     </div>
                     <div class="col">
@@ -176,7 +175,11 @@
                     </div>
                   </div>
                 </nav>
-                <div id="moveis" class="row px-1 mb-3"></div>
+                <div id="moveis" class="row px-1 mb-3">
+                  <div class="p-4 text-center">
+                    <small>Carregando móveis</small>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

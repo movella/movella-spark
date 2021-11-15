@@ -23,8 +23,6 @@ $(() => {
   $('#form').on('submit', (e) => {
     let body = {}
 
-    console.log(4234)
-
     $('#form')
       .serializeArray()
       .forEach((v) => {
@@ -40,6 +38,8 @@ $(() => {
 
       if (v.status === 200) {
         const data = await v.json()
+
+        await upload()
 
         Swal.fire({
           title: 'Sucesso',
@@ -91,3 +91,65 @@ $(() => {
     }
   })
 })
+
+const upload = async () => {
+  /**
+   * @type {HTMLInputElement}
+   */
+  const input = document.getElementById('foto')
+
+  const str = await getBase64(input.files[0])
+
+  await fetch('/api/movel/upload/0', {
+    body: str,
+    method: 'post',
+  }).then(async (v) => {
+    console.log(v)
+
+    // todo, fix
+    // if (v.status === 200) {
+    //   /**
+    //    * @type {Categoria[]}
+    //    */
+    //   const data = await v.json()
+
+    //   $('#categoria').append(
+    //     data.map((v) => {
+    //       return /* html */ `<option value="${v.id}">${v.nome}</option>`
+    //     })
+    //   )
+    // } else if (v.status == 400) {
+    //   const data = await v.json()
+
+    //   Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+    // } else {
+    //   Swal.fire({
+    //     title: 'Atenção',
+    //     icon: 'error',
+    //     text: 'Houve um erro inesperado',
+    //   })
+    // }
+  })
+}
+
+/**
+ * @param {File} file
+ * @returns {Promise<string>}
+ */
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+
+    reader.onload = () => {
+      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '')
+
+      if (encoded.length % 4 > 0)
+        encoded += '='.repeat(4 - (encoded.length % 4))
+
+      resolve(encoded)
+    }
+
+    reader.onerror = (error) => reject(error)
+  })
+}
