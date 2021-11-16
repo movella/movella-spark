@@ -136,11 +136,11 @@ public class UsuarioService {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-    final String acesso = sessionUsuario.getacesso();
-    final String email = sessionUsuario.getemail();
+    final String acesso = sessionUsuario.getAcesso();
+    final String email = sessionUsuario.getEmail();
     final String newAcesso = acesso == "admin" ? "admin" : "verificado";
 
-    final int id = sessionUsuario.getid();
+    final int id = sessionUsuario.getId();
 
     final JsonObject viaCep = FunctionUtils.get(String.format("https://viacep.com.br/ws/%s/json/", cep));
 

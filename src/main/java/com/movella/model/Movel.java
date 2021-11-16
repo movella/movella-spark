@@ -19,17 +19,17 @@ public class Movel {
   double espessura;
 
   public Movel() {
-    setid(0);
-    setcategoriaId(0);
-    setusuarioId(0);
-    setdescricao(null);
-    setimagem(null);
-    setnome(null);
-    setvalorMes(0);
-    setdisponivel(false);
-    setaltura(0);
-    setlargura(0);
-    setespessura(0);
+    setId(0);
+    setCategoriaId(0);
+    setUsuarioId(0);
+    setDescricao(null);
+    setImagem(null);
+    setNome(null);
+    setValorMes(0);
+    setDisponivel(false);
+    setAltura(0);
+    setLargura(0);
+    setEspessura(0);
   }
 
   public Movel( //
@@ -45,121 +45,121 @@ public class Movel {
       double largura, //
       double espessura //
   ) {
-    setid(id);
-    setcategoriaId(categoriaId);
-    setusuarioId(usuarioId);
-    setdescricao(descricao);
-    setimagem(imagem);
-    setnome(nome);
-    setvalorMes(valorMes);
-    setdisponivel(disponivel);
-    setaltura(altura);
-    setlargura(largura);
-    setespessura(espessura);
+    setId(id);
+    setCategoriaId(categoriaId);
+    setUsuarioId(usuarioId);
+    setDescricao(descricao);
+    setImagem(imagem);
+    setNome(nome);
+    setValorMes(valorMes);
+    setDisponivel(disponivel);
+    setAltura(altura);
+    setLargura(largura);
+    setEspessura(espessura);
   }
 
-  public int getid() {
+  public int getId() {
     return this.id;
   };
 
-  public int getcategoriaId() {
+  public int getCategoriaId() {
     return this.categoriaId;
   };
 
-  public int getusuarioId() {
+  public int getUsuarioId() {
     return this.usuarioId;
   };
 
-  public String getdescricao() {
+  public String getDescricao() {
     return this.descricao;
   };
 
-  public String getimagem() {
+  public String getImagem() {
     return this.imagem;
   };
 
-  public String getnome() {
+  public String getNome() {
     return this.nome;
   };
 
-  public double getvalorMes() {
+  public double getValorMes() {
     return this.valorMes;
   };
 
-  public boolean getdisponivel() {
+  public boolean getDisponivel() {
     return this.disponivel;
   };
 
-  public double getaltura() {
+  public double getAltura() {
     return this.altura;
   };
 
-  public double getlargura() {
+  public double getLargura() {
     return this.largura;
   };
 
-  public double getespessura() {
+  public double getEspessura() {
     return this.espessura;
   };
 
-  public void setid(int id) {
+  public void setId(int id) {
     this.id = id;
   };
 
-  public void setcategoriaId(int categoriaId) {
+  public void setCategoriaId(int categoriaId) {
     this.categoriaId = categoriaId;
   };
 
-  public void setusuarioId(int usuarioId) {
+  public void setUsuarioId(int usuarioId) {
     this.usuarioId = usuarioId;
   };
 
-  public void setdescricao(String descricao) {
+  public void setDescricao(String descricao) {
     this.descricao = descricao;
   };
 
-  public void setimagem(String imagem) {
+  public void setImagem(String imagem) {
     this.imagem = imagem;
   };
 
-  public void setnome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   };
 
-  public void setvalorMes(double valorMes) {
+  public void setValorMes(double valorMes) {
     this.valorMes = valorMes;
   };
 
-  public void setdisponivel(boolean disponivel) {
+  public void setDisponivel(boolean disponivel) {
     this.disponivel = disponivel;
   };
 
-  public void setaltura(double altura) {
+  public void setAltura(double altura) {
     this.altura = altura;
   };
 
-  public void setlargura(double largura) {
+  public void setLargura(double largura) {
     this.largura = largura;
   };
 
-  public void setespessura(double espessura) {
+  public void setEspessura(double espessura) {
     this.espessura = espessura;
   };
 
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 
-    jsonObject.addProperty("id", getid());
-    jsonObject.addProperty("categoriaId", getcategoriaId());
-    jsonObject.addProperty("usuarioId", getusuarioId());
-    jsonObject.addProperty("descricao", getdescricao());
-    jsonObject.addProperty("imagem", getimagem());
-    jsonObject.addProperty("nome", getnome());
-    jsonObject.addProperty("valorMes", getvalorMes());
-    jsonObject.addProperty("disponivel", getdisponivel());
-    jsonObject.addProperty("altura", getaltura());
-    jsonObject.addProperty("largura", getlargura());
-    jsonObject.addProperty("espessura", getespessura());
+    jsonObject.addProperty("id", getId());
+    jsonObject.addProperty("categoriaId", getCategoriaId());
+    jsonObject.addProperty("usuarioId", getUsuarioId());
+    jsonObject.addProperty("descricao", getDescricao());
+    jsonObject.addProperty("imagem", getImagem());
+    jsonObject.addProperty("nome", getNome());
+    jsonObject.addProperty("valorMes", getValorMes());
+    jsonObject.addProperty("disponivel", getDisponivel());
+    jsonObject.addProperty("altura", getAltura());
+    jsonObject.addProperty("largura", getLargura());
+    jsonObject.addProperty("espessura", getEspessura());
 
     return jsonObject;
   }
@@ -176,37 +176,37 @@ public class Movel {
 
       switch (uKey) {
       case "id":
-        movel.setid(js.get("id").getAsInt());
+        movel.setId(js.get("id").getAsInt());
         break;
       case "categoriaid":
-        movel.setcategoriaId(js.get("categoriaid").getAsInt());
+        movel.setCategoriaId(js.get("categoriaid").getAsInt());
         break;
       case "usuarioid":
-        movel.setusuarioId(js.get("usuarioid").getAsInt());
+        movel.setUsuarioId(js.get("usuarioid").getAsInt());
         break;
       case "descricao":
-        movel.setdescricao(js.get("descricao").getAsString());
+        movel.setDescricao(js.get("descricao").getAsString());
         break;
       case "imagem":
-        movel.setimagem(js.get("imagem").getAsString());
+        movel.setImagem(js.get("imagem").getAsString());
         break;
       case "nome":
-        movel.setnome(js.get("nome").getAsString());
+        movel.setNome(js.get("nome").getAsString());
         break;
       case "valormes":
-        movel.setvalorMes(js.get("valormes").getAsDouble());
+        movel.setValorMes(js.get("valormes").getAsDouble());
         break;
       case "disponivel":
-        movel.setdisponivel(js.get("disponivel").getAsBoolean());
+        movel.setDisponivel(js.get("disponivel").getAsBoolean());
         break;
       case "altura":
-        movel.setaltura(js.get("altura").getAsDouble());
+        movel.setAltura(js.get("altura").getAsDouble());
         break;
       case "largura":
-        movel.setlargura(js.get("largura").getAsDouble());
+        movel.setLargura(js.get("largura").getAsDouble());
         break;
       case "espessura":
-        movel.setespessura(js.get("espessura").getAsDouble());
+        movel.setEspessura(js.get("espessura").getAsDouble());
         break;
       }
     }

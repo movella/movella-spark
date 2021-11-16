@@ -91,7 +91,7 @@
                   </a>
                   <div
                     class="card bg-primary text-white"
-                    th:if="${user.getacesso() == 'normal'}"
+                    th:if="${user.getAcesso() == 'normal'}"
                   >
                     <div class="card-body">
                       <span>
@@ -220,7 +220,7 @@
                           name="nome"
                           maxlength="20"
                           class="form-control"
-                          th:value="${user.getnome()}"
+                          th:value="${user.getNome()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -233,7 +233,7 @@
                           name="email"
                           maxlength="200"
                           class="form-control"
-                          th:value="${user.getemail()}"
+                          th:value="${user.getEmail()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -257,7 +257,7 @@
                           maxlength="15"
                           minlength="14"
                           class="form-control"
-                          th:value="${user.getcelular()}"
+                          th:value="${user.getCelular()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -269,7 +269,7 @@
                           type="text"
                           maxlength="14"
                           class="form-control"
-                          th:value="${user.getcpf()}"
+                          th:value="${user.getCpf()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -282,7 +282,7 @@
                           maxlength="9"
                           minlength="9"
                           class="form-control"
-                          th:value="${user.getcep()}"
+                          th:value="${user.getCep()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -295,7 +295,7 @@
                           name="bairro"
                           maxlength="100"
                           class="form-control"
-                          th:value="${user.getbairro()}"
+                          th:value="${user.getBairro()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -308,7 +308,7 @@
                           name="cidade"
                           maxlength="100"
                           class="form-control"
-                          th:value="${user.getcidade()}"
+                          th:value="${user.getCidade()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -320,7 +320,7 @@
                           id="complemento"
                           name="complemento"
                           class="form-control"
-                          th:value="${user.getcomplemento()}"
+                          th:value="${user.getComplemento()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -333,7 +333,7 @@
                           maxlength="100"
                           name="logradouro"
                           class="form-control"
-                          th:value="${user.getlogradouro()}"
+                          th:value="${user.getLogradouro()}"
                         />
                       </div>
                       <div class="mb-3">
@@ -346,7 +346,7 @@
                           type="text"
                           maxlength="100"
                           class="form-control"
-                          th:value="${user.getuf()}"
+                          th:value="${user.getUf()}"
                         />
                       </div>
                       <div class="d-flex justify-content-end">

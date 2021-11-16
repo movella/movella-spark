@@ -22,20 +22,20 @@ public class Usuario {
   String uf;
 
   public Usuario() {
-    setid(0);
-    setcelular(null);
-    setemail(null);
-    setfoto(null);
-    setsenha(null);
-    setnome(null);
-    setacesso(null);
-    setcep(null);
-    setcpf(null);
-    setlogradouro(null);
-    setcomplemento(null);
-    setbairro(null);
-    setcidade(null);
-    setuf(null);
+    setId(0);
+    setCelular(null);
+    setEmail(null);
+    setFoto(null);
+    setSenha(null);
+    setNome(null);
+    setAcesso(null);
+    setCep(null);
+    setCpf(null);
+    setLogradouro(null);
+    setComplemento(null);
+    setBairro(null);
+    setCidade(null);
+    setUf(null);
   }
 
   public Usuario( //
@@ -54,131 +54,131 @@ public class Usuario {
       String cidade, //
       String uf //
   ) {
-    setid(id);
-    setcelular(celular);
-    setemail(email);
-    setfoto(foto);
-    setsenha(senha);
-    setnome(nome);
-    setacesso(acesso);
-    setcep(cep);
-    setcpf(cpf);
-    setlogradouro(logradouro);
-    setcomplemento(complemento);
-    setbairro(bairro);
-    setcidade(cidade);
-    setuf(uf);
+    setId(id);
+    setCelular(celular);
+    setEmail(email);
+    setFoto(foto);
+    setSenha(senha);
+    setNome(nome);
+    setAcesso(acesso);
+    setCep(cep);
+    setCpf(cpf);
+    setLogradouro(logradouro);
+    setComplemento(complemento);
+    setBairro(bairro);
+    setCidade(cidade);
+    setUf(uf);
   }
 
-  public int getid() {
+  public int getId() {
     return this.id;
   };
 
-  public String getcelular() {
+  public String getCelular() {
     return this.celular;
   };
 
-  public String getemail() {
+  public String getEmail() {
     return this.email;
   };
 
-  public String getfoto() {
+  public String getFoto() {
     return this.foto;
   };
 
-  public String getsenha() {
+  public String getSenha() {
     return this.senha;
   };
 
-  public String getnome() {
+  public String getNome() {
     return this.nome;
   };
 
-  public String getacesso() {
+  public String getAcesso() {
     return this.acesso;
   };
 
-  public String getcep() {
+  public String getCep() {
     return this.cep;
   };
 
-  public String getcpf() {
+  public String getCpf() {
     return this.cpf;
   };
 
-  public String getlogradouro() {
+  public String getLogradouro() {
     return this.logradouro;
   };
 
-  public String getcomplemento() {
+  public String getComplemento() {
     return this.complemento;
   };
 
-  public String getbairro() {
+  public String getBairro() {
     return this.bairro;
   };
 
-  public String getcidade() {
+  public String getCidade() {
     return this.cidade;
   };
 
-  public String getuf() {
+  public String getUf() {
     return this.uf;
   };
 
-  public void setid(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public void setcelular(String celular) {
+  public void setCelular(String celular) {
     this.celular = celular;
   }
 
-  public void setemail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
-  public void setfoto(String foto) {
+  public void setFoto(String foto) {
     this.foto = foto;
   }
 
-  public void setsenha(String senha) {
+  public void setSenha(String senha) {
     this.senha = senha;
   }
 
-  public void setnome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
-  public void setacesso(String acesso) {
+  public void setAcesso(String acesso) {
     this.acesso = acesso;
   }
 
-  public void setcep(String cep) {
+  public void setCep(String cep) {
     this.cep = cep;
   }
 
-  public void setcpf(String cpf) {
+  public void setCpf(String cpf) {
     this.cpf = cpf;
   }
 
-  public void setlogradouro(String logradouro) {
+  public void setLogradouro(String logradouro) {
     this.logradouro = logradouro;
   }
 
-  public void setcomplemento(String complemento) {
+  public void setComplemento(String complemento) {
     this.complemento = complemento;
   }
 
-  public void setbairro(String bairro) {
+  public void setBairro(String bairro) {
     this.bairro = bairro;
   }
 
-  public void setcidade(String cidade) {
+  public void setCidade(String cidade) {
     this.cidade = cidade;
   }
 
-  public void setuf(String uf) {
+  public void setUf(String uf) {
     this.uf = uf;
   }
 
@@ -194,46 +194,46 @@ public class Usuario {
 
       switch (uKey) {
       case "id":
-        usuario.setid(js.get("id").getAsInt());
+        usuario.setId(js.get("id").getAsInt());
         break;
       case "celular":
-        usuario.setcelular(js.get("celular").getAsString());
+        usuario.setCelular(js.get("celular").getAsString());
         break;
       case "email":
-        usuario.setemail(js.get("email").getAsString());
+        usuario.setEmail(js.get("email").getAsString());
         break;
       case "foto":
-        usuario.setfoto(js.get("foto").getAsString());
+        usuario.setFoto(js.get("foto").getAsString());
         break;
       case "senha":
-        usuario.setsenha(js.get("senha").getAsString());
+        usuario.setSenha(js.get("senha").getAsString());
         break;
       case "nome":
-        usuario.setnome(js.get("nome").getAsString());
+        usuario.setNome(js.get("nome").getAsString());
         break;
       case "acesso":
-        usuario.setacesso(js.get("acesso").getAsString());
+        usuario.setAcesso(js.get("acesso").getAsString());
         break;
       case "cep":
-        usuario.setcep(js.get("cep").getAsString());
+        usuario.setCep(js.get("cep").getAsString());
         break;
       case "cpf":
-        usuario.setcpf(js.get("cpf").getAsString());
+        usuario.setCpf(js.get("cpf").getAsString());
         break;
       case "logradouro":
-        usuario.setlogradouro(js.get("logradouro").getAsString());
+        usuario.setLogradouro(js.get("logradouro").getAsString());
         break;
       case "complemento":
-        usuario.setcomplemento(js.get("complemento").getAsString());
+        usuario.setComplemento(js.get("complemento").getAsString());
         break;
       case "bairro":
-        usuario.setbairro(js.get("bairro").getAsString());
+        usuario.setBairro(js.get("bairro").getAsString());
         break;
       case "cidade":
-        usuario.setcidade(js.get("cidade").getAsString());
+        usuario.setCidade(js.get("cidade").getAsString());
         break;
       case "uf":
-        usuario.setuf(js.get("uf").getAsString());
+        usuario.setUf(js.get("uf").getAsString());
         break;
       }
     }

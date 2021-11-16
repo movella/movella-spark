@@ -159,7 +159,7 @@ public class Main {
       return true;
 
     if (path.equals("/cadastrarmovel")
-        && (!hasSession || ((Usuario) session.attribute("user")).getacesso().equals("normal")))
+        && (!hasSession || ((Usuario) session.attribute("user")).getAcesso().equals("normal")))
       return true;
 
     if (!hasSession && path.contains("/api/"))

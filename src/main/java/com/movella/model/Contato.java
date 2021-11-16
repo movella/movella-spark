@@ -15,12 +15,12 @@ public class Contato {
   Timestamp data;
 
   public Contato() {
-    setid(0);
-    setnome(null);
-    setemail(null);
-    setassunto(null);
-    setmensagem(null);
-    setdata(null);
+    setId(0);
+    setNome(null);
+    setEmail(null);
+    setAssunto(null);
+    setMensagem(null);
+    setData(null);
   }
 
   public Contato( //
@@ -31,71 +31,71 @@ public class Contato {
       String mensagem, //
       Timestamp data //
   ) {
-    setid(id);
-    setnome(nome);
-    setemail(email);
-    setassunto(assunto);
-    setmensagem(mensagem);
-    setdata(data);
+    setId(id);
+    setNome(nome);
+    setEmail(email);
+    setAssunto(assunto);
+    setMensagem(mensagem);
+    setData(data);
   }
 
-  public int getid() {
+  public int getId() {
     return this.id;
   }
 
-  public String getnome() {
+  public String getNome() {
     return this.nome;
   }
 
-  public String getemail() {
+  public String getEmail() {
     return this.email;
   }
 
-  public String getassunto() {
+  public String getAssunto() {
     return this.assunto;
   }
 
-  public String getmensagem() {
+  public String getMensagem() {
     return this.mensagem;
   }
 
-  public Timestamp getdata() {
+  public Timestamp getData() {
     return this.data;
   }
 
-  public void setid(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public void setnome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
-  public void setemail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
-  public void setassunto(String assunto) {
+  public void setAssunto(String assunto) {
     this.assunto = assunto;
   }
 
-  public void setmensagem(String mensagem) {
+  public void setMensagem(String mensagem) {
     this.mensagem = mensagem;
   }
 
-  public void setdata(Timestamp data) {
+  public void setData(Timestamp data) {
     this.data = data;
   }
 
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 
-    jsonObject.addProperty("id", getid());
-    jsonObject.addProperty("nome", getnome());
-    jsonObject.addProperty("email", getemail());
-    jsonObject.addProperty("assunto", getassunto());
-    jsonObject.addProperty("mensagem", getmensagem());
-    jsonObject.addProperty("data", getdata().toString());
+    jsonObject.addProperty("id", getId());
+    jsonObject.addProperty("nome", getNome());
+    jsonObject.addProperty("email", getEmail());
+    jsonObject.addProperty("assunto", getAssunto());
+    jsonObject.addProperty("mensagem", getMensagem());
+    jsonObject.addProperty("data", getData().toString());
 
     return jsonObject;
   }
@@ -112,22 +112,22 @@ public class Contato {
 
       switch (uKey) {
       case "id":
-        contato.setid(js.get("id").getAsInt());
+        contato.setId(js.get("id").getAsInt());
         break;
       case "nome":
-        contato.setnome(js.get("nome").getAsString());
+        contato.setNome(js.get("nome").getAsString());
         break;
       case "email":
-        contato.setemail(js.get("email").getAsString());
+        contato.setEmail(js.get("email").getAsString());
         break;
       case "assunto":
-        contato.setassunto(js.get("assunto").getAsString());
+        contato.setAssunto(js.get("assunto").getAsString());
         break;
       case "mensagem":
-        contato.setmensagem(js.get("mensagem").getAsString());
+        contato.setMensagem(js.get("mensagem").getAsString());
         break;
       case "data":
-        contato.setdata(Timestamp.valueOf(js.get("data").getAsString()));
+        contato.setData(Timestamp.valueOf(js.get("data").getAsString()));
         break;
       }
     }

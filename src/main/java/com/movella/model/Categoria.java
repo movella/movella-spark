@@ -10,39 +10,39 @@ public class Categoria {
   String nome;
 
   public Categoria() {
-    setid(0);
-    setnome(null);
+    setId(0);
+    setNome(null);
   }
 
   public Categoria( //
       int id, //
       String nome //
   ) {
-    setid(id);
-    setnome(nome);
+    setId(id);
+    setNome(nome);
   }
 
-  public int getid() {
+  public int getId() {
     return id;
   }
 
-  public String getnome() {
+  public String getNome() {
     return nome;
   }
 
-  public void setid(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public void setnome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 
-    jsonObject.addProperty("id", getid());
-    jsonObject.addProperty("nome", getnome());
+    jsonObject.addProperty("id", getId());
+    jsonObject.addProperty("nome", getNome());
 
     return jsonObject;
   }
@@ -59,10 +59,10 @@ public class Categoria {
 
       switch (uKey) {
       case "id":
-        categoria.setid(js.get("id").getAsInt());
+        categoria.setId(js.get("id").getAsInt());
         break;
       case "nome":
-        categoria.setnome(js.get("nome").getAsString());
+        categoria.setNome(js.get("nome").getAsString());
         break;
       }
     }

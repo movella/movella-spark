@@ -40,7 +40,7 @@ public class CategoriaService {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-    if (!sessionUsuario.getacesso().equals("admin"))
+    if (!sessionUsuario.getAcesso().equals("admin"))
       return new Forbidden(res);
 
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();

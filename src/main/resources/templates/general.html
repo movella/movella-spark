@@ -97,7 +97,7 @@
               class="nav-link"
               th:if="${hasSession}"
               href="/cadastrarmovel"
-              th:classappend="|${user.getacesso() == 'normal' ? 'disabled' : ''} ${route == 'cadastrarmovel' ? 'active' : ''}|"
+              th:classappend="|${user.getAcesso() == 'normal' ? 'disabled' : ''} ${route == 'cadastrarmovel' ? 'active' : ''}|"
             >
               Cadastrar móvel
             </a>
@@ -131,8 +131,8 @@
             <div class="m-2">
               <a href="/perfil">
                 <img
-                  th:attr="alt=${user.getnome()}"
-                  th:src="${'/img/' + user.getfoto()}"
+                  th:attr="alt=${user.getNome()}"
+                  th:src="${'/img/' + user.getFoto()}"
                   style="
                     height: 50px;
                     width: 50px;
@@ -144,7 +144,7 @@
             </div>
             <div class="text-white">
               <a href="/perfil" class="text-white text-decoration-none">
-                <h5 class="mb-0" th:text="${user.getnome()}"></h5>
+                <h5 class="mb-0" th:text="${user.getNome()}"></h5>
               </a>
             </div>
           </div>

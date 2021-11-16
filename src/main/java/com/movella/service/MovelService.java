@@ -23,7 +23,7 @@ public class MovelService {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-    if (sessionUsuario.getacesso().equals("normal"))
+    if (sessionUsuario.getAcesso().equals("normal"))
       return new Forbidden(res);
 
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
@@ -69,7 +69,7 @@ public class MovelService {
     final double espessura = _espessura.getAsDouble();
 
     try {
-      MovelDAO.insert(categoriaId, sessionUsuario.getid(), descricao, "movel-default.png", nome, valorMes, true, altura,
+      MovelDAO.insert(categoriaId, sessionUsuario.getId(), descricao, "movel-default.png", nome, valorMes, true, altura,
           largura, espessura);
       return new Success(res, Localization.furnitureCreateSuccess);
     } catch (InvalidDataException e) {
@@ -83,7 +83,7 @@ public class MovelService {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-    if (!sessionUsuario.getacesso().equals("admin"))
+    if (!sessionUsuario.getAcesso().equals("admin"))
       return new Forbidden(res);
 
     try {
@@ -190,7 +190,7 @@ public class MovelService {
 
       final int maxId = MovelDAO.maxUploadId();
 
-      MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getid(), name);
+      MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getId(), name);
 
       return new Success(res, Localization.furniturePictureUploadSuccess);
     } catch (InvalidDataException e) {
