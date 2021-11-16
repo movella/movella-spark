@@ -89,7 +89,10 @@
                     <i class="fas fa-arrow-left"></i>
                     Cadastrar móvel
                   </a>
-                  <div class="card bg-primary text-white">
+                  <div
+                    class="card bg-primary text-white"
+                    th:if="${user.getacesso() == 'normal'}"
+                  >
                     <div class="card-body">
                       <span>
                         Adicione um cpf, endereço e celular para desbloquear sua
