@@ -136,12 +136,12 @@ public class MovelService {
     final String categoria = _categoria.getAsString();
     final String filtro = _filtro.getAsString();
     final Boolean disponivel = _filtro.getAsBoolean();
-    // final String order = _order.getAsString();
+    final String order = _order.getAsString();
 
     try {
       final JsonArray out = new JsonArray();
 
-      MovelDAO.pagination(limit, offset, categoria, filtro, disponivel).forEach((v) -> {
+      MovelDAO.pagination(limit, offset, categoria, filtro, disponivel, order).forEach((v) -> {
         out.add(v.toJson());
       });
 

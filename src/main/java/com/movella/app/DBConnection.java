@@ -53,9 +53,10 @@ public class DBConnection {
 
       st.execute();
       st.close();
-      connection.close();
     } catch (SQLException u) {
       throw new RuntimeException(u);
+    } finally {
+      connection.close();
     }
   }
 
@@ -88,6 +89,8 @@ public class DBConnection {
       st.close();
     } catch (Exception e) {
       System.err.println(e.getMessage());
+    } finally {
+      connection.close();
     }
 
     return out;
@@ -125,6 +128,8 @@ public class DBConnection {
       st.close();
     } catch (Exception e) {
       System.err.println(e.getMessage());
+    } finally {
+      connection.close();
     }
 
     return out;

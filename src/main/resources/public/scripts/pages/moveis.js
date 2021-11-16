@@ -97,6 +97,10 @@ $(() => {
     refresh()
   })
 
+  $('.ordem').on('change', () => {
+    refresh()
+  })
+
   fetch('/api/categorias').then(async (v) => {
     console.log(v)
 
@@ -152,7 +156,7 @@ const refresh = () => {
       categoria: $('#v-pills-tab > .active').text().replace(/\n/g, '').trim(),
       filtro: $('#filtro').val(),
       disponivel: $('#disponiveis').val() === 'on',
-      order: '',
+      order: $('.ordem:checked').val(),
     }),
     headers: { 'content-type': 'application/json' },
   }).then(async (v) => {
