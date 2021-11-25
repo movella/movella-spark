@@ -59,7 +59,7 @@ public class MovelDAO {
   }
 
   public static List<MovelPaginado> pagination(int limit, int offset, String categoria, String filtro,
-      Boolean disponivel, String order) throws Exception {
+      Boolean disponivel, String order, String usuarioNome) throws Exception {
     final String disponivelClause = disponivel ? "'disponivel'" : "true";
     final String categoriaClause = categoria.equals("Todos") ? "true" : String.format("categoria = '%s'", categoria);
     final String filterClause = filtro.length() == 0 ? "true"
@@ -67,9 +67,9 @@ public class MovelDAO {
     final String orderClause = order;
 
     final List<JsonObject> res = DBConnection.query(String.format(
-        "select * from view_movel where %s and %s and %s order by %s limit cast(? as integer) offset cast(? as integer)",
+        "select *, usuarionome = ? as seu from view_movel where %s and %s and %s order by %s limit cast(? as integer) offset cast(? as integer)",
         disponivelClause, filterClause, categoriaClause, orderClause),
-        new String[] { String.valueOf(limit), String.valueOf(offset) });
+        new String[] { usuarioNome, String.valueOf(limit), String.valueOf(offset) });
     final List<MovelPaginado> moveis = new ArrayList<MovelPaginado>();
 
     res.forEach((v) -> {

@@ -3,7 +3,9 @@
 /// <reference path="index.d.ts" />
 /// <reference path="common.js" />
 
-// const { default: Swal } = require('sweetalert2')
+try {
+  const { default: Swal } = require('sweetalert2')
+} catch (error) {}
 
 $(() => {
   $('#valorMes').on('change', function () {

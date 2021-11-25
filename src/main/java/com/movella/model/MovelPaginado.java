@@ -17,6 +17,7 @@ public class MovelPaginado {
   public String cidade = "";
   public double avaliacao = 0;
   public int avaliacoes = 0;
+  public boolean seu = false;
 
   public MovelPaginado() {
   }
@@ -32,7 +33,8 @@ public class MovelPaginado {
       int id, //
       String cidade, //
       double avaliacao, //
-      int avaliacoes //
+      int avaliacoes, //
+      boolean seu //
   ) {
     this.usuarionome = usuarionome;
     this.categoria = categoria;
@@ -45,6 +47,7 @@ public class MovelPaginado {
     this.cidade = cidade;
     this.avaliacao = avaliacao;
     this.avaliacoes = avaliacoes;
+    this.seu = seu;
   }
 
   public String getUsuarioNome() {
@@ -91,6 +94,10 @@ public class MovelPaginado {
     return this.avaliacoes;
   }
 
+  public boolean getSeu() {
+    return this.seu;
+  }
+
   public void setUsuarioNome(String str) {
     this.usuarionome = str;
   }
@@ -135,6 +142,10 @@ public class MovelPaginado {
     this.avaliacoes = str;
   }
 
+  public void setSeu(boolean seu) {
+    this.seu = seu;
+  }
+
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 
@@ -149,6 +160,7 @@ public class MovelPaginado {
     jsonObject.addProperty("cidade", cidade);
     jsonObject.addProperty("avaliacao", avaliacao);
     jsonObject.addProperty("avaliacoes", avaliacoes);
+    jsonObject.addProperty("seu", seu);
 
     return jsonObject;
   }
@@ -196,6 +208,9 @@ public class MovelPaginado {
         break;
       case "avaliacoes":
         movel.avaliacoes = js.get("avaliacoes").getAsInt();
+        break;
+      case "seu":
+        movel.seu = js.get("seu").getAsBoolean();
         break;
       }
     }

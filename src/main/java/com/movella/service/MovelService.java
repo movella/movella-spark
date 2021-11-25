@@ -139,6 +139,16 @@ public class MovelService {
     final String order = _order.getAsString();
 
     try {
+      String usuarioNome = "";
+
+      try {
+        final Session session = req.session();
+        final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+        usuarioNome = sessionUsuario.getNome();
+      } catch (Exception e) {
+      }
+
       final JsonObject out = new JsonObject();
 
       final JsonArray array = new JsonArray();
@@ -148,7 +158,7 @@ public class MovelService {
       out.add("moveis", array);
       out.addProperty("qntPages", qntPages);
 
-      MovelDAO.pagination(limit, offset, categoria, filtro, disponivel, order).forEach((v) -> {
+      MovelDAO.pagination(limit, offset, categoria, filtro, disponivel, order, usuarioNome).forEach((v) -> {
         array.add(v.toJson());
       });
 

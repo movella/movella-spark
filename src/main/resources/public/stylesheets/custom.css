@@ -22,3 +22,14 @@ html {
 :hover::-webkit-scrollbar-thumb {
   visibility: visible;
 }
+
+.movel > .card {
+  cursor: pointer;
+}
+
+.movel:hover > .card {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 10px 8px #888888;
+}

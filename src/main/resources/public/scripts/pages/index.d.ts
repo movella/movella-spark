@@ -37,4 +37,5 @@ type MovelPaginado = {
   cidade: string
   avaliacao: number
   avaliacoes: number
+  seu: boolean
 }

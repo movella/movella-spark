@@ -3,103 +3,28 @@
 /// <reference path="index.d.ts" />
 /// <reference path="common.js" />
 
-// const { default: Swal } = require('sweetalert2')
+try {
+  const { default: Swal } = require('sweetalert2')
+} catch (error) {}
 
 let offset = 0
 
 $(() => {
-  // $('#valorMes').on('change', function () {
-  //   let val = $(this).val()
-  //   val = numeral(val).format('$0.00').replace('$', '').replace('.', ',')
-  //   $(this).val(val)
-  // })
-
-  // $('#foto').on('change', function () {
-  //   if (this.files && this.files[0]) {
-  //     const reader = new FileReader()
-  //     reader.onload = (e) => $('#imagem').attr('src', e.target.result)
-  //     reader.readAsDataURL(this.files[0])
-  //   }
-  // })
-
-  // $('#form').on('submit', (e) => {
-  //   let body = {}
-
-  //   $('#form')
-  //     .serializeArray()
-  //     .forEach((v) => {
-  //       body[v.name] = v.value
-  //     })
-
-  //   fetch('/api/movel/create', {
-  //     method: 'post',
-  //     body: JSON.stringify(body),
-  //     headers: { 'content-type': 'application/json' },
-  //   }).then(async (v) => {
-  //     console.log(v)
-
-  //     if (v.status === 200) {
-  //       const data = await v.json()
-
-  //       Swal.fire({
-  //         title: 'Sucesso',
-  //         icon: 'success',
-  //         text: data['message'],
-  //       }).then((v) => {
-  //         location = '/'
-  //       })
-  //     } else if (v.status == 400) {
-  //       const data = await v.json()
-
-  //       Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
-  //     } else {
-  //       Swal.fire({
-  //         title: 'Atenção',
-  //         icon: 'error',
-  //         text: 'Dados inválidos',
-  //       })
-  //     }
-  //   })
-
-  //   return e.preventDefault() ?? false
-  // })
-
-  // fetch('/api/categorias').then(async (v) => {
-  //   console.log(v)
-
-  //   if (v.status === 200) {
-  //     /**
-  //      * @type {Categoria[]}
-  //      */
-  //     const data = await v.json()
-
-  //     $('#categoria').append(
-  //       data.map((v) => {
-  //         return /* html */ `<option value="${v.id}">${v.nome}</option>`
-  //       })
-  //     )
-  //   } else if (v.status == 400) {
-  //     const data = await v.json()
-
-  //     Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
-  //   } else {
-  //     Swal.fire({
-  //       title: 'Atenção',
-  //       icon: 'error',
-  //       text: 'Houve um erro inesperado',
-  //     })
-  //   }
-  // })
-
   $('#quantidade, #disponiveis').on('change', () => {
+    offset = 0
+
     refresh()
   })
 
   $('#filtro').on('keyup', () => {
+    offset = 0
+
     refresh()
   })
 
   $('.ordem').on('change', () => {
+    offset = 0
+
     refresh()
   })
 
@@ -131,6 +56,8 @@ $(() => {
       )
 
       $('#v-pills-tab > a').on('click', () => {
+        offset = 0
+
         refresh()
       })
     } else if (v.status == 400) {
@@ -201,13 +128,18 @@ const refresh = () => {
           })
         )
 
-        if ((offset + 6) / parseInt($('#quantidade').val()) !== data.qntPages) {
+        if (
+          (offset + parseInt($('#quantidade').val())) /
+            parseInt($('#quantidade').val()) !==
+          data.qntPages
+        ) {
           $('#pagination').append(/* html */ `
            <li class="page-item next" data-role="next">
              <a class="page-link" href="#">Próximo</a>
            </li>
           `)
         }
+
         $('.next').on('click', function () {
           offset += parseInt($('#quantidade').val())
           refresh()
@@ -227,7 +159,14 @@ const refresh = () => {
         $('#moveis').append(
           data.moveis.map((v) => {
             return /* html */ `
-              <div class="col-6 col-md-4 p-1 movel">
+              <div class="col-6 col-md-4 p-1 movel"
+              data-nome="${v.nome}"
+              data-por="${v.usuarionome}"
+              data-disponivel="${v.disponivel}"
+              data-seu="${v.seu}"
+              data-localidade="${v.cidade}"
+              data-valor="${v.valormes}"
+              >
                 <div class="card h-100">
                   <img
                     class="card-img-top"
@@ -254,6 +193,94 @@ const refresh = () => {
             `
           })
         )
+
+        $('.movel').on('click', async function () {
+          const movel = $(this)
+
+          const nome = movel.data('nome')
+          const por = movel.data('por')
+          const seu = Boolean(movel.data('seu'))
+          const localidade = movel.data('localidade')
+          const valor = parseInt(movel.data('valor'))
+          const disponivel = Boolean(movel.data('disponivel') && !seu)
+
+          const res = await Swal.fire({
+            title: nome,
+            showCancelButton: true,
+            cancelButtonText: 'Voltar',
+            confirmButtonText: 'Alugar',
+            showConfirmButton: disponivel,
+            input: disponivel && 'number',
+            footer: /* html */ `<small>Por: ${por}</small>`,
+            inputLabel: disponivel && 'Por quantos dias deseja alugar?',
+            imageUrl:
+              'http://localhost/img/fe0d1bb8-5ff4-4033-93f0-5b7a59329f12',
+            inputValidator: (result) => {
+              result = parseInt(result)
+              if (result <= 0 || result > 90) return 'Quantidade inválida'
+            },
+            preConfirm: (inputValue) => {
+              return inputValue
+            },
+            inputAttributes: {
+              max: 90,
+            },
+            didOpen: (popup) => {
+              const el = $(popup)
+
+              el.find('#swal2-input').on('keyup', function () {
+                const input = $(this)
+                const dias = parseInt(input.val())
+
+                if (typeof dias !== 'number') return
+
+                $('#valor-total').text(formataValor(valor * dias))
+                try {
+                } catch (error) {}
+              })
+            },
+            html: /* html */ `
+            <b>
+              ${
+                seu
+                  ? ''
+                  : /* html */ `
+                  <p class="text-${disponivel ? 'success' : 'danger'}">
+                    ${disponivel ? 'Disponível' : 'Indisponível'}
+                  </p>
+                  `
+              }
+              <table class="w-100">
+                <tr>
+                  <td class="text-start"><small>Valor por mês</small></td>
+                  <td class="text-end">
+                    <small>${formataValor(valor)}</small>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-start"><small>Localidade</small></td>
+                  <td class="text-end"><small>${localidade}</small></td>
+                </tr>
+                <tr>
+                  <td class="text-start"><small>Valor total</small></td>
+                  <td class="text-end">
+                    <small id="valor-total">${formataValor(0)}</small>
+                  </td>
+                </tr>
+              </table>
+              <hr />
+            </b>
+            `,
+          })
+
+          if (res.isConfirmed)
+            Swal.fire({
+              icon: 'success',
+              title: 'Aluguel realizado!',
+            }).then(() => {
+              location = '/'
+            })
+        })
       }
     } else if (v.status == 400) {
       const data = await v.json()
