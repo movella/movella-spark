@@ -137,7 +137,7 @@ public class MovelService {
     final String filtro = _filtro.getAsString();
     final Boolean disponivel = _filtro.getAsBoolean();
     final String order = _order.getAsString();
-    
+
     try {
       final JsonObject out = new JsonObject();
 

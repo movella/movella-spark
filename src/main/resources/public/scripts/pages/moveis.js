@@ -180,15 +180,13 @@ const refresh = () => {
         `)
       else {
         if (offset !== 0) {
-          $('#pagination').append(
-            /* html */ `
+          $('#pagination').append(/* html */ `
            <li class="page-item previous" data-role="previous">
              <a class="page-link" href="#">Anterior</a>
            </li>
-          `
-          )
+          `)
         }
-        
+
         $('#pagination').append(
           new Array(data.qntPages).fill(true).map((v, k) => {
             return /* html */ `
@@ -202,28 +200,27 @@ const refresh = () => {
             `
           })
         )
-        
-        if ((offset + 6)/parseInt($('#quantidade').val()) !== data.qntPages) {
-          $('#pagination').append(
-            /* html */ `
+
+        if ((offset + 6) / parseInt($('#quantidade').val()) !== data.qntPages) {
+          $('#pagination').append(/* html */ `
            <li class="page-item next" data-role="next">
              <a class="page-link" href="#">Próximo</a>
            </li>
-          `
-         )
+          `)
         }
-        $('.next').on('click', function() {
-          offset += parseInt($('#quantidade').val());
+        $('.next').on('click', function () {
+          offset += parseInt($('#quantidade').val())
           refresh()
         })
-        $('.previous').on('click', function() {
-          offset -= parseInt($('#quantidade').val());
+        $('.previous').on('click', function () {
+          offset -= parseInt($('#quantidade').val())
           refresh()
         })
-        $('.item').on('click', function() {
-          
-          offset = (parseInt($(this).find('a').text()) - 1) * parseInt($('#quantidade').val())
-          
+        $('.item').on('click', function () {
+          offset =
+            (parseInt($(this).find('a').text()) - 1) *
+            parseInt($('#quantidade').val())
+
           refresh()
         })
 
