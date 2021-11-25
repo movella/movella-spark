@@ -5,6 +5,8 @@
 
 // const { default: Swal } = require('sweetalert2')
 
+let offset = 0
+
 $(() => {
   // $('#valorMes').on('change', function () {
   //   let val = $(this).val()
@@ -152,7 +154,7 @@ const refresh = () => {
     method: 'post',
     body: JSON.stringify({
       limit: parseInt($('#quantidade').val()),
-      offset: 0,
+      offset: offset,
       categoria: $('#v-pills-tab > .active').text().replace(/\n/g, '').trim(),
       filtro: $('#filtro').val(),
       disponivel: $('#disponiveis').val() === 'on',
@@ -164,21 +166,69 @@ const refresh = () => {
 
     if (v.status === 200) {
       /**
-       * @type {MovelPaginado[]}
+       * @type {{moveis: MovelPaginado[], qntPages: number}}
        */
       const data = await v.json()
 
-      $('#moveis').html('')
+      $('#moveis, #pagination').html('')
 
-      if (data.length === 0)
+      if (data.moveis.length === 0)
         $('#moveis').append(/* html */ `
           <div class="p-4 text-center">
             <small>Nenhum móvel encontrado</small>
           </div>
         `)
-      else
+      else {
+        if (offset !== 0) {
+          $('#pagination').append(
+            /* html */ `
+           <li class="page-item previous" data-role="previous">
+             <a class="page-link" href="#">Anterior</a>
+           </li>
+          `
+          )
+        }
+        
+        $('#pagination').append(
+          new Array(data.qntPages).fill(true).map((v, k) => {
+            return /* html */ `
+            <li
+              class="page-item item"
+              data-role="page"
+              data-page="${k + 1}"
+            >
+              <a class="page-link" href="#">${k + 1}</a>
+            </li>
+            `
+          })
+        )
+        
+        if ((offset + 6)/parseInt($('#quantidade').val()) !== data.qntPages) {
+          $('#pagination').append(
+            /* html */ `
+           <li class="page-item next" data-role="next">
+             <a class="page-link" href="#">Próximo</a>
+           </li>
+          `
+         )
+        }
+        $('.next').on('click', function() {
+          offset += parseInt($('#quantidade').val());
+          refresh()
+        })
+        $('.previous').on('click', function() {
+          offset -= parseInt($('#quantidade').val());
+          refresh()
+        })
+        $('.item').on('click', function() {
+          
+          offset = (parseInt($(this).find('a').text()) - 1) * parseInt($('#quantidade').val())
+          
+          refresh()
+        })
+
         $('#moveis').append(
-          data.map((v) => {
+          data.moveis.map((v) => {
             return /* html */ `
               <div class="col-6 col-md-4 p-1 movel">
                 <div class="card h-100">
@@ -207,6 +257,7 @@ const refresh = () => {
             `
           })
         )
+      }
     } else if (v.status == 400) {
       const data = await v.json()
 

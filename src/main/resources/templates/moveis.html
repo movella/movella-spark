@@ -121,21 +121,6 @@
               >
                 <nav aria-label="Paginacao">
                   <ul id="pagination" class="pagination mt-2">
-                    <li class="page-item" data-role="previous">
-                      <a class="page-link" href="/">Anterior</a>
-                    </li>
-                    <li
-                      th:each="item: ${new int[]{1, 2, 3, 4}}"
-                      class="page-item"
-                      th:classappend="${item} == 1 ? active"
-                      data-role="page"
-                      data-page="${item}"
-                    >
-                      <a class="page-link" th:text="${item}" href="/"></a>
-                    </li>
-                    <li class="page-item" data-role="next">
-                      <a class="page-link" href="/">Próximo</a>
-                    </li>
                   </ul>
                 </nav>
                 <nav class="mb-3" aria-label="Filtro">

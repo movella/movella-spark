@@ -137,12 +137,19 @@ public class MovelService {
     final String filtro = _filtro.getAsString();
     final Boolean disponivel = _filtro.getAsBoolean();
     final String order = _order.getAsString();
-
+    
     try {
-      final JsonArray out = new JsonArray();
+      final JsonObject out = new JsonObject();
+
+      final JsonArray array = new JsonArray();
+
+      final int qntPages = MovelDAO.getPages(limit, offset, categoria, filtro, disponivel, order);
+
+      out.add("moveis", array);
+      out.addProperty("qntPages", qntPages);
 
       MovelDAO.pagination(limit, offset, categoria, filtro, disponivel, order).forEach((v) -> {
-        out.add(v.toJson());
+        array.add(v.toJson());
       });
 
       return new Success(res, out);

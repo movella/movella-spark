@@ -81,4 +81,20 @@ public class MovelDAO {
 
     return moveis;
   }
+
+  public static int getPages(int limit, int offset, String categoria, String filtro,
+      Boolean disponivel, String order) throws Exception {
+    final String disponivelClause = disponivel ? "'disponivel'" : "true";
+    final String categoriaClause = categoria.equals("Todos") ? "true" : String.format("categoria = '%s'", categoria);
+    final String filterClause = filtro.length() == 0 ? "true"
+        : String.format("lower(nome) like lower('%%%s%%')", filtro);
+
+    final JsonObject res = DBConnection.queryOne(String.format(
+        "select count(*) as qnt from view_movel where %s and %s and %s",
+        disponivelClause, filterClause, categoriaClause),
+        new String[] {});
+    final int qntPages = (int) Math.ceil(res.get("qnt").getAsInt()/(float) limit);
+    
+    return qntPages;
+  }
 }
