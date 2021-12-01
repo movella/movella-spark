@@ -12,7 +12,7 @@ import com.movella.utils.Localization;
 
 public class MovelDAO {
   public static Movel read(int id) throws Exception {
-    final JsonObject res = DBConnection.queryOne("select * from tbl_movel where id = ?",
+    final JsonObject res = DBConnection.queryOne("select * from tbl_movel where id = cast(? as integer)",
         new String[] { String.valueOf(id) });
 
     if (res == null)

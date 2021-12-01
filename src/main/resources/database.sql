@@ -384,35 +384,3 @@ CREATE VIEW view_usuario AS
         tbl_usuario u
         LEFT JOIN tbl_avaliacao a ON a.avaliadoId = u.id
     GROUP BY nome, email, celular, foto, cep, logradouro, complemento, bairro, cidade, uf, acesso;
-
-CREATE OR REPLACE FUNCTION update_aluguel()
-RETURNS TRIGGER
-AS
-$$
-DECLARE
-  descricao TEXT;
-  imagem TEXT;
-  nome TEXT;
-  valorMes REAL;
-BEGIN
-	SELECT
-    descricao,
-    imagem,
-    nome,
-    valorMes
-  INTO
-    descricao,
-    imagem,
-    nome,
-    valorMes
-  FROM tbl_movel m
-  WHERE m.id = new.movelId;
-
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_aluguel_insert
-BEFORE INSERT ON tbl_aluguel
-FOR EACH ROW
-EXECUTE PROCEDURE update_aluguel();
