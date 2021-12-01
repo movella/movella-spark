@@ -209,12 +209,11 @@ const refresh = () => {
             showCancelButton: true,
             cancelButtonText: 'Voltar',
             confirmButtonText: 'Alugar',
+            imageUrl: `/img/${v.imagem}`,
             showConfirmButton: disponivel,
             input: disponivel && 'number',
             footer: /* html */ `<small>Por: ${por}</small>`,
             inputLabel: disponivel && 'Por quantos dias deseja alugar?',
-            imageUrl:
-              'http://localhost/img/fe0d1bb8-5ff4-4033-93f0-5b7a59329f12',
             inputValidator: (result) => {
               result = parseInt(result)
               if (result <= 0 || result > 90) return 'Quantidade inválida'

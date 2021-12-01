@@ -29,6 +29,8 @@ public class AluguelService {
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
     final JsonElement _movel = body.get("movel");
+    final JsonElement _dias = body.get("dias");
+    final JsonElement _pagamento = body.get("pagamento");
 
     // TODO: fix, falta checar se é int ou string
     // TODO: fix tudo
@@ -36,10 +38,18 @@ public class AluguelService {
     if (_movel == null)
       return new BadRequest(res, Localization.invalidFurniture);
 
+    if (_dias == null)
+      return new BadRequest(res, Localization.invalidDays);
+
+    if (_pagamento == null)
+      return new BadRequest(res, Localization.invalidPayment);
+
+    final int dias = _dias.getAsInt();
     final int movelId = _movel.getAsInt();
+    final int pagamento = _pagamento.getAsInt();
     final int usuarioId = sessionUsuario.getId();
     final Timestamp dataInicio = Timestamp.valueOf(LocalDateTime.now());
-    final Timestamp dataFim = Timestamp.valueOf(LocalDateTime.now().plusDays(1));
+    final Timestamp dataFim = Timestamp.valueOf(LocalDateTime.now().plusDays(dias));
     final double valorFrete = 20;
     final String chavePagamento = "aaa";
     // final double valorFrete = Double
@@ -47,6 +57,8 @@ public class AluguelService {
     // "").replace("!", "."));
 
     try {
+      // TODO: fix pagamento
+
       final Movel movel = MovelDAO.read(movelId);
 
       final String descricao = movel.getDescricao();

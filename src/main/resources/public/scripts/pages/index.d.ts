@@ -39,3 +39,14 @@ type MovelPaginado = {
   avaliacoes: number
   seu: boolean
 }
+
+type Pagamento = {
+  id: number
+  tipo: string
+  chave: stirng
+  usuarioId: number
+}
+
+type BaseResponse = {
+  message: string
+}

@@ -10,6 +10,7 @@ public class Localization {
   public final static String rentalNotFound = "Aluguel não encontrado.";
   public final static String contactNotFound = "Contato não encontrado.";
   public final static String furnitureNotFound = "Móvel não encontrado.";
+  public final static String paymentNotFound = "Pagamento não encontrado.";
   public final static String categoryNotFound = "Categoria não encontrada.";
 
   public final static String userUpdateError = "Dados inválidos.";
@@ -19,6 +20,7 @@ public class Localization {
   public final static String invalidId = "ID inválido.";
   public final static String invalidCpf = "CPF inválido.";
   public final static String invalidCep = "CEP inválido.";
+  public final static String invalidKey = "Chave inválida.";
   public final static String invalidName = "Nome inválido.";
   public final static String invalidOrder = "Ordem inválida.";
   public final static String invalidEmail = "Email inválido.";
@@ -34,10 +36,12 @@ public class Localization {
   public final static String invalidSubject = "Assunto inválido.";
   public final static String invalidFurniture = "Móvel inválido.";
   public final static String invalidMessage = "Mensagem inválida.";
+  public final static String invalidPayment = "Pagamento inválido.";
   public final static String invalidCategory = "Categoria inválida.";
   public final static String invalidThickness = "Espessura inválida.";
   public final static String invalidDescription = "Descrição inválida.";
   public final static String invalidMonthlyValue = "Valor mês inválido.";
+  public final static String invalidDays = "Quantidade de dias inválida.";
   public final static String invalidComplemento = "Complemento inválido.";
   public final static String invalidDisponivel = "Disponibilidade inválida.";
 
@@ -48,5 +52,8 @@ public class Localization {
   public final static String furniturePictureUploadSuccess = "Imagem enviada!";
   public final static String userUpdateSuccess = "Dados atualizados com sucesso!";
   public final static String rentCreateSuccess = "Aluguel realizado com sucesso!";
+  public final static String paymentCreateSuccess = "Pagamento cadastrado com sucesso!";
   public final static String contactCreateSuccess = "Contato registrado. Obrigado pelo feedback!";
+
+  public final static String paymentDeleteSuccess = "Pagamento removido com sucesso!";
 }

@@ -13,6 +13,7 @@ import com.movella.service.AluguelService;
 import com.movella.service.CategoriaService;
 import com.movella.service.ContatoService;
 import com.movella.service.MovelService;
+import com.movella.service.PagamentoService;
 import com.movella.service.UsuarioService;
 
 import spark.ModelAndView;
@@ -131,6 +132,14 @@ public class Main {
         post("/movel/upload/:id", MovelService.upload);
 
         post("/alugar", AluguelService.create);
+
+        post("/pagamento/create", PagamentoService.create);
+
+        get("/pagamento/all", PagamentoService.all);
+
+        get("/pagamentos", PagamentoService.list);
+
+        post("/pagamento/delete", PagamentoService.delete);
       });
 
       System.out.println(String.format("listening on port %d", port));

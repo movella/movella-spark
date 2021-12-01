@@ -180,20 +180,20 @@ public class Aluguel {
         case "id":
           aluguel.setid(js.get("id").getAsInt());
           break;
-        case "movelId":
-          aluguel.setmovelId(js.get("movelId").getAsInt());
+        case "movelid":
+          aluguel.setmovelId(js.get("movelid").getAsInt());
           break;
-        case "usuarioId":
-          aluguel.setusuarioId(js.get("usuarioId").getAsInt());
+        case "usuarioid":
+          aluguel.setusuarioId(js.get("usuarioid").getAsInt());
           break;
-        case "dataInicio":
-          aluguel.setdataInicio(Timestamp.valueOf(js.get("dataInicio").getAsString()));
+        case "datainicio":
+          aluguel.setdataInicio(Timestamp.valueOf(js.get("datainicio").getAsString()));
           break;
-        case "dataFim":
-          aluguel.setdataFim(Timestamp.valueOf(js.get("dataFim").getAsString()));
+        case "datafim":
+          aluguel.setdataFim(Timestamp.valueOf(js.get("datafim").getAsString()));
           break;
-        case "valorFrete":
-          aluguel.setvalorFrete(js.get("valorFrete").getAsDouble());
+        case "valorfrete":
+          aluguel.setvalorFrete(js.get("valorfrete").getAsDouble());
           break;
         case "descricao":
           aluguel.setdescricao(js.get("descricao").getAsString());
@@ -204,11 +204,11 @@ public class Aluguel {
         case "nome":
           aluguel.setnome(js.get("nome").getAsString());
           break;
-        case "valorMes":
-          aluguel.setvalorMes(js.get("valorMes").getAsDouble());
+        case "valormes":
+          aluguel.setvalorMes(js.get("valormes").getAsDouble());
           break;
-        case "chavePagamento":
-          aluguel.setchavePagamento(js.get("chavePagamento").getAsString());
+        case "chavepagamento":
+          aluguel.setchavePagamento(js.get("chavepagamento").getAsString());
           break;
       }
     }
