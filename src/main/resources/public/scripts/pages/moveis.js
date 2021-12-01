@@ -166,6 +166,7 @@ const refresh = () => {
               data-seu="${v.seu}"
               data-localidade="${v.cidade}"
               data-valor="${v.valormes}"
+              data-imagem="${v.imagem}"
               >
                 <div class="card h-100">
                   <img
@@ -203,13 +204,14 @@ const refresh = () => {
           const localidade = movel.data('localidade')
           const valor = parseInt(movel.data('valor'))
           const disponivel = Boolean(movel.data('disponivel') && !seu)
+          const imagem = movel.data('imagem')
 
           const res = await Swal.fire({
             title: nome,
             showCancelButton: true,
+            imageUrl: `/img/${imagem}`,
             cancelButtonText: 'Voltar',
             confirmButtonText: 'Alugar',
-            imageUrl: `/img/${v.imagem}`,
             showConfirmButton: disponivel,
             input: disponivel && 'number',
             footer: /* html */ `<small>Por: ${por}</small>`,
