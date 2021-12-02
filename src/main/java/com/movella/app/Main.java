@@ -115,6 +115,8 @@ public class Main {
 
         post("/alugar", AluguelService.create);
 
+        get("/aluguel/all", AluguelService.all);
+
         get("/categorias", CategoriaService.all);
 
         post("/contato/create", ContatoService.create);
@@ -138,6 +140,8 @@ public class Main {
         // admin
 
         get("/admin/aluguel/all", AluguelService.adminAll);
+
+        post("/admin/aluguel/delete", AluguelService.adminDelete);
 
         post("/admin/categoria/create", CategoriaService.adminCreate);
 

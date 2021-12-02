@@ -31,6 +31,8 @@ $(() => {
         body[v.name] = v.value
       })
 
+    // Swal.showLoading()
+
     fetch('/api/movel/create', {
       method: 'post',
       body: JSON.stringify(body),
@@ -38,10 +40,18 @@ $(() => {
     }).then(async (v) => {
       console.log(v)
 
+      // Swal.close()
+
+      console.log(v.status)
+
       if (v.status === 200) {
         const data = await v.json()
 
+        console.log(data)
+
         await upload()
+
+        console.log(432432)
 
         Swal.fire({
           title: 'Sucesso',
@@ -100,38 +110,48 @@ const upload = async () => {
    */
   const input = document.getElementById('foto')
 
+  const files = input.files
+
+  if (files.length === 0) return
+
   const str = await getBase64(input.files[0])
+
+  console.log(1111111111)
 
   await fetch('/api/movel/upload/0', {
     body: str,
     method: 'post',
-  }).then(async (v) => {
-    console.log(v)
-
-    // todo, fix
-    // if (v.status === 200) {
-    //   /**
-    //    * @type {Categoria[]}
-    //    */
-    //   const data = await v.json()
-
-    //   $('#categoria').append(
-    //     data.map((v) => {
-    //       return /* html */ `<option value="${v.id}">${v.nome}</option>`
-    //     })
-    //   )
-    // } else if (v.status == 400) {
-    //   const data = await v.json()
-
-    //   Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
-    // } else {
-    //   Swal.fire({
-    //     title: 'Atenção',
-    //     icon: 'error',
-    //     text: 'Houve um erro inesperado',
-    //   })
-    // }
   })
+    .then(async (v) => {
+      console.log(v)
+
+      console.log(222222222222)
+
+      // todo, fix
+      // if (v.status === 200) {
+      //   /**
+      //    * @type {Categoria[]}
+      //    */
+      //   const data = await v.json()
+
+      //   $('#categoria').append(
+      //     data.map((v) => {
+      //       return /* html */ `<option value="${v.id}">${v.nome}</option>`
+      //     })
+      //   )
+      // } else if (v.status == 400) {
+      //   const data = await v.json()
+
+      //   Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+      // } else {
+      //   Swal.fire({
+      //     title: 'Atenção',
+      //     icon: 'error',
+      //     text: 'Houve um erro inesperado',
+      //   })
+      // }
+    })
+    .catch(console.log)
 }
 
 /**
@@ -141,7 +161,9 @@ const upload = async () => {
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.readAsDataURL(file)
+    try {
+      reader.readAsDataURL(file)
+    } catch (error) {}
 
     reader.onload = () => {
       let encoded = reader.result.toString().replace(/^data:(.*,)?/, '')

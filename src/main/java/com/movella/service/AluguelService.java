@@ -35,9 +35,6 @@ public class AluguelService {
     final JsonElement _dias = body.get("dias");
     final JsonElement _pagamento = body.get("pagamento");
 
-    // TODO: fix, falta checar se é int ou string
-    // TODO: fix tudo
-
     if (_movel == null)
       return new BadRequest(res, Localization.invalidFurniture);
 
@@ -102,122 +99,54 @@ public class AluguelService {
     }
   };
 
-  // public static Route pagination = (Request req, Response res) -> {
-  // final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+  public static Route all = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-  // final JsonElement _limit = body.get("limit");
-  // final JsonElement _offset = body.get("offset");
-  // final JsonElement _categoria = body.get("categoria");
-  // final JsonElement _filtro = body.get("filtro");
-  // final JsonElement _disponivel = body.get("disponivel");
-  // final JsonElement _order = body.get("order");
+    if (sessionUsuario.getAcesso().equals("normal"))
+      return new Forbidden(res);
 
-  // // TODO: fix, falta checar se é int ou string
+    final int id = sessionUsuario.getId();
 
-  // if (_limit == null)
-  // return new BadRequest(res, Localization.invalidLimit);
+    try {
+      final JsonArray out = new JsonArray();
 
-  // if (_offset == null)
-  // return new BadRequest(res, Localization.invalidOffset);
+      AluguelDAO.all(id).forEach((v) -> {
+        out.add(v.toJson());
+      });
 
-  // if (_categoria == null)
-  // return new BadRequest(res, Localization.invalidCategory);
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
 
-  // if (_filtro == null)
-  // return new BadRequest(res, Localization.invalidFilter);
+  public static Route adminDelete = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-  // if (_disponivel == null)
-  // return new BadRequest(res, Localization.invalidDisponivel);
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
 
-  // if (_order == null)
-  // return new BadRequest(res, Localization.invalidOrder);
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
-  // final int limit = _limit.getAsInt();
-  // final int offset = _offset.getAsInt();
-  // final String categoria = _categoria.getAsString();
-  // final String filtro = _filtro.getAsString();
-  // final Boolean disponivel = _filtro.getAsBoolean();
-  // final String order = _order.getAsString();
+    final JsonElement _id = body.get("id");
 
-  // try {
-  // String usuarioNome = "";
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
 
-  // try {
-  // final Session session = req.session();
-  // final Usuario sessionUsuario = (Usuario) session.attribute("user");
+    final int id = _id.getAsInt();
 
-  // usuarioNome = sessionUsuario.getNome();
-  // } catch (Exception e) {
-  // }
+    try {
+      AluguelDAO.delete(id);
 
-  // final JsonObject out = new JsonObject();
-
-  // final JsonArray array = new JsonArray();
-
-  // final int qntPages = MovelDAO.getPages(limit, offset, categoria, filtro,
-  // disponivel, order);
-
-  // out.add("moveis", array);
-  // out.addProperty("qntPages", qntPages);
-
-  // MovelDAO.pagination(limit, offset, categoria, filtro, disponivel, order,
-  // usuarioNome).forEach((v) -> {
-  // array.add(v.toJson());
-  // });
-
-  // return new Success(res, out);
-  // } catch (InvalidDataException e) {
-  // return new BadRequest(res, e.message);
-  // } catch (RuntimeException e) {
-  // return new BadRequest(res);
-  // }
-  // };
-
-  // public static Route upload = (Request req, Response res) -> {
-  // final Session session = req.session();
-  // final Usuario sessionUsuario = (Usuario) session.attribute("user");
-
-  // final String _id = req.params("id");
-
-  // final String body = req.body();
-
-  // if (_id == null)
-  // return new BadRequest(res, Localization.invalidId);
-
-  // int id;
-
-  // try {
-  // id = Integer.parseInt(_id);
-  // } catch (Exception e) {
-  // return new BadRequest(res, Localization.invalidId);
-  // }
-
-  // try {
-  // final String name = UUID.randomUUID().toString();
-
-  // final String treatedBody = body.replaceAll(".+,(.+)", "$1");
-
-  // try {
-  // final byte[] bytes = Base64.getDecoder().decode(treatedBody);
-
-  // final FileOutputStream f = new
-  // FileOutputStream(String.format("src/main/resources/public/img/%s", name));
-
-  // f.write(bytes);
-  // f.close();
-  // } catch (Exception e) {
-  // System.out.println(e.getStackTrace());
-  // }
-
-  // final int maxId = MovelDAO.maxUploadId();
-
-  // MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getId(), name);
-
-  // return new Success(res, Localization.furniturePictureUploadSuccess);
-  // } catch (InvalidDataException e) {
-  // return new BadRequest(res, e.message);
-  // } catch (RuntimeException e) {
-  // return new BadRequest(res);
-  // }
-  // };
+      return new Success(res, Localization.rentalDeleteSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
 }

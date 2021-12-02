@@ -192,10 +192,8 @@ public class MovelService {
     try {
       final String name = UUID.randomUUID().toString();
 
-      final String treatedBody = body.replaceAll(".+,(.+)", "$1");
-
       try {
-        final byte[] bytes = Base64.getDecoder().decode(treatedBody);
+        final byte[] bytes = Base64.getDecoder().decode(body);
 
         final FileOutputStream f = new FileOutputStream(String.format("src/main/resources/public/img/%s", name));
 

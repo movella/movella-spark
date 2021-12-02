@@ -54,49 +54,30 @@ public class AluguelDAO {
     return alugueis;
   }
 
-  // public static List<MovelPaginado> pagination(int limit, int offset, String
-  // categoria, String filtro,
-  // Boolean disponivel, String order, String usuarioNome) throws Exception {
-  // final String disponivelClause = disponivel ? "'disponivel'" : "true";
-  // final String categoriaClause = categoria.equals("Todos") ? "true" :
-  // String.format("categoria = '%s'", categoria);
-  // final String filterClause = filtro.length() == 0 ? "true"
-  // : String.format("lower(nome) like lower('%%%s%%')", filtro);
-  // final String orderClause = order;
+  public static List<Aluguel> all(int id) throws Exception {
+    final List<JsonObject> res = DBConnection.query("select * from tbl_aluguel where usuarioId = cast(? as integer)",
+        new String[] { String.valueOf(id) });
+    final List<Aluguel> alugueis = new ArrayList<Aluguel>();
 
-  // final List<JsonObject> res = DBConnection.query(String.format(
-  // "select *, usuarionome = ? as seu from view_movel where %s and %s and %s
-  // order by %s limit cast(? as integer) offset cast(? as integer)",
-  // disponivelClause, filterClause, categoriaClause, orderClause),
-  // new String[] { usuarioNome, String.valueOf(limit), String.valueOf(offset) });
-  // final List<MovelPaginado> moveis = new ArrayList<MovelPaginado>();
+    res.forEach((v) -> {
+      try {
+        alugueis.add(Aluguel.fromJson(v));
+      } catch (Exception e) {
+      }
+    });
 
-  // res.forEach((v) -> {
-  // try {
-  // moveis.add(MovelPaginado.fromJson(v));
-  // } catch (Exception e) {
-  // }
-  // });
+    return alugueis;
+  }
 
-  // return moveis;
-  // }
+  public static void delete(int id, int usuarioId) throws Exception {
+    DBConnection.execute(
+        "delete from tbl_aluguel where id = cast(? as integer) and usuarioId = cast(? as integer)",
+        new String[] { String.valueOf(id), String.valueOf(usuarioId) });
+  }
 
-  // public static int getPages(int limit, int offset, String categoria, String
-  // filtro, Boolean disponivel, String order)
-  // throws Exception {
-  // final String disponivelClause = disponivel ? "'disponivel'" : "true";
-  // final String categoriaClause = categoria.equals("Todos") ? "true" :
-  // String.format("categoria = '%s'", categoria);
-  // final String filterClause = filtro.length() == 0 ? "true"
-  // : String.format("lower(nome) like lower('%%%s%%')", filtro);
-
-  // final JsonObject res = DBConnection
-  // .queryOne(String.format("select count(*) as qnt from view_movel where %s and
-  // %s and %s", disponivelClause,
-  // filterClause, categoriaClause), new String[] {});
-  // final int qntPages = (int) Math.ceil(res.get("qnt").getAsInt() / (float)
-  // limit);
-
-  // return qntPages;
-  // }
+  public static void delete(int id) throws Exception {
+    DBConnection.execute(
+        "delete from tbl_aluguel where id = cast(? as integer)",
+        new String[] { String.valueOf(id) });
+  }
 }

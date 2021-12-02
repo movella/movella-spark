@@ -55,6 +55,7 @@ public class Localization {
   public final static String paymentCreateSuccess = "Pagamento cadastrado com sucesso!";
   public final static String contactCreateSuccess = "Contato registrado. Obrigado pelo feedback!";
 
+  public final static String rentalDeleteSuccess = "Aluguel removido com sucesso!";
   public final static String furnitureDeleteSuccess = "Móvel removido com sucesso!";
   public final static String paymentDeleteSuccess = "Pagamento removido com sucesso!";
 }
