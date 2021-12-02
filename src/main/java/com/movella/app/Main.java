@@ -145,6 +145,8 @@ public class Main {
 
         post("/admin/categoria/create", CategoriaService.adminCreate);
 
+        post("/admin/categoria/delete", CategoriaService.adminDelete);
+
         get("/admin/contato/all", ContatoService.adminAll);
 
         get("/admin/contato/read/:id", ContatoService.adminRead);

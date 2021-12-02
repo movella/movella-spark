@@ -78,4 +78,31 @@ public class CategoriaService {
       return new BadRequest(res);
     }
   };
+
+  public static Route adminDelete = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
+
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _id = body.get("id");
+
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
+
+    final int id = _id.getAsInt();
+
+    try {
+      CategoriaDAO.delete(id);
+
+      return new Success(res, Localization.categoryDeleteSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
 }

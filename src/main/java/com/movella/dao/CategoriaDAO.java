@@ -39,4 +39,10 @@ public class CategoriaDAO {
   public static void insert(String nome) throws Exception {
     DBConnection.execute("insert into tbl_categoria (nome) values (?)", new String[] { nome });
   }
+
+  public static void delete(int id) throws Exception {
+    DBConnection.execute(
+        "delete from tbl_categoria where id = cast(? as integer)",
+        new String[] { String.valueOf(id) });
+  }
 }

@@ -53,7 +53,7 @@ public class AluguelService {
     final double valorFrete = 0;
 
     try {
-      final Pagamento pagamento = PagamentoDAO.read(pagamentoId);
+      final Pagamento pagamento = PagamentoDAO.read(pagamentoId, usuarioId);
 
       final String chavePagamento = pagamento.getChave();
 

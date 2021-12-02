@@ -60,10 +60,13 @@ $(() => {
 
         refresh()
       })
-    } else if (v.status == 400) {
+    } else if (v.status === 400) {
+      /**
+       * @type {BaseResponse}
+       */
       const data = await v.json()
 
-      Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+      Swal.fire({ title: 'Atenção', icon: 'error', text: data.message })
     } else {
       Swal.fire({
         title: 'Atenção',
@@ -160,6 +163,7 @@ const refresh = () => {
           data.moveis.map((v) => {
             return /* html */ `
               <div class="col-6 col-md-4 p-1 movel"
+              data-id="${v.id}"
               data-nome="${v.nome}"
               data-por="${v.usuarionome}"
               data-disponivel="${v.disponivel}"
@@ -198,6 +202,7 @@ const refresh = () => {
         $('.movel').on('click', async function () {
           const movel = $(this)
 
+          const id = movel.data('id')
           const nome = movel.data('nome')
           const por = movel.data('por')
           const seu = Boolean(movel.data('seu'))
@@ -220,8 +225,20 @@ const refresh = () => {
               result = parseInt(result)
               if (result <= 0 || result > 90) return 'Quantidade inválida'
             },
+            inputAttributes: {
+              minlength: 1,
+              minLength: 1,
+            },
+            inputOptions: {
+              minlength: 1,
+              minLength: 1,
+            },
             preConfirm: (inputValue) => {
-              return inputValue
+              inputValue ??= ''
+
+              return inputValue.length === 0
+                ? false
+                : { dias: inputValue, pagamento: $('#meio-de-pagamento').val() }
             },
             didOpen: (popup) => {
               const el = $(popup)
@@ -234,6 +251,28 @@ const refresh = () => {
 
                 if (typeof dias === 'number' && !isNaN(dias))
                   $('#valor-total').text(formataValor(valor * dias))
+              })
+
+              fetch('/api/pagamentos').then(async (d) => {
+                console.log(d)
+
+                if (v.status === 200) {
+                  /**
+                   * @type {Pagamento[]}
+                   */
+                  const data = await d.json()
+
+                  $('#meio-de-pagamento').append(
+                    data.map((v) => {
+                      return /* html */ `<option value="${v.id}">
+                        Chave PIX - ${v.chave.replace(
+                          /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                          '$1.$2.$3-$4'
+                        )}
+                      </option>`
+                    })
+                  )
+                }
               })
             },
             html: /* html */ `
@@ -266,23 +305,78 @@ const refresh = () => {
                 </tr>
               </table>
               <hr />
+              <div class="mb-3">
+                <label for="meio-de-pagamento">Meio de pagamento</label>
+                <select id="meio-de-pagamento" class="form-control"></select>
+              <div>
             </b>
             `,
           })
 
-          if (res.isConfirmed)
-            Swal.fire({
-              icon: 'success',
-              title: 'Aluguel realizado!',
-            }).then(() => {
-              location = '/'
+          if (res.isConfirmed) {
+            /**
+             * @type {{ dias: string, pagamento: string}}
+             */
+            const result = res.value
+
+            fetch('/api/alugar', {
+              method: 'post',
+              body: JSON.stringify({
+                movel: id,
+                dias: result.dias,
+                pagamento: result.pagamento,
+              }),
+              headers: { 'content-type': 'application/json' },
+            }).then(async (v) => {
+              console.log(v)
+
+              if (v.status === 200) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Aluguel realizado!',
+                }).then(() => {
+                  location = '/'
+                })
+              } else if (v.status === 400) {
+                /**
+                 * @type {BaseResponse}
+                 */
+                const data = await v.json()
+
+                Swal.fire({
+                  title: 'Atenção',
+                  icon: 'error',
+                  text: data.message,
+                })
+              } else if (v.status === 401) {
+                /**
+                 * @type {BaseResponse}
+                 */
+                const data = await v.json()
+
+                Swal.fire({
+                  title: 'Atenção',
+                  icon: 'error',
+                  text: `${data.message} Para alugar um móvel, faça login e ative sua conta na página "Minha Conta".`,
+                })
+              } else {
+                Swal.fire({
+                  title: 'Atenção',
+                  icon: 'error',
+                  text: 'Houve um erro inesperado',
+                })
+              }
             })
+          }
         })
       }
-    } else if (v.status == 400) {
+    } else if (v.status === 400) {
+      /**
+       * @type {BaseResponse}
+       */
       const data = await v.json()
 
-      Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+      Swal.fire({ title: 'Atenção', icon: 'error', text: data.message })
     } else {
       Swal.fire({
         title: 'Atenção',

@@ -58,4 +58,5 @@ public class Localization {
   public final static String rentalDeleteSuccess = "Aluguel removido com sucesso!";
   public final static String furnitureDeleteSuccess = "Móvel removido com sucesso!";
   public final static String paymentDeleteSuccess = "Pagamento removido com sucesso!";
+  public final static String categoryDeleteSuccess = "Categoria removida com sucesso!";
 }

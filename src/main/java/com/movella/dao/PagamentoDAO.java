@@ -22,6 +22,19 @@ public class PagamentoDAO {
     return pagamento;
   }
 
+  public static Pagamento read(int id, int usuarioId) throws Exception {
+    final JsonObject res = DBConnection.queryOne(
+        "select * from tbl_pagamento where id = cast(? as integer) and usuarioId = cast(? as integer)",
+        new String[] { String.valueOf(id), String.valueOf(usuarioId) });
+
+    if (res == null)
+      throw new InvalidDataException(Localization.paymentNotFound);
+
+    final Pagamento pagamento = Pagamento.fromJson(res);
+
+    return pagamento;
+  }
+
   public static void insert(String tipo, String chave, int usuarioId) throws Exception {
     DBConnection.execute(
         "insert into tbl_pagamento (tipo, chave, usuarioId) values (cast(? as tipopagamento), ?, cast(? as integer))",
