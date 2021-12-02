@@ -46,7 +46,7 @@ public class PagamentoService {
     }
   };
 
-  public static Route all = (Request req, Response res) -> {
+  public static Route adminAll = (Request req, Response res) -> {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
@@ -110,6 +110,35 @@ public class PagamentoService {
 
     try {
       PagamentoDAO.delete(id, usuarioId);
+
+      return new Success(res, Localization.paymentDeleteSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route adminDelete = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
+
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _id = body.get("id");
+
+    // TODO: fix, falta checar se é int ou string
+
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
+
+    final int id = _id.getAsInt();
+
+    try {
+      PagamentoDAO.delete(id);
 
       return new Success(res, Localization.paymentDeleteSuccess);
     } catch (InvalidDataException e) {

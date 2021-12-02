@@ -113,33 +113,45 @@ public class Main {
 
         post("/register", UsuarioService.register);
 
-        get("/contato/:id", ContatoService.read);
-
-        post("/contato/create", ContatoService.create);
-
-        post("/movel/create", MovelService.create);
+        post("/alugar", AluguelService.create);
 
         get("/categorias", CategoriaService.all);
 
-        post("/categoria/create", CategoriaService.create);
-
-        post("/usuario/update", UsuarioService.update);
-
-        get("/movel/all", MovelService.all);
+        post("/contato/create", ContatoService.create);
 
         post("/moveis", MovelService.pagination);
 
+        post("/movel/create", MovelService.create);
+
+        post("/movel/delete", MovelService.delete);
+
         post("/movel/upload/:id", MovelService.upload);
-
-        post("/alugar", AluguelService.create);
-
-        post("/pagamento/create", PagamentoService.create);
-
-        get("/pagamento/all", PagamentoService.all);
 
         get("/pagamentos", PagamentoService.list);
 
+        post("/pagamento/create", PagamentoService.create);
+
         post("/pagamento/delete", PagamentoService.delete);
+
+        post("/usuario/update", UsuarioService.update);
+
+        // admin
+
+        get("/admin/aluguel/all", AluguelService.adminAll);
+
+        post("/admin/categoria/create", CategoriaService.adminCreate);
+
+        get("/admin/contato/all", ContatoService.adminAll);
+
+        get("/admin/contato/read/:id", ContatoService.adminRead);
+
+        get("/admin/movel/all", MovelService.adminAll);
+
+        post("/admin/movel/delete", MovelService.adminDelete);
+
+        get("/admin/pagamento/all", PagamentoService.adminAll);
+
+        post("/admin/pagamento/delete", PagamentoService.adminDelete);
       });
 
       System.out.println(String.format("listening on port %d", port));

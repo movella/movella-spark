@@ -52,6 +52,7 @@
                     role="tab"
                     aria-controls="v-pills-pagamento"
                     aria-selected="false"
+                    th:classappend="${user.getAcesso()} == normal ? disabled"
                   >
                     Chaves cadastradas
                   </a>
@@ -64,6 +65,7 @@
                     role="tab"
                     aria-controls="v-pills-historico"
                     aria-selected="false"
+                    th:classappend="${user.getAcesso()} == normal ? disabled"
                   >
                     Histórico
                   </a>
@@ -76,6 +78,7 @@
                     role="tab"
                     aria-controls="v-pills-moveis"
                     aria-selected="false"
+                    th:classappend="${user.getAcesso()} == normal ? disabled"
                   >
                     Meus móveis
                   </a>
@@ -85,6 +88,7 @@
                     href="/cadastrarmovel"
                     aria-controls="v-pills-cadastrar"
                     aria-selected="false"
+                    th:classappend="${user.getAcesso()} == normal ? disabled"
                   >
                     <i class="fas fa-arrow-left"></i>
                     Cadastrar móvel
@@ -180,7 +184,7 @@
                     <h4 class="mb-3">Editar dados</h4>
                     <form method="post" id="form">
                       <div class="row mb-2">
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                           <div class="form-group">
                             <label for="foto">Imagem</label>
                             <div class="input-group">
@@ -200,14 +204,18 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <div class="col-md-12">
                           <img
                             src="/img/default.png"
                             alt="img"
                             id="imagem"
                             class="w-100 h-100"
-                            style="object-fit: contain; border-radius: 10px"
+                            style="
+                              object-fit: contain;
+                              border-radius: 10px;
+                              max-height: 200px;
+                            "
                           />
                         </div>
                       </div>

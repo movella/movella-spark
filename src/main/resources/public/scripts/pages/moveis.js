@@ -223,21 +223,17 @@ const refresh = () => {
             preConfirm: (inputValue) => {
               return inputValue
             },
-            inputAttributes: {
-              max: 90,
-            },
             didOpen: (popup) => {
               const el = $(popup)
+
+              el.find('#swal2-input').mask('00')
 
               el.find('#swal2-input').on('keyup', function () {
                 const input = $(this)
                 const dias = parseInt(input.val())
 
-                if (typeof dias !== 'number') return
-
-                $('#valor-total').text(formataValor(valor * dias))
-                try {
-                } catch (error) {}
+                if (typeof dias === 'number' && !isNaN(dias))
+                  $('#valor-total').text(formataValor(valor * dias))
               })
             },
             html: /* html */ `

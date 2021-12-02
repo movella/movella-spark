@@ -1,5 +1,8 @@
 package com.movella.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.JsonObject;
 import com.movella.app.DBConnection;
 import com.movella.exceptions.InvalidDataException;
@@ -14,9 +17,24 @@ public class ContatoDAO {
     if (res == null)
       throw new InvalidDataException(Localization.contactNotFound);
 
-    final Contato usuario = Contato.fromJson(res);
+    final Contato contato = Contato.fromJson(res);
 
-    return usuario;
+    return contato;
+  }
+
+  public static List<Contato> all() throws Exception {
+    final List<JsonObject> res = DBConnection.query("select * from tbl_contato",
+        new String[] {});
+    final List<Contato> contatos = new ArrayList<Contato>();
+
+    res.forEach((v) -> {
+      try {
+        contatos.add(Contato.fromJson(v));
+      } catch (Exception e) {
+      }
+    });
+
+    return contatos;
   }
 
   public static void insert(String nome, String email, String assunto, String mensagem) throws Exception {

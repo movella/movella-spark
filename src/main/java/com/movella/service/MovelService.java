@@ -79,7 +79,7 @@ public class MovelService {
     }
   };
 
-  public static Route all = (Request req, Response res) -> {
+  public static Route adminAll = (Request req, Response res) -> {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
@@ -210,6 +210,61 @@ public class MovelService {
       MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getId(), name);
 
       return new Success(res, Localization.furniturePictureUploadSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route delete = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (sessionUsuario.getAcesso().equals("normal"))
+      return new Forbidden(res);
+
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _id = body.get("id");
+
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
+
+    final int usuarioId = sessionUsuario.getId();
+    final int id = _id.getAsInt();
+
+    try {
+      MovelDAO.delete(id, usuarioId);
+
+      return new Success(res, Localization.furnitureDeleteSuccess);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
+  public static Route adminDelete = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
+
+    final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
+
+    final JsonElement _id = body.get("id");
+
+    if (_id == null)
+      return new BadRequest(res, Localization.invalidId);
+
+    final int id = _id.getAsInt();
+
+    try {
+      MovelDAO.delete(id);
+
+      return new Success(res, Localization.furnitureDeleteSuccess);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
     } catch (RuntimeException e) {

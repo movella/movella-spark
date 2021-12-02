@@ -35,29 +35,10 @@ public class AluguelDAO {
       double valorMes,
       String chavePagamento) throws Exception {
     DBConnection.execute(
-        // "insert into tbl_aluguel (movelId, usuarioId, dataInicio, dataFim,
-        // valorFrete, descricao, imagem, nome, valorMes, chavePagamento) values (cast(?
-        // as integer), cast(? as integer), ?, ?, cast(? as real), ?, ?, ?, cast(? as
-        // real), ?",
         "insert into tbl_aluguel (movelId, usuarioId, dataInicio, dataFim, valorFrete, descricao, imagem, nome, valorMes, chavePagamento) values (cast(? as integer), cast(? as integer), cast(? as timestamp), cast(? as timestamp), cast(? as real), ?, ?, ?, cast(? as real), ?)",
         new String[] { String.valueOf(movelId), String.valueOf(usuarioId), dataInicio.toString(), dataFim.toString(),
             String.valueOf(valorFrete), descricao, imagem, nome, String.valueOf(valorMes), chavePagamento });
   }
-
-  // public static int maxUploadId() throws Exception {
-  // final JsonObject res = DBConnection.queryOne("select max(id) as max from
-  // tbl_movel", new String[] {});
-
-  // return res.get("max").getAsInt();
-  // }
-
-  // public static void upload(int id, int usuarioId, String imagem) throws
-  // Exception {
-  // DBConnection.execute(
-  // "update tbl_movel set imagem = ? where id = cast(? as integer) and usuarioId
-  // = cast(? as integer)",
-  // new String[] { imagem, String.valueOf(id), String.valueOf(usuarioId) });
-  // }
 
   public static List<Aluguel> all() throws Exception {
     final List<JsonObject> res = DBConnection.query("select * from tbl_aluguel", new String[] {});

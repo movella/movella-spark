@@ -1,18 +1,27 @@
 package com.movella.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.movella.dao.ContatoDAO;
 import com.movella.exceptions.InvalidDataException;
+import com.movella.model.Usuario;
 import com.movella.responses.BadRequest;
+import com.movella.responses.Forbidden;
 import com.movella.responses.Success;
 import com.movella.utils.Localization;
 
 import spark.*;
 
 public class ContatoService {
-  public static Route read = (Request req, Response res) -> {
+  public static Route adminRead = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
+
     final String _id = req.params("id");
 
     if (_id == null)
@@ -30,6 +39,28 @@ public class ContatoService {
       return new Success(res, ContatoDAO.read(id).toJson());
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
+    }
+  };
+
+  public static Route adminAll = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
+
+    try {
+      final JsonArray out = new JsonArray();
+
+      ContatoDAO.all().forEach((v) -> {
+        out.add(v.toJson());
+      });
+
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
     }
   };
 

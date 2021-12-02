@@ -64,4 +64,10 @@ public class PagamentoDAO {
         "delete from tbl_pagamento where id = cast(? as integer) and usuarioId = cast(? as integer)",
         new String[] { String.valueOf(id), String.valueOf(usuarioId) });
   }
+
+  public static void delete(int id) throws Exception {
+    DBConnection.execute(
+        "delete from tbl_pagamento where id = cast(? as integer)",
+        new String[] { String.valueOf(id) });
+  }
 }

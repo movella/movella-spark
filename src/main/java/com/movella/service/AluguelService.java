@@ -3,13 +3,16 @@ package com.movella.service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.movella.dao.AluguelDAO;
 import com.movella.dao.MovelDAO;
+import com.movella.dao.PagamentoDAO;
 import com.movella.exceptions.InvalidDataException;
 import com.movella.model.Movel;
+import com.movella.model.Pagamento;
 import com.movella.model.Usuario;
 import com.movella.responses.BadRequest;
 import com.movella.responses.Forbidden;
@@ -46,18 +49,16 @@ public class AluguelService {
 
     final int dias = _dias.getAsInt();
     final int movelId = _movel.getAsInt();
-    final int pagamento = _pagamento.getAsInt();
+    final int pagamentoId = _pagamento.getAsInt();
     final int usuarioId = sessionUsuario.getId();
     final Timestamp dataInicio = Timestamp.valueOf(LocalDateTime.now());
     final Timestamp dataFim = Timestamp.valueOf(LocalDateTime.now().plusDays(dias));
-    final double valorFrete = 20;
-    final String chavePagamento = "aaa";
-    // final double valorFrete = Double
-    // .parseDouble(_valorMes.getAsString().replace(",", "!").replace(".",
-    // "").replace("!", "."));
+    final double valorFrete = 0;
 
     try {
-      // TODO: fix pagamento
+      final Pagamento pagamento = PagamentoDAO.read(pagamentoId);
+
+      final String chavePagamento = pagamento.getChave();
 
       final Movel movel = MovelDAO.read(movelId);
 
@@ -69,6 +70,8 @@ public class AluguelService {
       AluguelDAO.insert(movelId, usuarioId, dataInicio, dataFim, valorFrete, descricao, imagem, nome, valorMes,
           chavePagamento);
 
+      MovelDAO.updateDisponivel(movelId, false);
+
       return new Success(res, Localization.rentCreateSuccess);
     } catch (InvalidDataException e) {
       return new BadRequest(res, e.message);
@@ -77,27 +80,27 @@ public class AluguelService {
     }
   };
 
-  // public static Route all = (Request req, Response res) -> {
-  // final Session session = req.session();
-  // final Usuario sessionUsuario = (Usuario) session.attribute("user");
+  public static Route adminAll = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
-  // if (!sessionUsuario.getAcesso().equals("admin"))
-  // return new Forbidden(res);
+    if (!sessionUsuario.getAcesso().equals("admin"))
+      return new Forbidden(res);
 
-  // try {
-  // final JsonArray out = new JsonArray();
+    try {
+      final JsonArray out = new JsonArray();
 
-  // MovelDAO.all().forEach((v) -> {
-  // out.add(v.toJson());
-  // });
+      AluguelDAO.all().forEach((v) -> {
+        out.add(v.toJson());
+      });
 
-  // return new Success(res, out);
-  // } catch (InvalidDataException e) {
-  // return new BadRequest(res, e.message);
-  // } catch (RuntimeException e) {
-  // return new BadRequest(res);
-  // }
-  // };
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
 
   // public static Route pagination = (Request req, Response res) -> {
   // final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();

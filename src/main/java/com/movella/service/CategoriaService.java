@@ -36,7 +36,7 @@ public class CategoriaService {
     }
   };
 
-  public static Route create = (Request req, Response res) -> {
+  public static Route adminCreate = (Request req, Response res) -> {
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");
 
