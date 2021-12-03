@@ -25,7 +25,6 @@ public class FunctionUtils {
     final String body = response.body();
 
     if (response.statusCode() >= 400)
-      // TODO fazer erro mais expressivo depois
       throw new Exception(Localization.invalidCep);
 
     return JsonParser.parseString(body).getAsJsonObject();

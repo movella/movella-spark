@@ -20,17 +20,17 @@ public class Aluguel {
   String chavePagamento;
 
   public Aluguel() {
-    setid(0);
-    setmovelId(0);
-    setusuarioId(0);
-    setdataInicio(null);
-    setdataFim(null);
-    setvalorFrete(0);
-    setdescricao(null);
-    setimagem(null);
-    setnome(null);
-    setvalorMes(0);
-    setchavePagamento(null);
+    setId(0);
+    setMovelId(0);
+    setUsuarioId(0);
+    setDataInicio(null);
+    setDataFim(null);
+    setValorFrete(0);
+    setDescricao(null);
+    setImagem(null);
+    setNome(null);
+    setValorMes(0);
+    setChavePagamento(null);
   }
 
   public Aluguel( //
@@ -46,121 +46,121 @@ public class Aluguel {
       double valorMes, //
       String chavePagamento //
   ) {
-    setid(id);
-    setmovelId(movelId);
-    setusuarioId(usuarioId);
-    setdataInicio(dataInicio);
-    setdataFim(dataFim);
-    setvalorFrete(valorFrete);
-    setdescricao(descricao);
-    setimagem(imagem);
-    setnome(nome);
-    setvalorMes(valorMes);
-    setchavePagamento(chavePagamento);
+    setId(id);
+    setMovelId(movelId);
+    setUsuarioId(usuarioId);
+    setDataInicio(dataInicio);
+    setDataFim(dataFim);
+    setValorFrete(valorFrete);
+    setDescricao(descricao);
+    setImagem(imagem);
+    setNome(nome);
+    setValorMes(valorMes);
+    setChavePagamento(chavePagamento);
   }
 
-  public int getid() {
+  public int getId() {
     return this.id;
   }
 
-  public int getmovelId() {
+  public int getMovelId() {
     return this.movelId;
   }
 
-  public int getusuarioId() {
+  public int getUsuarioId() {
     return this.usuarioId;
   }
 
-  public Timestamp getdataInicio() {
+  public Timestamp getDataInicio() {
     return this.dataInicio;
   }
 
-  public Timestamp getdataFim() {
+  public Timestamp getDataFim() {
     return this.dataFim;
   }
 
-  public double getvalorFrete() {
+  public double getValorFrete() {
     return this.valorFrete;
   }
 
-  public String getdescricao() {
+  public String getDescricao() {
     return this.descricao;
   }
 
-  public String getimagem() {
+  public String getImagem() {
     return this.imagem;
   }
 
-  public String getnome() {
+  public String getNome() {
     return this.nome;
   }
 
-  public double getvalorMes() {
+  public double getValorMes() {
     return this.valorMes;
   }
 
-  public String getchavePagamento() {
+  public String getChavePagamento() {
     return this.chavePagamento;
   }
 
-  public void setid(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 
-  public void setmovelId(int movelId) {
+  public void setMovelId(int movelId) {
     this.movelId = movelId;
   }
 
-  public void setusuarioId(int usuarioId) {
+  public void setUsuarioId(int usuarioId) {
     this.usuarioId = usuarioId;
   }
 
-  public void setdataInicio(Timestamp dataInicio) {
+  public void setDataInicio(Timestamp dataInicio) {
     this.dataInicio = dataInicio;
   }
 
-  public void setdataFim(Timestamp dataFim) {
+  public void setDataFim(Timestamp dataFim) {
     this.dataFim = dataFim;
   }
 
-  public void setvalorFrete(double valorFrete) {
+  public void setValorFrete(double valorFrete) {
     this.valorFrete = valorFrete;
   }
 
-  public void setdescricao(String descricao) {
+  public void setDescricao(String descricao) {
     this.descricao = descricao;
   }
 
-  public void setimagem(String imagem) {
+  public void setImagem(String imagem) {
     this.imagem = imagem;
   }
 
-  public void setnome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
-  public void setvalorMes(double valorMes) {
+  public void setValorMes(double valorMes) {
     this.valorMes = valorMes;
   }
 
-  public void setchavePagamento(String chavePagamento) {
+  public void setChavePagamento(String chavePagamento) {
     this.chavePagamento = chavePagamento;
   }
 
   public JsonObject toJson() {
     final JsonObject jsonObject = new JsonObject();
 
-    jsonObject.addProperty("id", getid());
-    jsonObject.addProperty("movelId", getmovelId());
-    jsonObject.addProperty("usuarioId", getusuarioId());
-    jsonObject.addProperty("dataInicio", getdataInicio().toString());
-    jsonObject.addProperty("dataFim", getdataFim().toString());
-    jsonObject.addProperty("valorFrete", getvalorFrete());
-    jsonObject.addProperty("descricao", getdescricao());
-    jsonObject.addProperty("imagem", getimagem());
-    jsonObject.addProperty("nome", getnome());
-    jsonObject.addProperty("valorMes", getvalorMes());
-    jsonObject.addProperty("chavePagamento", getchavePagamento());
+    jsonObject.addProperty("id", getId());
+    jsonObject.addProperty("movelId", getMovelId());
+    jsonObject.addProperty("usuarioId", getUsuarioId());
+    jsonObject.addProperty("dataInicio", getDataInicio().toString());
+    jsonObject.addProperty("dataFim", getDataFim().toString());
+    jsonObject.addProperty("valorFrete", getValorFrete());
+    jsonObject.addProperty("descricao", getDescricao());
+    jsonObject.addProperty("imagem", getImagem());
+    jsonObject.addProperty("nome", getNome());
+    jsonObject.addProperty("valorMes", getValorMes());
+    jsonObject.addProperty("chavePagamento", getChavePagamento());
 
     return jsonObject;
   }
@@ -178,37 +178,37 @@ public class Aluguel {
       switch (uKey) {
 
         case "id":
-          aluguel.setid(js.get("id").getAsInt());
+          aluguel.setId(js.get("id").getAsInt());
           break;
         case "movelid":
-          aluguel.setmovelId(js.get("movelid").getAsInt());
+          aluguel.setMovelId(js.get("movelid").getAsInt());
           break;
         case "usuarioid":
-          aluguel.setusuarioId(js.get("usuarioid").getAsInt());
+          aluguel.setUsuarioId(js.get("usuarioid").getAsInt());
           break;
         case "datainicio":
-          aluguel.setdataInicio(Timestamp.valueOf(js.get("datainicio").getAsString()));
+          aluguel.setDataInicio(Timestamp.valueOf(js.get("datainicio").getAsString()));
           break;
         case "datafim":
-          aluguel.setdataFim(Timestamp.valueOf(js.get("datafim").getAsString()));
+          aluguel.setDataFim(Timestamp.valueOf(js.get("datafim").getAsString()));
           break;
         case "valorfrete":
-          aluguel.setvalorFrete(js.get("valorfrete").getAsDouble());
+          aluguel.setValorFrete(js.get("valorfrete").getAsDouble());
           break;
         case "descricao":
-          aluguel.setdescricao(js.get("descricao").getAsString());
+          aluguel.setDescricao(js.get("descricao").getAsString());
           break;
         case "imagem":
-          aluguel.setimagem(js.get("imagem").getAsString());
+          aluguel.setImagem(js.get("imagem").getAsString());
           break;
         case "nome":
-          aluguel.setnome(js.get("nome").getAsString());
+          aluguel.setNome(js.get("nome").getAsString());
           break;
         case "valormes":
-          aluguel.setvalorMes(js.get("valormes").getAsDouble());
+          aluguel.setValorMes(js.get("valormes").getAsDouble());
           break;
         case "chavepagamento":
-          aluguel.setchavePagamento(js.get("chavepagamento").getAsString());
+          aluguel.setChavePagamento(js.get("chavepagamento").getAsString());
           break;
       }
     }

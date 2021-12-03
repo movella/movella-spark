@@ -36,8 +36,6 @@ public class MovelService {
     final JsonElement _largura = body.get("largura");
     final JsonElement _espessura = body.get("espessura");
 
-    // TODO: fix, falta checar se é int ou string
-
     if (_nome == null)
       return new BadRequest(res, Localization.invalidName);
 
@@ -134,8 +132,6 @@ public class MovelService {
     final JsonElement _filtro = body.get("filtro");
     final JsonElement _disponivel = body.get("disponivel");
     final JsonElement _order = body.get("order");
-
-    // TODO: fix, falta checar se é int ou string
 
     if (_limit == null)
       return new BadRequest(res, Localization.invalidLimit);

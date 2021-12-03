@@ -26,13 +26,11 @@ public class PagamentoService {
 
     final JsonElement _chave = body.get("chave");
 
-    // TODO: fix, falta checar se é int ou string
-
     if (_chave == null)
       return new BadRequest(res, Localization.invalidKey);
 
     final int usuarioId = sessionUsuario.getId();
-    // TODO: fix, falta validção de cpf
+
     final String chave = _chave.getAsString().replaceAll("[\\.\\-]", "");
 
     try {
@@ -100,8 +98,6 @@ public class PagamentoService {
 
     final JsonElement _id = body.get("id");
 
-    // TODO: fix, falta checar se é int ou string
-
     if (_id == null)
       return new BadRequest(res, Localization.invalidId);
 
@@ -129,8 +125,6 @@ public class PagamentoService {
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
     final JsonElement _id = body.get("id");
-
-    // TODO: fix, falta checar se é int ou string
 
     if (_id == null)
       return new BadRequest(res, Localization.invalidId);

@@ -85,7 +85,6 @@ public class UsuarioService {
     }
   };
 
-  // TODO falta upload de imagem
   public static Route update = (Request req, Response res) -> {
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 
@@ -93,17 +92,12 @@ public class UsuarioService {
     final JsonElement _celular = body.get("celular");
     final JsonElement _cep = body.get("cep");
     final JsonElement _complemento = body.get("complemento");
-    // final JsonElement _numero = body.get("numero");
 
     final JsonElement _nome = body.get("nome");
-    // final JsonElement _email = body.get("email");
     final JsonElement _senha = body.get("senha");
 
     if (_nome == null)
       return new BadRequest(res, Localization.invalidName);
-
-    // if (_email == null)
-    // return new BadRequest(res, Localization.invalidEmail);
 
     if (_senha == null)
       return new BadRequest(res, Localization.invalidPassword);
@@ -120,9 +114,6 @@ public class UsuarioService {
     if (_complemento == null)
       return new BadRequest(res, Localization.invalidComplemento);
 
-    // if (_numero == null)
-    // return new BadRequest(res, Localization.invalidNumero);
-
     final String nome = _nome.getAsString();
     final String senha = _senha.getAsString();
 
@@ -130,8 +121,6 @@ public class UsuarioService {
     final String celular = _celular.getAsString().replaceAll("[\\(\\)\\-\\s]", "");
     final String cep = _cep.getAsString().replaceAll("[\\.\\-]", "");
     final String complemento = _complemento.getAsString();
-    // TODO colocar número no endereço
-    // final String numero = _numero.getAsString();
 
     final Session session = req.session();
     final Usuario sessionUsuario = (Usuario) session.attribute("user");

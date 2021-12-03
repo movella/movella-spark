@@ -209,15 +209,3 @@ public class Main {
     return new ThymeleafTemplateEngine().render(new ModelAndView(model, templatePath));
   }
 }
-
-// TODO: Suas classes java seguem princípios de desenvolvimento Java?
-// Comentários padronizados, atributos privados começando com letra minúscula e
-// tendo um método get/set?
-
-// TODO: fix poder ver contato sem ser adm
-// TODO: terminar a edição de perfil
-// TODO: fazer chaves cadastradas
-// TODO: fazer sistema de aluguel
-// TODO: fazer resto do perfil
-// TODO: fazer a parte de admin
-// TODO:
