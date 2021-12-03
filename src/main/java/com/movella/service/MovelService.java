@@ -212,10 +212,15 @@ public class MovelService {
     try {
       final String name = UUID.randomUUID().toString();
 
+      System.out.println("got here - 1");
+      System.out.println(name);
+
       try {
         final byte[] bytes = Base64.getDecoder().decode(body.replaceAll(".+,(.+)", "$1"));
+        System.out.println("got here - 2");
+        System.out.println(bytes.toString().substring(0, 50));
 
-        final FileOutputStream f = new FileOutputStream(String.format("src/main/resources/public/img/%s", name));
+        final FileOutputStream f = new FileOutputStream(String.format("./src/main/resources/public/img/%s", name));
 
         f.write(bytes);
         f.close();
@@ -224,6 +229,9 @@ public class MovelService {
       }
 
       final int maxId = MovelDAO.maxUploadId();
+
+      System.out.println("got here - 3");
+      System.out.println(maxId);
 
       MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getId(), name);
 

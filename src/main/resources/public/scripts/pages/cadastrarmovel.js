@@ -125,31 +125,22 @@ const upload = async () => {
     .then(async (v) => {
       console.log(v)
 
-      console.log(222222222222)
+      if (v.status === 200) {
+        const data = await v.json()
 
-      // todo, fix
-      // if (v.status === 200) {
-      //   /**
-      //    * @type {Categoria[]}
-      //    */
-      //   const data = await v.json()
+        console.log(data)
+      } else if (v.status == 400) {
+        const data = await v.json()
 
-      //   $('#categoria').append(
-      //     data.map((v) => {
-      //       return /* html */ `<option value="${v.id}">${v.nome}</option>`
-      //     })
-      //   )
-      // } else if (v.status == 400) {
-      //   const data = await v.json()
-
-      //   Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
-      // } else {
-      //   Swal.fire({
-      //     title: 'Atenção',
-      //     icon: 'error',
-      //     text: 'Houve um erro inesperado',
-      //   })
-      // }
+        console.log(data)
+        Swal.fire({ title: 'Atenção', icon: 'error', text: data['message'] })
+      } else {
+        Swal.fire({
+          title: 'Atenção',
+          icon: 'error',
+          text: 'Houve um erro inesperado',
+        })
+      }
     })
     .catch(console.log)
 }
