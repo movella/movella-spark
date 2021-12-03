@@ -190,12 +190,13 @@ const refresh = () => {
                         ${v.disponivel ? 'Disponível' : 'Indisponível'}
                       </p>
                     </b>
-                    <small>Avaliação: ${v.avaliacao}</small>
                   </div>
                   <div class="card-footer">${formataValor(v.valormes)}/mês</div>
                 </div>
               </div>
             `
+
+            // <small>Avaliação: ${v.avaliacao}</small>
           })
         )
 
@@ -250,7 +251,7 @@ const refresh = () => {
                 const dias = parseInt(input.val())
 
                 if (typeof dias === 'number' && !isNaN(dias))
-                  $('#valor-total').text(formataValor(valor * dias))
+                  $('#valor-total').text(formataValor(valor * (dias / 30)))
               })
 
               fetch('/api/pagamentos').then(async (d) => {
@@ -305,10 +306,17 @@ const refresh = () => {
                 </tr>
               </table>
               <hr />
-              <div class="mb-3">
-                <label for="meio-de-pagamento">Meio de pagamento</label>
-                <select id="meio-de-pagamento" class="form-control"></select>
-              <div>
+              ${
+                disponivel
+                  ? /* html */ `
+                  <div class="mb-3">
+                    <label for="meio-de-pagamento">Meio de pagamento</label>
+                    <select id="meio-de-pagamento" class="form-control"></select>
+                  <div>
+                  <small>Caso não tenha meios de pagamento, adicione um na página de "Minha conta".</small>
+                  `
+                  : ''
+              }
             </b>
             `,
           })
@@ -357,7 +365,7 @@ const refresh = () => {
                 Swal.fire({
                   title: 'Atenção',
                   icon: 'error',
-                  text: `${data.message} Para alugar um móvel, faça login e ative sua conta na página "Minha Conta".`,
+                  text: `${data.message} Para alugar um móvel, faça login e ative sua conta na página "Minha conta".`,
                 })
               } else {
                 Swal.fire({

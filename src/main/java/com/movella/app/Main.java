@@ -123,6 +123,8 @@ public class Main {
 
         post("/moveis", MovelService.pagination);
 
+        get("/movel/all", MovelService.all);
+
         post("/movel/create", MovelService.create);
 
         post("/movel/delete", MovelService.delete);

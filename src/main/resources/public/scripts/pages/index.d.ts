@@ -50,3 +50,17 @@ type Pagamento = {
 type BaseResponse = {
   message: string
 }
+
+type Aluguel = {
+  id: number
+  movelId: number
+  usuarioId: number
+  dataInicio: string
+  dataFim: string
+  valorFrete: number
+  descricao: string
+  imagem: string
+  nome: string
+  valorMes: number
+  chavePagamento: string
+}

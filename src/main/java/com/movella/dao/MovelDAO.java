@@ -58,6 +58,21 @@ public class MovelDAO {
     return moveis;
   }
 
+  public static List<Movel> all(int id) throws Exception {
+    final List<JsonObject> res = DBConnection.query("select * from tbl_movel where usuarioId = cast(? as integer)",
+        new String[] { String.valueOf(id) });
+    final List<Movel> moveis = new ArrayList<Movel>();
+
+    res.forEach((v) -> {
+      try {
+        moveis.add(Movel.fromJson(v));
+      } catch (Exception e) {
+      }
+    });
+
+    return moveis;
+  }
+
   public static List<MovelPaginado> pagination(int limit, int offset, String categoria, String filtro,
       Boolean disponivel, String order, String usuarioNome) throws Exception {
     final String disponivelClause = disponivel ? "'disponivel'" : "true";
@@ -105,7 +120,7 @@ public class MovelDAO {
 
   public static void delete(int id, int usuarioId) throws Exception {
     DBConnection.execute(
-        "delete from tbl_movel where id = cast(? as integer) and usuarioId = cast(? as integer)",
+        "delete from tbl_movel where id = cast(? as integer) and usuarioId = cast(? as integer) and disponivel = true",
         new String[] { String.valueOf(id), String.valueOf(usuarioId) });
   }
 

@@ -101,6 +101,30 @@ public class MovelService {
     }
   };
 
+  public static Route all = (Request req, Response res) -> {
+    final Session session = req.session();
+    final Usuario sessionUsuario = (Usuario) session.attribute("user");
+
+    if (sessionUsuario.getAcesso().equals("normal"))
+      return new Forbidden(res);
+
+    final int id = sessionUsuario.getId();
+
+    try {
+      final JsonArray out = new JsonArray();
+
+      MovelDAO.all(id).forEach((v) -> {
+        out.add(v.toJson());
+      });
+
+      return new Success(res, out);
+    } catch (InvalidDataException e) {
+      return new BadRequest(res, e.message);
+    } catch (RuntimeException e) {
+      return new BadRequest(res);
+    }
+  };
+
   public static Route pagination = (Request req, Response res) -> {
     final JsonObject body = JsonParser.parseString(req.body()).getAsJsonObject();
 

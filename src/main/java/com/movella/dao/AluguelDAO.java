@@ -55,7 +55,8 @@ public class AluguelDAO {
   }
 
   public static List<Aluguel> all(int id) throws Exception {
-    final List<JsonObject> res = DBConnection.query("select * from tbl_aluguel where usuarioId = cast(? as integer)",
+    final List<JsonObject> res = DBConnection.query(
+        "select * from tbl_aluguel where usuarioId = cast(? as integer) order by dataInicio desc",
         new String[] { String.valueOf(id) });
     final List<Aluguel> alugueis = new ArrayList<Aluguel>();
 

@@ -200,6 +200,214 @@ $(() => {
     })
   })
 
+  $('#v-pills-historico-tab').on('click', () => {
+    $('.historico').html(/* html */ `
+      <small class="text-center p-3">Carregando histórico</small>
+    `)
+
+    fetch('/api/aluguel/all').then(async (v) => {
+      console.log(v)
+
+      if (v.status === 200) {
+        /**
+         * @type {Aluguel[]}
+         */
+        const data = await v.json()
+
+        if (data.length === 0)
+          $('.historico').html(/* html */ `
+            <small class="text-center p-3">Nenhum aluguel encontrado</small>
+          `)
+        else {
+          $('.historico').html('')
+
+          $('.historico').append(
+            data.map((v) => {
+              const inicio = new Date(v.dataInicio)
+              const fim = new Date(v.dataFim)
+
+              const duracao = new Date(fim - inicio)
+
+              const valor =
+                (Math.round((100 * duracao.getTime()) / 1000 / 3600 / 24 / 30) *
+                  v.valorMes) /
+                100
+
+              return /* html */ `
+              <div class="card p-0 mb-2">
+                <div class="card-body d-flex flex-row">
+                  <img src="/img/${
+                    v.imagem
+                  }" class="w-25 h-100" style="object-fit: contain"/>
+                  <div class="d-flex flex-column flex-grow-1 ps-2">
+                    <h5>${v.nome}</h5>
+                    <small>${v.descricao}</small>
+                    <hr>
+                    <small>Valor total: ${formataValor(valor)}</small>
+                    <small>Valor por mês: ${formataValor(v.valorMes)}</small>
+                    <small>Início: ${inicio.toLocaleDateString()}</small>
+                    <small>Fim: ${fim.toLocaleDateString()}</small>
+                    <small class="pt-2">Chave: ${v.chavePagamento.replace(
+                      /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                      '$1.$2.$3-$4'
+                    )}</small>
+                  </div>
+                </div>
+              </div>
+              `
+            })
+          )
+        }
+      } else if (v.status == 400) {
+        /**
+         * @type {BaseResponse}
+         */
+        const data = await v.json()
+
+        Swal.fire({ title: 'Atenção', icon: 'error', text: data.message })
+      } else {
+        Swal.fire({
+          title: 'Atenção',
+          icon: 'error',
+          text: 'Houve um erro inesperado',
+        })
+      }
+    })
+  })
+
+  $('#v-pills-moveis-tab').on('click', () => {
+    $('.moveis').html(/* html */ `
+      <small class="text-center p-3">Carregando móveis</small>
+    `)
+
+    fetch('/api/movel/all').then(async (v) => {
+      console.log(v)
+
+      if (v.status === 200) {
+        /**
+         * @type {Movel[]}
+         */
+        const data = await v.json()
+
+        if (data.length === 0)
+          $('.moveis').html(/* html */ `
+            <small class="text-center p-3">Nenhum móvel encontrado</small>
+          `)
+        else {
+          $('.moveis').html('')
+
+          $('.moveis').append(
+            data.map((v) => {
+              return /* html */ `
+              <div class="card p-0 mb-2">
+                <div class="card-body d-flex flex-row">
+                  <img src="/img/${
+                    v.imagem
+                  }" class="w-25 h-100" style="object-fit: contain"/>
+                  <div class="d-flex flex-column flex-grow-1 ps-2">
+                    <h5>${v.nome}</h5>
+                    <small>${v.descricao}</small>
+                    <b>
+                      <p class="text-${v.disponivel ? 'success' : 'danger'}">
+                        ${v.disponivel ? 'Disponível' : 'Indisponível'}
+                      </p>
+                    </b>
+                    <small>Valor por mês: ${formataValor(v.valorMes)}</small>
+                    <small>
+                      Dimensões (ALE): ${v.altura}m x ${v.largura}m x ${
+                v.espessura
+              }m
+                    </small>
+                  </div>
+                  ${
+                    v.disponivel
+                      ? /* html */ `
+                    <button
+                      data-id="${v.id}"
+                      class="btn btn-primary bg-primary btn-delete-movel"
+                    >
+                      <i class="mdi mdi-delete text-white"></i>
+                    </button>
+                    `
+                      : ''
+                  }
+                </div>
+              </div>
+              `
+            })
+          )
+        }
+
+        $('.btn-delete-movel').on('click', async function () {
+          const button = $(this)
+
+          const id = button.data('id')
+
+          const res = await Swal.fire({
+            title: 'Aviso',
+            showCancelButton: true,
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim',
+            text: 'Deseja mesmo remover este móvel?',
+            footer: /* html */ `<small>Esta ação nã pode ser desfeita!</small>`,
+          })
+
+          if (res.isConfirmed) {
+            fetch('/api/movel/delete', {
+              method: 'post',
+              body: JSON.stringify({ id: id }),
+              headers: { 'content-type': 'application/json' },
+            }).then(async (v) => {
+              if (v.status === 200) {
+                /**
+                 * @type {BaseResponse}
+                 */
+                const data = await v.json()
+
+                await Swal.fire({
+                  icon: 'success',
+                  title: data.message,
+                }).then(() => {
+                  location = '/perfil'
+                })
+              } else if (v.status == 400) {
+                /**
+                 * @type {BaseResponse}
+                 */
+                const data = await v.json()
+
+                Swal.fire({
+                  title: 'Atenção',
+                  icon: 'error',
+                  text: data.message,
+                })
+              } else {
+                Swal.fire({
+                  title: 'Atenção',
+                  icon: 'error',
+                  text: 'Houve um erro inesperado',
+                })
+              }
+            })
+          }
+        })
+      } else if (v.status == 400) {
+        /**
+         * @type {BaseResponse}
+         */
+        const data = await v.json()
+
+        Swal.fire({ title: 'Atenção', icon: 'error', text: data.message })
+      } else {
+        Swal.fire({
+          title: 'Atenção',
+          icon: 'error',
+          text: 'Houve um erro inesperado',
+        })
+      }
+    })
+  })
+
   $('#btn-add-pagamento').on('click', async () => {
     const res = await Swal.fire({
       input: 'text',
