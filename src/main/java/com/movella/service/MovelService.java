@@ -1,6 +1,5 @@
 package com.movella.service;
 
-import java.io.FileOutputStream;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -16,6 +15,10 @@ import com.movella.responses.Forbidden;
 import com.movella.responses.Success;
 import com.movella.utils.Localization;
 
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import spark.*;
 
 public class MovelService {
@@ -212,26 +215,27 @@ public class MovelService {
     try {
       final String name = UUID.randomUUID().toString();
 
-      System.out.println("got here - 1");
-      System.out.println(name);
-
       try {
         final byte[] bytes = Base64.getDecoder().decode(body.replaceAll(".+,(.+)", "$1"));
-        System.out.println("got here - 2");
-        System.out.println(bytes.toString().substring(0, 50));
 
-        final FileOutputStream f = new FileOutputStream(String.format("./src/main/resources/public/img/%s", name));
+        final Region region = Region.US_EAST_2;
+        final S3Client s3 = S3Client.builder()
+            .region(region)
+            .build();
 
-        f.write(bytes);
-        f.close();
+        final PutObjectRequest putOb = PutObjectRequest.builder()
+            .bucket(System.getenv("S3_BUCKET_NAME"))
+            .key(name)
+            .acl("public-read")
+            .build();
+
+        s3.putObject(putOb, RequestBody.fromBytes(bytes));
+
       } catch (Exception e) {
         System.out.println(e.getStackTrace());
       }
 
       final int maxId = MovelDAO.maxUploadId();
-
-      System.out.println("got here - 3");
-      System.out.println(maxId);
 
       MovelDAO.upload(id == 0 ? maxId : id, sessionUsuario.getId(), name);
 

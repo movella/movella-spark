@@ -236,7 +236,7 @@ $(() => {
               return /* html */ `
               <div class="card p-0 mb-2">
                 <div class="card-body d-flex flex-row">
-                  <img src="/img/${
+                  <img src="https://cdn-movella-spark.s3.us-east-2.amazonaws.com/${
                     v.imagem
                   }" class="w-25 h-100" style="object-fit: contain"/>
                   <div class="d-flex flex-column flex-grow-1 ps-2">
@@ -301,7 +301,7 @@ $(() => {
               return /* html */ `
               <div class="card p-0 mb-2">
                 <div class="card-body d-flex flex-row">
-                  <img src="/img/${
+                  <img src="https://cdn-movella-spark.s3.us-east-2.amazonaws.com/${
                     v.imagem
                   }" class="w-25 h-100" style="object-fit: contain"/>
                   <div class="d-flex flex-column flex-grow-1 ps-2">

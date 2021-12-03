@@ -116,8 +116,6 @@ const upload = async () => {
 
   const str = await getBase64(input.files[0])
 
-  console.log(1111111111)
-
   await fetch('/api/movel/upload/0', {
     body: str,
     method: 'post',

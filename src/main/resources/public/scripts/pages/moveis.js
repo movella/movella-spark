@@ -176,7 +176,9 @@ const refresh = () => {
                   <img
                     class="card-img-top"
                     style="height: 150px; object-fit: cover"
-                    src="/img/${v.imagem}"
+                    src="https://cdn-movella-spark.s3.us-east-2.amazonaws.com/${
+                      v.imagem
+                    }"
                     alt="Móvel"
                   />
                   <div class="card-body">
@@ -215,7 +217,7 @@ const refresh = () => {
           const res = await Swal.fire({
             title: nome,
             showCancelButton: true,
-            imageUrl: `/img/${imagem}`,
+            imageUrl: `https://cdn-movella-spark.s3.us-east-2.amazonaws.com/${imagem}`,
             cancelButtonText: 'Voltar',
             confirmButtonText: 'Alugar',
             showConfirmButton: disponivel,
